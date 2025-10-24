@@ -1,0 +1,184 @@
+/* ======== ESTILO BASE ======== */
+body {
+  background-color: #000;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+}
+
+/* ======== CONTENEDOR PRINCIPAL ======== */
+.RegistroUsuario-box {
+  width: 40%;
+  min-width: 500px;
+  max-width: 700px;
+  margin: 7rem auto 3rem auto;
+  padding: 3rem 3.5rem;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.92);
+  box-shadow: 0 0 25px #39ff14, 0 0 50px #1e90ff;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.RegistroUsuario-box:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 30px #39ff14, 0 0 60px #1e90ff;
+}
+
+/* ======== TÍTULO ======== */
+.Registro1 {
+  font-weight: bold;
+  font-size: 2.8rem;
+  padding-bottom: 1.5rem;
+  text-shadow: 0 0 40px #39ff14, 0 0 50px #1e90ff;
+  color: #fff;
+  letter-spacing: 1px;
+}
+
+/* ======== CAMPOS DEL FORMULARIO ======== */
+label {
+  font-weight: bold;
+  color: #fff;
+  text-align: left;
+  display: block;
+  margin-bottom: 6px;
+  font-size: 1.1rem;
+}
+
+input,
+select {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 1.2rem;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 1rem;
+  color: #39ff14;
+  background-color: #111;
+  box-shadow: inset 0 0 10px #39ff14;
+  outline: none;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+input:focus,
+select:focus {
+  background-color: #0b0b0b;
+  box-shadow: 0 0 15px #1e90ff, 0 0 25px #39ff14;
+}
+
+/* ======== BOTÓN PRINCIPAL ======== */
+.boton-registro {
+  width: 60%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #00ff00, #00ffff);
+  color: #000;
+  font-weight: bold;
+  font-size: 1rem;
+  cursor: pointer;
+  margin-top: 15px;
+  box-shadow: 0 0 20px #00ff00, 0 0 35px #00ffff;
+  transition: all 0.3s ease;
+}
+
+.boton-registro:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #00ffff, 0 0 50px #00ff00;
+}
+
+/* ======== MENSAJES DE VALIDACIÓN ======== */
+p {
+  font-size: 1rem;
+  margin-top: 15px;
+  line-height: 1.4;
+}
+
+/* ======== BANNER SUPERIOR ======== */
+.title-wrapper {
+  width: 100%;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+}
+
+.title-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: brightness(0.85);
+  transition: transform 6s ease;
+}
+
+.title-img:hover {
+  transform: scale(1.05);
+}
+
+.title-text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #39ff14;
+  font-weight: bold;
+  font-size: 2.5rem;
+  text-shadow: 0 0 20px #39ff14, 0 0 30px #1e90ff;
+  letter-spacing: 2px;
+}
+
+/* ======== SCROLLBAR PERSONALIZADO ======== */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(#39ff14, #1e90ff);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #000;
+}
+
+/* ======== AJUSTES SEGÚN RESOLUCIÓN ======== */
+/* Monitores grandes (2K y 4K) */
+@media (min-width: 1600px) {
+  .RegistroUsuario-box {
+    width: 35%;
+    padding: 4rem;
+  }
+
+  .Registro1 {
+    font-size: 3rem;
+  }
+
+  input,
+  select {
+    font-size: 1.1rem;
+  }
+}
+
+/* Pantallas más pequeñas (entre 1000px y 1300px) */
+@media (max-width: 1300px) {
+  .RegistroUsuario-box {
+    width: 50%;
+    padding: 2.5rem;
+  }
+}
+
+/* Laptops 1366x768 */
+@media (max-width: 1024px) {
+  .RegistroUsuario-box {
+    width: 60%;
+    padding: 2.2rem;
+  }
+
+  .Registro1 {
+    font-size: 2.2rem;
+  }
+}
