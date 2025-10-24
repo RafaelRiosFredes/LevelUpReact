@@ -4,17 +4,19 @@ import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 
-
 const App = () => (
+    <div
+    className="bg-black text-light min-vh-100"
+    style={{
+      backgroundColor: "#000", 
+    }}
+  >
   <BrowserRouter>
     <Routes>
-      {/* Mostrar RegistroUsuario en la ruta raíz */}
       <Route path="/" element={<RegistroUsuario />} />
-
-      {/* También mantener ruta /registro si quieres */}
-      <Route path="/registro" element={<RegistroUsuario />} />
     </Routes>
   </BrowserRouter>
+  </div>
 );
 
 export default App;

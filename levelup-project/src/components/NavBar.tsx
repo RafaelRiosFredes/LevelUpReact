@@ -1,7 +1,4 @@
 import { useEffect, useState } from "react";
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap-icons/font/bootstrap-icons.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js"; // necesario para dropdown y collapse
 
 export const Navbar = () => {
   const [usuario, setUsuario] = useState<string | null>(null);
@@ -19,8 +16,10 @@ export const Navbar = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
       <div className="container">
-        <a className="navbar-brand" href="/">LEVEL-UP GAMER</a>
+        {/* LOGO */}
+        <a className="navbar-brand" href="#">LEVEL-UP GAMER</a>
 
+        {/* BOTÓN HAMBURGUESA */}
         <button
           className="navbar-toggler"
           type="button"
@@ -33,6 +32,7 @@ export const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
 
+        {/* MENÚ */}
         <div className="collapse navbar-collapse" id="navbarNav">
           <form className="d-flex mx-auto search-bar">
             <input
@@ -46,29 +46,22 @@ export const Navbar = () => {
           </form>
 
           <ul className="navbar-nav ms-auto align-items-center">
-            <li className="nav-item"><a className="nav-link" href="/">Inicio</a></li>
-            <li className="nav-item"><a className="nav-link" href="/productos">Productos</a></li>
-            <li className="nav-item"><a className="nav-link" href="/noticias">Noticias</a></li>
-            <li className="nav-item"><a className="nav-link" href="/contacto">Contacto</a></li>
-
+            <li className="nav-item"><a className="nav-link active" href="#">Inicio</a></li>
+            <li className="nav-item"><a className="nav-link" href="#">Productos</a></li>
+            <li className="nav-item"><a className="nav-link" href="#">Noticias</a></li>
+            <li className="nav-item"><a className="nav-link" href="#">Contacto</a></li>
             <li className="nav-item dropdown">
-              <a
-                className="nav-link dropdown-toggle"
-                href="#"
-                role="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                onClick={(e) => e.preventDefault()} // evita que haga scroll al top
-              >
-                {usuario ? `Hola, ${usuario}` : "Inicia sesión"}
+              <a className="nav-link dropdown-toggle" href="#" role="button">
+                {usuario ? `Hola, ${usuario}` : "Hola, Inicia sesión"}
               </a>
               <ul className="dropdown-menu dropdown-menu-end bg-dark text-white">
                 {!usuario && (
                   <>
-                    <li><a className="dropdown-item text-white" href="/login">Inicia sesión</a></li>
-                    <li><a className="dropdown-item text-white" href="/registro">Regístrate</a></li>
+                    <li><a className="dropdown-item text-white" href="#">Inicia sesión</a></li>
+                    <li><a className="dropdown-item text-white" href="#">Regístrate</a></li>
                   </>
                 )}
+                
                 {usuario && (
                   <li>
                     <a className="dropdown-item text-white" href="#" onClick={cerrarSesion}>
@@ -76,6 +69,8 @@ export const Navbar = () => {
                     </a>
                   </li>
                 )}
+                <li><hr className="dropdown-divider bg-light" /></li>
+                <li><a className="dropdown-item text-white" href="#">Puntos LevelUp</a></li>
               </ul>
             </li>
           </ul>

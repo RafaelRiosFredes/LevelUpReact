@@ -8,6 +8,30 @@ body {
   padding: 0;
 }
 
+/*=== Navbar === */
+.navbar {
+  padding: 0.8rem 1rem;
+}
+.navbar-brand {
+  color: #39ff14 !important;
+  font-weight: bold;
+  font-size: 1.3rem;
+}
+
+.search-bar input {
+  border-radius: 20px;
+  padding: 5px 15px;
+}
+.search-bar button {
+  border-radius: 20px;
+  color: #39ff14;
+  border-color: #39ff14;
+}
+.search-bar button:hover {
+  background-color: #39ff14;
+  color: #000;
+}
+
 /* ======== CONTENEDOR PRINCIPAL ======== */
 .RegistroUsuario-box {
   width: 40%;
@@ -33,7 +57,7 @@ body {
   font-size: 2.8rem;
   padding-bottom: 1.5rem;
   text-shadow: 0 0 40px #39ff14, 0 0 50px #1e90ff;
-  color: #fff;
+  color: #39ff14;
   letter-spacing: 1px;
 }
 
@@ -135,7 +159,7 @@ p {
 
 /* ======== SCROLLBAR PERSONALIZADO ======== */
 ::-webkit-scrollbar {
-  width: 10px;
+  width: 5px;
 }
 ::-webkit-scrollbar-thumb {
   background: linear-gradient(#39ff14, #1e90ff);

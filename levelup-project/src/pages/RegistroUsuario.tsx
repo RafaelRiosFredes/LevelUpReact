@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Navbar } from "../components/NavBar";
 import { Footer } from "../components/Footer";
-import "../styles/registroUsuario.css";
+import "../assets/RegistroUsuario.css";
 
 export const RegistroUsuario = () => {
   const [formData, setFormData] = useState({
