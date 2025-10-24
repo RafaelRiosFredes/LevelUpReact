@@ -39,23 +39,22 @@ export const RegistroUsuario = () => {
     "Magallanes": ["Punta Arenas", "Puerto Natales", "Porvenir"],
   };
 
-  //  Maneja cambios en los campos del formulario
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  const { name, value } = e.target;
 
-    // Validar correo @duocuc.cl
-    if (name === "email") {
-      setDescuento(value.toLowerCase().endsWith("@duocuc.cl"));
-    }
-
-    // Actualizar comunas al seleccionar región
     if (name === "region") {
-      setFormData({ ...formData, region: value, comuna: "" });
+      setFormData(prev => ({ ...prev, region: value, comuna: "" }));
       setComunas(regionesConComunas[value] || []);
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
     }
-  };
 
+    // verifiac si e scorreo duoc
+      if (name === "email") {
+        setDescuento(value.toLowerCase().endsWith("@duocuc.cl"));
+      }
+  };
+  
   // Calcular edad a partir de fecha
   const calcularEdad = (fechaNacimiento: string) => {
     const hoy = new Date();
