@@ -8,198 +8,149 @@ body {
   padding: 0;
 }
 
-/* ======== NAVBAR ======== */
-.navbar {
-  padding: 0.8rem 1rem;
+
+/* ======== NAVBAR ADMIN ======== */
+.navbar-admin {
+  background-color: #000;
+  border-bottom: 2px solid #8000ff;
+  padding: 16px 24px;
+  box-shadow: 0 0 15px #39ff14, 0 0 30px #8000ff;
 }
-.navbar-brand {
+
+.brand-admin {
   color: #39ff14 !important;
   font-weight: bold;
-  font-size: 1.3rem;
-}
-
-.search-bar input {
-  border-radius: 20px;
-  padding: 5px 15px;
-}
-.search-bar button {
-  border-radius: 20px;
-  color: #39ff14;
-  border-color: #39ff14;
-}
-.search-bar button:hover {
-  background-color: #39ff14;
-  color: #000;
-}
-
-.nav-link-carrito {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-.nav-link-carrito i.bi-cart3 {
-  font-size: 22px;
-  position: relative;
-}
-.cantidad-carrito {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  font-size: 0.7rem;
-  padding: 0.25em 0.4em;
-  border-radius: 50%;
-  background-color: #39ff14;
-  color: black;
-  font-weight: bold;
-  min-width: 18px;
-  height: 18px;
-  text-align: center;
-}
-
-/* ======== HERO / BANNER ======== */
-.title {
-  margin-top: 80px;
-  display: flex;
-  justify-content: center; /* 🔥 centra horizontalmente */
-  align-items: center;     /* 🔥 centra verticalmente */
-  width: 100%;
-  padding: 40px;   
-}
-
-.title-wrapper {
-
- width: 100%;       /* ancho total */
- height: 400px;      /* o la altura que quieras */
- display: flex;      /* flexbox para centrar */
- justify-content: center; /* centrar horizontal */
- align-items: center;   /* centrar vertical */
- overflow: hidden;     /* recortar excedentes */
- position: static;
- margin-left: 250px;
-
-}
-
-.title-img {
- min-width: 100%;     /* mínimo ancho 100% para cubrir */
- height: auto;       /* mantiene proporción */
- object-fit: cover;    /* recorta para cubrir */
- object-position: center; /* centra imagen dentro */
- display: block;
-
-}
-
-.title-text {
-  position: absolute;
-  top: 50%;                 /* 🔥 centrado vertical */
-  left: 50%;                /* 🔥 centrado horizontal */
-  transform: translate(-50%, -50%);
-  color: #39ff14;
-  font-weight: bold;
-  font-size: 2.2rem;
-  width: 90%;
-  padding-bottom: 10%;
-}
-
-
-
-
-/* ======== CATEGORÍAS ======== */
-.container h2 {
-  color: #fff;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  letter-spacing: 1px;
-}
-
-/* grilla responsiva que centra las tarjetas */
-.row.g-4 {
-  justify-content: center;
-  gap: 1rem;
-}
-
-.category-card {
-  background-color: #1a1a1a;
-  border-radius: 10px;
-  padding: 1.5rem;
-  transition: 0.3s;
-  height: 160px;
-  width: 100%;
-  max-width: 220px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  font-size: 26px;
   cursor: pointer;
-  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px #39ff14, 0 0 20px #8000ff;
+  transition: transform 0.3s ease;
 }
 
-.category-card:hover {
-  background-color: #262626;
-  transform: translateY(-5px);
+.brand-admin span {
+  color: #8000ff;
+  font-weight: 700;
 }
 
-/* 🔥 Wrapper para íconos e imágenes (alineación uniforme) */
-.icon-wrapper {
+.brand-admin:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 20px #39ff14, 0 0 40px #8000ff;
+}
+
+.navbar-admin .nav-link {
+  color: #fff !important;
+  font-weight: 500;
+  font-size: 17px;
+  text-transform: uppercase;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
+}
+
+.navbar-admin .nav-link:hover {
+  color: #39ff14 !important;
+  text-shadow: 0 0 10px #39ff14, 0 0 20px #8000ff;
+}
+
+.navbar-admin .nav-link.active {
+  color: #8000ff !important;
+  text-shadow: 0 0 10px #8000ff, 0 0 25px #39ff14;
+}
+
+.navbar-toggler {
+  border: 1px solid #39ff14;
+  background-color: #111;
+}
+
+/* ======== LOGIN ADMIN ======== */
+.login-section {
   display: flex;
-  align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
-  margin-bottom: 0.8rem;
-}
-
-/* Íconos de Bootstrap */
-.icon-wrapper i {
-  font-size: 2.5rem;
-  color: #39ff14;
-  filter: drop-shadow(0 0 5px #39ff14);
-}
-
-/* Imágenes externas (icons8, etc.) */
-.icon-wrapper img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 5px #39ff14);
-}
-
-/* Texto debajo del ícono */
-.category-card p {
-  color: #fff;
-  font-size: 1rem;
-  font-weight: bold;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+  background-color: #000;
+  padding: 100px 0;
   margin: 0;
 }
 
-/* 🔹 Responsivo */
-@media (max-width: 768px) {
-  .icon-wrapper {
-    width: 45px;
-    height: 45px;
-  }
-
-  .icon-wrapper i {
-    font-size: 2rem;
-  }
-
-  .icon-wrapper img {
-    width: 45px;
-    height: 45px;
-  }
-
-  .category-card p {
-    font-size: 0.85rem;
-  }
-}
-
-/* ======== FOOTER ======== */
-footer {
-  background-color: #000;
-  color: #888;
+.login-admin-box {
+  background: rgba(0, 0, 0, 0.95);
+  border-radius: 25px;
+  padding: 60px 50px;
+  width: 95%;
+  max-width: 550px;
   text-align: center;
-  padding: 20px 10px;
-  font-size: 0.9rem;
-  margin-top: 40px;
-  border-top: 1px solid #111;
+  box-shadow: 0 0 35px #8000ff, 0 0 60px #39ff14;
+  border: 2px solid #8000ff;
 }
-footer p { margin: 0; }
+
+.login-admin-box:hover {
+  transform: scale(1.02);
+  box-shadow: 0 0 45px #39ff14, 0 0 80px #8000ff;
+}
+
+.login-title {
+  font-size: 38px;
+  font-weight: bold;
+  color: #39ff14;
+  text-shadow: 0 0 25px #39ff14, 0 0 40px #8000ff;
+  margin-bottom: 40px;
+}
+
+label {
+  display: block;
+  text-align: left;
+  margin-bottom: 8px;
+  font-weight: bold;
+  color: #fff;
+}
+
+input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 20px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  color: #39ff14;
+  background-color: #111;
+  outline: none;
+  text-align: center;
+  box-shadow: inset 0 0 10px #8000ff;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+input:focus {
+  background-color: #0b0b0b;
+  box-shadow: 0 0 15px #1e90ff, 0 0 25px #39ff14;
+}
+
+.boton-login {
+  width: 70%;
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(90deg, #8000ff, #39ff14);
+  color: #000;
+  font-weight: bold;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 20px;
+  box-shadow: 0 0 25px #8000ff, 0 0 45px #39ff14;
+  transition: all 0.3s ease;
+}
+
+.boton-login:hover {
+  transform: scale(1.07);
+  box-shadow: 0 0 35px #39ff14, 0 0 65px #8000ff;
+}
+
+.mensaje-login {
+  margin-top: 15px;
+  font-size: 16px;
+  color: #ff4040;
+}
+
+.mensaje-login.exito {
+  color: #39ff14;
+}
+
