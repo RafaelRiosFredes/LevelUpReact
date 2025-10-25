@@ -1,0 +1,862 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+body {
+  background-color: #000000;
+  color: white;
+  font-family: 'Roboto', sans-serif;
+}
+
+:root {
+  --card-height: 380px;
+}
+
+.navbar-brand {
+  color: #39FF14 !important;
+  font-weight: bold;
+}
+.title {
+  text-align: left;
+  display: flex;
+  align-items: center;
+}
+.title h1 {
+  color: #1E90FF;
+  font-weight: bold;
+}
+.category-card {
+  background-color: #1a1a1a;
+  border: none;
+  text-align: center;
+  padding: 1.5rem;
+  border-radius: 10px;
+  transition: 0.3s;
+  height: 100%;
+}
+.category-card:hover {
+  background-color: #262626;
+  cursor: pointer;
+}
+.category-card i {
+  font-size: 40px;
+  color: #39FF14;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.category-card:active{
+  background-color: #727272;
+}
+.highlight {
+  color: #00aaff;
+  font-weight: bold;
+}
+.price {
+  color: #a8ff60;
+  font-size: 1.5rem;
+}
+.btn-custom {
+  background-color: #a8ff60;
+  color: #000;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+.btn-custom:hover {
+  background-color: #8dd44f;
+  color: #000;
+}
+
+.controller-img{
+  width: auto;
+}
+
+.title-img{
+  width: 100%;
+  max-height: 400px;
+  object-fit: cover;
+  object-position: center 70%; /* shifts the focus lower */
+  display: block;
+}
+
+.title-img-contact{
+  width: 100%;
+  max-height: 200px;
+  object-fit: cover;
+  object-position: center 60%; /* shifts the focus lower */
+  display: block;
+}
+
+.title-wrapper {
+  position: relative;
+  display: inline-block; /* centers the wrapper inside text-center section */
+}
+
+.title-text {
+  position: absolute;
+  top: 50%;            /* vertically center */
+  left: 50%;           /* horizontally center */
+  transform: translate(0%, -50%);
+  color: #00aaff;
+  font-weight: bold;
+  font-size: 2rem;
+  text-shadow: 2px 2px 8px rgba(0,0,0,0.7); /* adds contrast on image */
+  padding: 0 1rem;     /* small padding for mobile screens */
+}
+
+@media (max-width: 768px) {
+  .title-text {
+    position: static;       /* ya no es absoluto */
+    transform: none;        /* elimina desplazamiento */
+    margin-top: 1rem;       /* pequeño espacio sobre la imagen */
+    font-size: 1.5rem;      /* reduce tamaño para móviles */
+    text-align: center;
+  }
+
+  .title-wrapper {
+    display: block;         /* full width en móviles */
+  }
+}
+
+.img-chair,.img-tshirt,.img-custom-tshirt{
+  margin-bottom: 3px;
+}
+
+.img-chair{
+  height: 48px;
+  color: #39FF14;
+  margin-top: 6px;
+}
+
+.img-custom-tshirt,.img-tshirt{
+  height: 55px;
+}
+
+.img-tshirt{
+  color: #39FF14;
+}
+
+path{
+  height: 100%;
+}
+
+.img-txt{
+  margin-top: 3px;
+}
+
+
+
+
+
+/* FRANCISCA / PAGINA LOGIN */
+
+.tituloo {
+  font-family: 'Roboto';
+  font-size: 20px;
+}
+
+.titulo{
+  font-weight: 1000;
+  font-family: 'Roboto';
+  text-align: center;
+  font-size: 70px;
+  padding-bottom: 30px;
+    text-shadow: 
+    0 0 40px #39FF14,
+    0 0 50px #1E90FF,
+    0 0 60px #1E90FF;
+}
+
+.Inicio-1{
+    text-transform: uppercase; 
+    color: #ffffff;
+    display: inline-block;
+}
+
+.Logo-1{
+  display: grid;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  width: 250px;
+  height: 250px;
+  object-fit: cover;
+}
+
+.email-entrada{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 10px; 
+
+}
+
+#email{
+  background-color: #fffefe;
+  border: 2px solid #1E90FF;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  margin-bottom: 18px;
+  transition: 1s;
+}
+
+.constraseña-entrada{
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px; 
+}
+
+#contraseña{
+  background-color: #fffefe;
+  border: 2px solid #1E90FF;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  margin-bottom: 18px;
+  transition: 1s;
+}
+
+
+.Inicio-1{
+  margin-bottom: 40px;
+  font-weight: bold;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.login-box {
+  text-align: center;
+  box-shadow: 0 0 15px #39FF14, 0 0 30px #1E90FF;
+  width: 360px;
+  margin: 0 auto 40px auto;
+  padding: 45px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.95);
+  border-radius: 10px;
+  animation: flicker 2s infinite alternate;
+}
+
+.boton-inicio{
+  width: 100px;
+  padding: 4px;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #00ff00, #00ffff);
+  color: #0f0000;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ff00, 0 0 20px #00ffff;
+}
+
+
+/* FRANCISCA / PAGINA LOGIN */
+
+/* FRANCISCA / PAGINA REGISTRO USUARIO */
+
+.RegistroUsuario-box{
+  text-align: center;
+  box-shadow: 0 0 15px #39FF14, 0 0 30px #1E90FF;
+  width: 550px;
+  margin: 150px auto 50px auto; 
+  padding: 45px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.95);
+  animation: flicker 2s infinite alternate;
+}
+
+.Registro1{
+    font-weight: bold;
+
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+  text-align: center;
+  font-size: 40px;
+  padding-bottom: 30px;
+    text-shadow: 
+    0 0 40px #39FF14,
+    0 0 50px #1E90FF,
+    0 0 60px #1E90FF;
+}
+
+.Nombre-usuario-registro{
+  text-align: left; 
+  font-weight: bold;
+  font-size: 17px;
+  margin-bottom: 10px;
+  height: 70px;
+  display: grid;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+}
+
+#Nombre{
+  padding: 3px;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.email-registro{
+  text-align: left; 
+  font-weight: bold;
+  font-size: 17px;
+  margin-bottom: 10px;
+  height: 70px;
+  display: grid;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+}
+
+#email{
+  padding: 3px;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.constraseña-registro-confirmacion{
+  text-align: left; 
+  font-weight: bold;
+  font-size: 17px;
+  margin-bottom: 10px;
+  height: 70px;
+  display: grid;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+}
+
+#contraseña-Confirmacion{
+  padding: 3px;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+}
+
+
+.constraseña-registro{
+  text-align: left; 
+  font-weight: bold;
+  font-size: 17px;
+  margin-bottom: 10px;
+  height: 70px;
+  display: grid;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+}
+
+
+#contraseña{
+  padding: 3px;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.telefono-registro{
+  text-align: left;
+  font-weight: bold;
+  font-size: 17px;
+  margin-bottom: 10px;
+  height: 70px;
+  display: grid;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif ;
+}
+
+#telefono{
+  padding: 3px;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+}
+
+#region{
+  padding: 7px;
+  margin: 15px;
+  border: none;
+  border-radius: 10px;
+}
+
+#comuna{
+  padding: 7px;
+  margin: 20px;
+  border: none;
+  border-radius: 10px;
+}
+
+#region{  box-shadow: 0 0 20px #00ff00, 0 0 40px #1E90FF;
+}
+
+#comuna{  box-shadow: 0 0 20px #00ff00, 0 0 40px #1E90FF;
+}
+
+.fechaNacimiento-registro{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+    gap: 10px;
+}
+.boton-registro{
+  width: 120px;
+  padding: 4px;
+  border: none;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #00ff00, #00ffff);
+  color: #0f0000;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 0 10px #00ff00, 0 0 20px #00ffff;
+}
+
+/* FRANCISCA / PAGINA REGISTRO USUARIO */
+
+/* FRANCISCA / PAGINA COSAS CURIOSAS */
+
+.noticias{
+  font-family: 'Roboto', sans-serif; 
+  font-size: 48px;                   
+  font-weight: bold;
+  text-align: center;                 
+  margin: 30px 30px;                      /* separación arriba y abajo */
+}
+
+.noticias_gamer{
+  font-size: 50px;
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  height: 200px; 
+  text-shadow: 2px 2px 5px #0f0, -2px -2px 5px #00f;
+
+}
+
+.noticia-box {
+  background: #000;
+  border-radius: 15px;
+  padding: 20px;
+  margin: 30px auto;
+  width: 90%;
+  max-width: 800px;
+  box-shadow: 0 0 15px #39FF14, 0 0 30px #1E90FF;
+  transition: 0.3s;
+}
+
+
+.imagen-noticia {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 49px;
+  margin-bottom: 24px;
+}
+
+.imagen-noticia img {
+  width: 250px;          /* mismo ancho */
+  height: 150px;         /* mismo alto */
+  object-fit: cover;     /* recorta la imagen para llenar el espacio */
+  border-radius: 8px;
+}
+
+.noticia-box:hover {
+  box-shadow: 0 0 25px #39FF14, 0 0 50px #1E90FF;
+} 
+
+.noticia-box img {
+  width: 200px;
+  border-radius: 10px;
+  margin-bottom: 25px; 
+}
+
+.imagenes-container {
+  display: flex;           
+  gap: 20px;              
+  justify-content: center; 
+  margin-bottom: 20px;    
+}
+
+.img-lado {
+  width: 48%;            
+  border-radius: 10px;
+}
+
+.noticia-box h2 {
+  color: #39FF14;
+  font-size: 22px;
+  margin-bottom: 15px; 
+  text-align: center; 
+  text-shadow: 0 0 3px #1E90FF;
+}
+
+.noticia-box p {
+  color: #fff;
+  font-size: 16px;
+  margin-bottom: 25px; 
+  text-align: justify; 
+}
+
+.boton-noticia {
+  float: right;
+  padding: 9px 15px;
+  background-color: #000;
+  color: #00aaff;     
+  border-radius: 80px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: 0.3s;
+  display: inline-block;
+  
+}
+
+.boton-noticia:hover {
+  background-color: #39FF14;
+  color: #000;
+}
+
+/* FRANCISCA / PAGINA COSAS CURIOSAS */
+
+
+
+
+.producto {
+  background-color: #1a1a1a;
+  border-radius: 10px;
+  padding: 0.8rem;
+  width: 100%;
+  max-width: 220px;
+  height: var(--card-height);
+  box-sizing: border-box;
+
+  display: grid;
+  grid-template-rows: 60% 12% 12% 16%; /* imagen | nombre | precio | botón */
+  align-items: center;
+  justify-items: center;
+  transition: transform .12s ease;
+}
+
+.producto:hover { transform: translateY(-6px); }
+
+.imagen-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255,255,255,0.02);
+  border-radius: 8px;
+  padding: 6px;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+@supports not (aspect-ratio: 1 / 1) {
+  .imagen-wrapper {
+    height: var(--image-box-size);
+  }
+}
+.imagen-producto {
+  width: auto;
+  height: 100%;          /* fuerza la imagen a llenar verticalmente el área */
+  max-width: 100%;
+  object-fit: contain;   /* muestra la imagen completa sin recortarla */
+  display: block;
+}
+
+.nombre-producto {
+  width: 100%;
+  height: auto;                     /* deja que el contenido decida la altura */
+  display: -webkit-box;             /* soporte truncamiento multilinea */
+  -webkit-line-clamp: 1;            /* una sola línea */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: normal;              /* permite que el texto se ajuste */
+  text-align: center;                 /* desde el inicio */
+  font-weight: 700;
+  padding: 0 6px;                   /* padding normal, no exagerado */
+  box-sizing: border-box;
+  color: #fff;
+  font-size: 0.95rem;
+  padding-top: 7%;
+}
+
+.precio-producto {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  color: #a8ff60;
+  padding: 0 6px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.anadir-carrito {
+  width: 100%;
+  height: 100%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0.4rem 0.6rem;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+@media (max-width: 768px) {
+  :root { --card-height: 340px; }
+
+  .producto {
+    grid-template-rows: 55% 14% 14% 17%;
+    max-width: 100%;
+  }
+
+  .nombre-producto { font-size: 0.9rem; }
+  .precio-producto { font-size: 0.98rem; }
+}
+
+.titulo-categoria{
+  color: #1E90FF;
+}
+
+.mousepad{
+  height: 60px;
+  margin-top: -3px;
+}
+
+.categorias .list-group-item {
+  background-color: #1a1a1a;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.categorias .list-group-item:hover {
+  background-color: #262626;
+}
+
+.categorias .list-group-item.active {
+  background-color: #39FF14;
+  color: #000;
+  font-weight: bold;
+}
+
+
+/* Barra de búsqueda */
+.search-bar input {
+  border-radius: 20px;
+  padding: 5px 15px;
+}
+
+.search-bar button {
+  border-radius: 20px;
+  color: #39FF14;
+  border-color: #39FF14;
+}
+
+.search-bar button:hover {
+  background-color: #39FF14;
+  color: #000;
+}
+
+/* Dropdown login hover */
+.navbar .dropdown:hover .dropdown-menu {
+  display: block;
+  margin-top: 0; /* se alinea justo debajo */
+}
+
+.dropdown-menu {
+  min-width: 200px;
+}
+
+.dropdown-item:hover {
+  background-color: #262626;
+}
+.search-bar {
+  width: 35%;
+  max-width: 600px;
+  position: relative; /* IMPORTANTE: hace que las sugerencias se posicionen respecto al form */
+}
+
+/* Cuando la pantalla sea menor a 768px (Bootstrap md) */
+@media (max-width: 768px) {
+  .search-bar {
+    width: 100%;       /* ocupar todo el ancho disponible */
+    max-width: none;   /* quitar limitante */
+    margin-bottom: 1rem; /* opcional: espacio debajo */
+  }
+
+  .search-bar input {
+    flex: 1;           /* input ocupa todo el espacio disponible dentro del form */
+  }
+
+  .search-bar button {
+    margin-left: 0.5rem; /* separa un poco el botón del input */
+  }
+}
+
+.search-bar ul.list-group {
+  top: 100%;           /* justo debajo del input */
+  left: 0;
+  z-index: 2000;
+  max-height: 300px;
+  overflow-y: auto;
+  display: none;       /* se muestra solo cuando hay coincidencias */
+}
+
+/* Alinea el ícono y el texto del carrito */
+.nav-link-carrito {
+  display: inline-flex;
+  align-items: center; /* centra verticalmente */
+  gap: 5px;            /* espacio entre icono y texto */
+}
+
+/* Haz que el ícono del carrito sea el contenedor relativo */
+/* Ícono del carrito como contenedor relativo */
+.nav-link-carrito i.bi-cart3 {
+  font-size: 22px;
+  position: relative;
+  display: inline-block; /* importante para que top/right funcionen bien */
+}
+
+/* Badge posicionado sobre el ícono */
+#cantidad-carrito {
+  position: absolute;
+  top: -6px;      /* mueve el badge un poco hacia arriba */
+  right: -6px;    /* mueve el badge un poco hacia la derecha */
+  font-size: 0.7rem;
+  padding: 0.25em 0.4em;
+  border-radius: 50%;
+  background-color: #39FF14;
+  color: black;
+  font-weight: bold;
+  line-height: 1;
+  text-align: center;
+  min-width: 18px;
+  height: 18px;
+}
+
+.estrellas {
+  font-size: 1.8rem;
+  color: #666;
+  cursor: pointer;
+}
+
+.estrellas i {
+  transition: color 0.3s;
+}
+
+.estrellas i.activa {
+  color: gold;
+}
+
+.estrellas i {
+  font-size: 2rem;
+  color: #444; /* Estrellas inactivas */
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.estrellas i.hover,
+.estrellas i.selected {
+  color: #FFD700; /* Dorado para estrellas activas */
+}
+
+.contacto-box {
+  text-align: center;
+  box-shadow: 0 0 15px #39FF14, 0 0 30px #1E90FF;
+  width: 500px;
+  margin: 50px auto 40px auto;
+  padding: 45px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.95);
+  animation: flicker 2s infinite alternate;
+}
+
+.caja-contacto {
+  border: none;
+}
+
+.caja-contacto label {
+  font-weight: bold;
+  margin-bottom: 5px;
+  text-align: left;
+  display: block;
+}
+
+#nombre, #correo, #contenido {
+  background-color: #fffefe;
+  border: 2px solid #1E90FF;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: center;
+  margin-bottom: 18px;
+  width: 100%;
+  transition: 1s;
+}
+
+#contenido {
+  text-align: left;
+  resize: none;
+}
+
+textarea {
+  overflow: hidden;
+  resize: none; /* Evita que el usuario lo redimensione manualmente */
+  transition: height 0.2s ease;
+}
+
+/* 🔧 Fondo general */
+body {
+  background-color: #0b0b0b; /* negro suave */
+  color: #f0f0f0;           /* texto gris claro para contraste */
+}
+
+/* 🔧 Navbar visible */
+.navbar {
+  background-color: #000 !important;
+  box-shadow: 0 0 10px #39ff14;
+}
+
+/* 🔧 Tarjetas de producto */
+.producto {
+  background-color: #1a1a1a;
+  color: white;
+  border-radius: 10px;
+  padding: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.producto:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 0 10px #39ff14;
+}
+
+/* 🔧 Botón de añadir al carrito */
+.btn-custom {
+  background-color: #39ff14;
+  color: #000;
+  font-weight: bold;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.btn-custom:hover {
+  background-color: #76ff7a;
+}
+
+/* 🔧 Lista de categorías */
+.list-group-item {
+  background-color: #1a1a1a;
+  color: #fff;
+  border: none;
+}
+
+.list-group-item.active {
+  background-color: #39ff14;
+  color: #000;
+  font-weight: bold;
+}
+
+/* 🔧 Footer */
+footer {
+  background-color: #000;
+  color: #39ff14;
+  font-weight: 500;
+  border-top: 1px solid #1e90ff;
+}

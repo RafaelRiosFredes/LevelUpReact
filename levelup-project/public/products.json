@@ -1,0 +1,38 @@
+[
+  {
+    "id": 1,
+    "nombre": "Catan",
+    "categoria": "Juegos de mesa",
+    "stock": 25,
+    "precio": 29990,
+    "imagen": "https://m.media-amazon.com/images/I/91xPR02JhtL.jpg",
+    "descripcion": "Juego de estrategia clásico."
+  },
+  {
+    "id": 2,
+    "nombre": "The Mind",
+    "categoria": "Juegos de mesa",
+    "stock": 10,
+    "precio": 18990,
+    "imagen": "https://m.media-amazon.com/images/I/81z5E1Sg1pL.jpg",
+    "descripcion": "Juego cooperativo de sincronía mental."
+  },
+  {
+    "id": 3,
+    "nombre": "Monopoly",
+    "categoria": "Juegos de mesa",
+    "stock": 0,
+    "precio": 19990,
+    "imagen": "https://m.media-amazon.com/images/I/81T0nr8twGL.jpg",
+    "descripcion": "El clásico juego de finanzas familiares."
+  },
+  {
+    "id": 4,
+    "nombre": "Basta",
+    "categoria": "Juegos de mesa",
+    "stock": 15,
+    "precio": 17990,
+    "imagen": "https://m.media-amazon.com/images/I/81L3Q-M+HhL.jpg",
+    "descripcion": "Juego rápido de palabras y diversión."
+  }
+]
