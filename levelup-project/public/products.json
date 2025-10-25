@@ -1,0 +1,614 @@
+[
+  {
+    "id": 1,
+    "nombre": "Catan",
+    "descripcion": "Un clásico juego de estrategia donde los jugadores compiten por colonizar y expandirse en la isla de Catan. Ideal para 3-4 jugadores y perfecto para noches de juego en familia o con amigos",
+    "precio": 29990.0,
+    "categoria": "Juegos de Mesa",
+    "imagen": "https://cdnx.jumpseller.com/magic4ever/image/16617730/resize/1400/1400?1665082693",
+    "stock": 74
+  },
+  {
+    "id": 2,
+    "nombre": "The Mind",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 18990.0,
+    "categoria": "Juegos de Mesa",
+    "imagen": "https://www.cardgame.cl/cdn/shop/products/rane_1024x1024@2x.jpg?v=1601268760",
+    "stock": 51
+  },
+  {
+    "id": 3,
+    "nombre": "Monopoly",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 19990.0,
+    "categoria": "Juegos de Mesa",
+    "imagen": "https://m.media-amazon.com/images/I/71Tks9Tf7aL._AC_SL1000_.jpg",
+    "stock": 14
+  },
+  {
+    "id": 4,
+    "nombre": "Basta",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 17990.0,
+    "categoria": "Juegos de Mesa",
+    "imagen": "https://dacplay.cl/cdn/shop/files/Juego_basta_4.jpg?v=1740844356&width=1206",
+    "stock": 41
+  },
+  {
+    "id": 5,
+    "nombre": "Battleship Clasico",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 17990.0,
+    "categoria": "Juegos de Mesa",
+    "imagen": "https://hasbrostore.cl/15427-large_default/juego-de-mesa-hasbro-gaming-battleship.jpg",
+    "stock": 30
+  },
+  {
+    "id": 6,
+    "nombre": "UNO",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 6990.0,
+    "categoria": "Juegos de Mesa",
+    "imagen": "https://dojiw2m9tvv09.cloudfront.net/10102/product/unoclasico-14328.jpg",
+    "stock": 23
+  },
+  {
+    "id": 7,
+    "nombre": "Pictureka",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 15990.0,
+    "categoria": "Juegos de Mesa",
+    "imagen": "https://media.falabella.com/falabellaCL/15538892_1/w=1500,h=1500,fit=pad",
+    "stock": 12
+  },
+  {
+    "id": 8,
+    "nombre": "Jenga",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 16990.0,
+    "categoria": "Juegos de Mesa",
+    "imagen": "https://m.media-amazon.com/images/I/71lm-6cxltL._AC_SL1297_.jpg",
+    "stock": 71
+  },
+  {
+    "id": 9,
+    "nombre": "Audífonos Gamer",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Accesorios",
+    "imagen": "https://assets.pcfactory.cl/public/foto/36991/google_1000.jpg",
+    "stock": 22
+  },
+  {
+    "id": 10,
+    "nombre": "Teclado Gamer",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Accesorios",
+    "imagen": "https://mutant.cl/cdn/shop/files/Teclado-Gamer-Tecware-Phantom-L-Red-Switch-Mutant-27972418273349.png?v=1755035408",
+    "stock": 54
+  },
+  {
+    "id": 11,
+    "nombre": "Luces",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Accesorios",
+    "imagen": "https://cdnx.jumpseller.com/easytech-store/image/24199609/17674691_1.jpg?1652804512",
+    "stock": 79
+  },
+  {
+    "id": 12,
+    "nombre": "Kit 3 Ventiladores",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Accesorios",
+    "imagen": "https://kronosgaming.cl/wp-content/uploads/2023/11/Kit-3-Ventiladores-Cooler-Kronos-Boreal-ARGB-120mm-Molex-1-600x600.png",
+    "stock": 37
+  },
+  {
+    "id": 13,
+    "nombre": "100 Sticker Gamer",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Accesorios",
+    "imagen": "https://i.etsystatic.com/52843257/r/il/e0209e/6421098844/il_1080xN.6421098844_bciu.jpg",
+    "stock": 33
+  },
+  {
+    "id": 14,
+    "nombre": "Control PS5",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 69990.0,
+    "categoria": "Accesorios",
+    "imagen": "https://i5.walmartimages.cl/asr/16f27659-e78f-4ddf-8b49-e4f8cae4f06a.6d6e0cdb78835d5822ed397909036546.png?odnHeight=2000&odnWidth=2000&odnBg=ffffff",
+    "stock": 87
+  },
+  {
+    "id": 15,
+    "nombre": "Audífonos PS5",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Accesorios",
+    "imagen": "https://prophonechile.cl/wp-content/uploads/2024/02/ps5blanco.png",
+    "stock": 43
+  },
+  {
+    "id": 16,
+    "nombre": "Mando PS4",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Accesorios",
+    "imagen": "https://cdn.grupoelcorteingles.es/SGFM/dctm/MEDIA03/202409/13/00197578113306____3__1200x1200.jpg?impolicy=Resize&width=1200&height=1200",
+    "stock": 1
+  },
+  {
+    "id": 17,
+    "nombre": "PS4 Fortnite",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Consolas",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_879465-MLC40290535880_122019-O-consola-ps4-slim-1tb-fornite.webp",
+    "stock": 14
+  },
+  {
+    "id": 18,
+    "nombre": "PS4 Spiderman",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Consolas",
+    "imagen": "https://farm1.staticflickr.com/941/43466833032_008deed960_c.jpg",
+    "stock": 11
+  },
+  {
+    "id": 19,
+    "nombre": "PS4 God Of War",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Consolas",
+    "imagen": "https://i5.walmartimages.com/seo/Sony-PlayStation-4-Pro-1TB-God-of-War-Bundle-CUH-7115B_e28cf210-a294-4fac-be13-c768600787f5_1.925ab6bbdf37a93325f9f9ff23f91f90.jpeg",
+    "stock": 83
+  },
+  {
+    "id": 20,
+    "nombre": "PS4 Gold",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Consolas",
+    "imagen": "https://media.solotodo.com/media/products/648803_picture_1498763623.jpg",
+    "stock": 91
+  },
+  {
+    "id": 21,
+    "nombre": "PS5",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 669990.0,
+    "categoria": "Consolas",
+    "imagen": "https://prophonechile.cl/wp-content/uploads/2021/04/ps5digital.png",
+    "stock": 56
+  },
+  {
+    "id": 22,
+    "nombre": "PS4 + Juegos",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 229990.0,
+    "categoria": "Consolas",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_736680-MLA88711411300_072025-O.webp",
+    "stock": 95
+  },
+  {
+    "id": 23,
+    "nombre": "PS5 Fortnite",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 659990.0,
+    "categoria": "Consolas",
+    "imagen": "https://owp.klarna.com/product/640x640/3183312838/Sony-PlayStation-5-(PS5)-Slim-Digital-Edition-Fortnite.jpg?ph=true",
+    "stock": 14
+  },
+  {
+    "id": 24,
+    "nombre": "PS5 Spiderman",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 669990.0,
+    "categoria": "Consolas",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRuKWVeIVjNEcWqS27upDZ33qQ_TQaLay1How&s",
+    "stock": 57
+  },
+  {
+    "id": 25,
+    "nombre": "PC Gamer ASUS ROG Strix G35CA, I9-13900KF, RTX3080, 2x16GB Ram, 1TB SSD, W11P",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 4281990.0,
+    "categoria": "Computadores Gamer",
+    "imagen": "https://media.spdigital.cl/thumbnails/products/ygse9ue7_b405ce7d_thumbnail_512.jpg",
+    "stock": 84
+  },
+  {
+    "id": 26,
+    "nombre": "Notebook Gamer Lenovo Legion Intel Core Ultra 9 275HX 32GB RAM 1TB SSD NVIDIA GeForce RTX 5060 WQXGA",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 1795990.0,
+    "categoria": "Computadores Gamer",
+    "imagen": "https://media.falabella.com/falabellaCL/146562122_01/w=1500,h=1500,fit=pad",
+    "stock": 72
+  },
+  {
+    "id": 27,
+    "nombre": "Pc Gamer Ryzen 7 5700G - 16GB - Vega 8 - 1TB - (Monitor 22\" + Parlante) STORM",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 659990.0,
+    "categoria": "Computadores Gamer",
+    "imagen": "https://media.falabella.com/falabellaCL/143253063_01/w=1500,h=1500,fit=pad",
+    "stock": 44
+  },
+  {
+    "id": 28,
+    "nombre": "PC Gamer AMD Ryzen 7 5700X - RTX 5060TI 16GB - 16GB - 500GB",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 1153990.0,
+    "categoria": "Computadores Gamer",
+    "imagen": "https://media.falabella.com/falabellaCL/145856850_01/w=1500,h=1500,fit=pad",
+    "stock": 70
+  },
+  {
+    "id": 29,
+    "nombre": "Pc Gamer AMD Ryzen 7 5700X - 32GB RAM - RTX 4060 - 2TB - Wifi - TNM01",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 1158990.0,
+    "categoria": "Computadores Gamer",
+    "imagen": "https://media.falabella.com/falabellaCL/132846227_01/w=1500,h=1500,fit=pad",
+    "stock": 89
+  },
+  {
+    "id": 30,
+    "nombre": "PC Gamer Amd Ryzen 5 8600G 6-Core + Radeon + A620 + WIFI + 32GB DDR5 + SSD 1TB",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 661990.0,
+    "categoria": "Computadores Gamer",
+    "imagen": "https://media.falabella.com/falabellaCL/128365402_01/w=1500,h=1500,fit=pad",
+    "stock": 24
+  },
+  {
+    "id": 31,
+    "nombre": "Pc Gamer Vibora Black V2 AMD Ryzen 5 5600GT, SSD 500GB, RAM 16 GB",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 399990.0,
+    "categoria": "Computadores Gamer",
+    "imagen": "https://media.falabella.com/falabellaCL/122260390_01/w=1500,h=1500,fit=pad",
+    "stock": 35
+  },
+  {
+    "id": 32,
+    "nombre": "Pc Gamer AMD Ryzen 7 5700G - 16GB - Vega 8 - 1TB - (Monitor 22\") AX20",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 639990.0,
+    "categoria": "Computadores Gamer",
+    "imagen": "https://media.falabella.com/falabellaCL/143252707_01/w=1500,h=1500,fit=pad",
+    "stock": 45
+  },
+  {
+    "id": 33,
+    "nombre": "Silla Gamer Azul",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 129990.0,
+    "categoria": "Sillas Gamer",
+    "imagen": "https://bicestore.cl/46351-medium_default/silla-gamer-oficina-ajustable-y-reclinable-azul.jpg",
+    "stock": 61
+  },
+  {
+    "id": 34,
+    "nombre": "Silla Gamer Roja",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 129990.0,
+    "categoria": "Sillas Gamer",
+    "imagen": "https://i5.walmartimages.cl/asr/0abbeb35-6360-4757-bcb0-ced8f98c7f45.966f6d87ffe1e6149dbc31dbaafa1488.jpeg?odnHeight=612&odnWidth=612&odnBg=FFFFFF",
+    "stock": 7
+  },
+  {
+    "id": 35,
+    "nombre": "Silla Gamer Rosa",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 129990.0,
+    "categoria": "Sillas Gamer",
+    "imagen": "https://kronestore.cl/cdn/shop/files/Silla_Gamer_Krone_XL_Rosa_001.jpg?v=1748439817&width=1445",
+    "stock": 51
+  },
+  {
+    "id": 36,
+    "nombre": "Silla Gamer luz",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 149990.0,
+    "categoria": "Sillas Gamer",
+    "imagen": "https://cdnx.jumpseller.com/crusec/image/41489554/resize/610/610?1754575833",
+    "stock": 88
+  },
+  {
+    "id": 37,
+    "nombre": "Silla Gamer",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 125990.0,
+    "categoria": "Sillas Gamer",
+    "imagen": "https://m.media-amazon.com/images/I/71qlQUfhx7L._UF894,1000_QL80_.jpg",
+    "stock": 47
+  },
+  {
+    "id": 38,
+    "nombre": "Silla Gamer Pro",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 139990.0,
+    "categoria": "Sillas Gamer",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_618875-MLM80683419028_112024-O-silla-de-juegos-ergonomica-con-masaje-altavoces-y-luces-led.webp",
+    "stock": 17
+  },
+  {
+    "id": 39,
+    "nombre": "Silla Spiderman",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 119990.0,
+    "categoria": "Sillas Gamer",
+    "imagen": "https://siafu.com.mx/cdn/shop/files/con-almohadas-spider_2_1024x1024.jpg?v=1740702563",
+    "stock": 9
+  },
+  {
+    "id": 40,
+    "nombre": "Silla Gamer kawaii",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 119990.0,
+    "categoria": "Sillas Gamer",
+    "imagen": "https://siafu.com.mx/cdn/shop/files/silla-nina-rosa-frente_4701bab2-eaca-4eca-b387-c82ab70a68d4_1024x1024.jpg?v=1740702565",
+    "stock": 11
+  },
+  {
+    "id": 41,
+    "nombre": "Mouse Pro X Superlight - Negro Logitech",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 119990.0,
+    "categoria": "Mouse",
+    "imagen": "https://media.falabella.com/falabellaCL/15567051_1/w=1500,h=1500,fit=pad",
+    "stock": 45
+  },
+  {
+    "id": 42,
+    "nombre": "Mouse Mx Vertical Logitech",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 84990.0,
+    "categoria": "Mouse",
+    "imagen": "https://media.falabella.com/falabellaCL/12048837_1/w=1500,h=1500,fit=pad",
+    "stock": 94
+  },
+  {
+    "id": 43,
+    "nombre": "Mouse Gamer G502 Hero Logitech",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 59990.0,
+    "categoria": "Mouse",
+    "imagen": "https://media.falabella.com/falabellaCL/142496315_01/w=1500,h=1500,fit=pad",
+    "stock": 19
+  },
+  {
+    "id": 44,
+    "nombre": "Mouse Gamer Redragon Griffin M607 RGB 7200 DPI Blanco",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 14990.0,
+    "categoria": "Mouse",
+    "imagen": "https://media.falabella.com/falabellaCL/135422185_01/w=1500,h=1500,fit=pad",
+    "stock": 74
+  },
+  {
+    "id": 45,
+    "nombre": "Mouse M601 Centrophorus Redragon",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Mouse",
+    "imagen": "https://media.falabella.com/falabellaCL/17292997_1/w=1500,h=1500,fit=pad",
+    "stock": 57
+  },
+  {
+    "id": 46,
+    "nombre": "Mouse Gamer NjoyTech Ergonómico con Luces RGB",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Mouse",
+    "imagen": "https://media.falabella.com/falabellaCL/123923558_01/w=1500,h=1500,fit=pad",
+    "stock": 17
+  },
+  {
+    "id": 47,
+    "nombre": "Mouse Gamer Bold Monster Games",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Mouse",
+    "imagen": "https://media.falabella.com/falabellaCL/17306091_1/w=1500,h=1500,fit=pad",
+    "stock": 82
+  },
+  {
+    "id": 48,
+    "nombre": "MousePad color",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "MousePad",
+    "imagen": "https://www.ultrapc.cl/wp-content/uploads/2024/08/3330X4675153502028129.jpg",
+    "stock": 0
+  },
+  {
+    "id": 49,
+    "nombre": "MousePad",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "MousePad",
+    "imagen": "https://cdnx.jumpseller.com/comercial-cim/image/46318087/resize/610/610?1743546954",
+    "stock": 16
+  },
+  {
+    "id": 50,
+    "nombre": "MousePad Flor",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "MousePad",
+    "imagen": "https://ar.isadoraonline.com/media/catalog/product/4/5/45334201_0_1_20220502151304.jpg?quality=75&bg-color=255,255,255&fit=bounds&height=985&width=770&canvas=770:985",
+    "stock": 46
+  },
+  {
+    "id": 51,
+    "nombre": "MousePad Fresa",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "MousePad",
+    "imagen": "https://m.media-amazon.com/images/I/71t1Bkx3YaL._UF894,1000_QL80_.jpg",
+    "stock": 7
+  },
+  {
+    "id": 52,
+    "nombre": "MousePad Emojis",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "MousePad",
+    "imagen": "https://i.etsystatic.com/28314969/r/il/3d6e20/6621401058/il_570xN.6621401058_31k7.jpg",
+    "stock": 79
+  },
+  {
+    "id": 53,
+    "nombre": "MousePad Albo",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "MousePad",
+    "imagen": "https://tienda.colocolo.cl/13443-large_default/mousepad-colo-colo-cacique-rojo.jpg",
+    "stock": 68
+  },
+  {
+    "id": 54,
+    "nombre": "MousePad Rosa",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "MousePad",
+    "imagen": "https://media.falabella.com/falabellaCL/134015726_01/w=1500,h=1500,fit=pad",
+    "stock": 51
+  },
+  {
+    "id": 55,
+    "nombre": "MousePad Azul",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "MousePad",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRl42cdhlTd2eLzkIE6Apd3KxAwP0-biWfCqcwWIgJhLOnIaqkex6GJ-GuE-I5JSmnMpS8&usqp=CAU",
+    "stock": 78
+  },
+  {
+    "id": 56,
+    "nombre": "Polera Dragon Ball - Goku",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 19990.0,
+    "categoria": "Poleras Personalizadas",
+    "imagen": "https://www.marstonstore.cl/cdn/shop/products/DragonBallmarston.storeinstagram_30.jpg?v=1619497840",
+    "stock": 41
+  },
+  {
+    "id": 57,
+    "nombre": "Polera Dragon Ball - Goku SSJ",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 19990.0,
+    "categoria": "Poleras Personalizadas",
+    "imagen": "https://shiningcollection.cl/cdn/shop/files/polera-goku-legendary_0004_Capa-1.png?v=1729091130&width=416",
+    "stock": 46
+  },
+  {
+    "id": 58,
+    "nombre": "Polera Naturo",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 19990.0,
+    "categoria": "Poleras Personalizadas",
+    "imagen": "https://images.jumpseller.com/store/tienda-amarilla/6504657/polera-Naruto-front.jpg",
+    "stock": 96
+  },
+  {
+    "id": 59,
+    "nombre": "Polera One Punch Man",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 19990.0,
+    "categoria": "Poleras Personalizadas",
+    "imagen": "https://cdnx.jumpseller.com/estampados-bettoskys/image/28059862/resize/640/640?1665017226",
+    "stock": 33
+  },
+  {
+    "id": 60,
+    "nombre": "Polera Sailor Moon",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 19990.0,
+    "categoria": "Poleras Personalizadas",
+    "imagen": "https://graficacolectiva.cl/wp-content/uploads/2021/02/polera_sailor_2-1.jpg",
+    "stock": 73
+  },
+  {
+    "id": 61,
+    "nombre": "Polera PacMan",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Poleras Gamer Personalizadas",
+    "imagen": "https://polerasaunclick.cl/wp-content/uploads/2020/04/85-FRENTE-PAC-MAN-ARCADE-GAME.png",
+    "stock": 60
+  },
+  {
+    "id": 62,
+    "nombre": "Polera Papá Gamer",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Poleras Gamer Personalizadas",
+    "imagen": "https://cdnx.jumpseller.com/pistacha/image/49348686/resize/1080/1350?1717301363",
+    "stock": 0
+  },
+  {
+    "id": 63,
+    "nombre": "Poler Gamer Zone",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Poleras Gamer Personalizadas",
+    "imagen": "https://www.gustore.cl/img/estampados/4518/4518_1.png",
+    "stock": 97
+  },
+  {
+    "id": 64,
+    "nombre": "Polera Papá e Hija",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Poleras Gamer Personalizadas",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_840328-MLC84967696131_052025-O-pack-poleras-gamer-dad-gamer-hija-papa-manga-larga-grafimax.webp",
+    "stock": 76
+  },
+  {
+    "id": 65,
+    "nombre": "Polera Papá e Hijo",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Poleras Gamer Personalizadas",
+    "imagen": "https://www.regalosdivertidos.cl/wp-content/uploads/2023/06/Regalos-para-papa-Gamer-Dad-3-scaled.png",
+    "stock": 7
+  },
+  {
+    "id": 66,
+    "nombre": "Polera Crash Bandicoot",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Poleras Gamer Personalizadas",
+    "imagen": "https://http2.mlstatic.com/D_NQ_NP_929800-MLC82170188891_012025-O-polera-crash-bandicoot-psx-gustore.webp",
+    "stock": 56
+  },
+  {
+    "id": 67,
+    "nombre": "Polera Nintendo",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Poleras Gamer Personalizadas",
+    "imagen": "https://cycorecords.cl/cdn/shop/files/2c90fa17-af81-43d7-9c76-f9a844977bb4-d_780782-mlc54544367739_032023-o_grande.jpg?v=1709385272",
+    "stock": 67
+  },
+  {
+    "id": 68,
+    "nombre": "Polera Mario Bros",
+    "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. ",
+    "precio": 29990.0,
+    "categoria": "Poleras Gamer Personalizadas",
+    "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR3bEix24i1hqlkgveflsneWbvlanaf8CngvdPseXMnFmRj-sebSF5lEstx6DAXMgJSFws&usqp=CAU",
+    "stock": 99
+  }
+]
