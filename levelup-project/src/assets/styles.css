@@ -1,205 +1,188 @@
-/* ======== ESTILO BASE ======== */
-body { 
+/* ======== NAVBAR ADMIN ======== */
+.navbar-admin {
   background-color: #000;
-  color: white;
-  font-family: "Roboto", sans-serif;
-  overflow-x: hidden;
-  margin: 0;
-  padding: 0;
+  border-bottom: 2px solid #8000ff;
+  padding: 16px 24px;
+  box-shadow: 0 0 15px #39ff14, 0 0 30px #8000ff;
 }
 
-/* ======== NAVBAR ======== */
-.navbar {
-  padding: 0.8rem 1rem;
-}
-.navbar-brand {
+.brand-admin {
   color: #39ff14 !important;
   font-weight: bold;
-  font-size: 1.3rem;
-}
-
-.search-bar input {
-  border-radius: 20px;
-  padding: 5px 15px;
-}
-.search-bar button {
-  border-radius: 20px;
-  color: #39ff14;
-  border-color: #39ff14;
-}
-.search-bar button:hover {
-  background-color: #39ff14;
-  color: #000;
-}
-
-.nav-link-carrito {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-.nav-link-carrito i.bi-cart3 {
-  font-size: 22px;
-  position: relative;
-}
-.cantidad-carrito {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  font-size: 0.7rem;
-  padding: 0.25em 0.4em;
-  border-radius: 50%;
-  background-color: #39ff14;
-  color: black;
-  font-weight: bold;
-  min-width: 18px;
-  height: 18px;
-  text-align: center;
-}
-
-/* ======== HERO / BANNER ======== */
-.title {
-  margin-top: 80px;
-  display: flex;
-  justify-content: center; /* 🔥 centra horizontalmente */
-  align-items: center;     /* 🔥 centra verticalmente */
-  width: 100%;
-  padding: 40px;   
-}
-
-.title-wrapper {
-
- width: 100%;       /* ancho total */
- height: 400px;      /* o la altura que quieras */
- display: flex;      /* flexbox para centrar */
- justify-content: center; /* centrar horizontal */
- align-items: center;   /* centrar vertical */
- overflow: hidden;     /* recortar excedentes */
- position: static;
- margin-left: 250px;
-
-}
-
-.title-img {
- min-width: 100%;     /* mínimo ancho 100% para cubrir */
- height: auto;       /* mantiene proporción */
- object-fit: cover;    /* recorta para cubrir */
- object-position: center; /* centra imagen dentro */
- display: block;
-
-}
-
-.title-text {
-  position: absolute;
-  top: 50%;                 /* 🔥 centrado vertical */
-  left: 50%;                /* 🔥 centrado horizontal */
-  transform: translate(-50%, -50%);
-  color: #39ff14;
-  font-weight: bold;
-  font-size: 2.2rem;
-  width: 90%;
-  padding-bottom: 10%;
-}
-
-
-
-
-/* ======== CATEGORÍAS ======== */
-.container h2 {
-  color: #fff;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  letter-spacing: 1px;
-}
-
-/* grilla responsiva que centra las tarjetas */
-.row.g-4 {
-  justify-content: center;
-  gap: 1rem;
-}
-
-.category-card {
-  background-color: #1a1a1a;
-  border-radius: 10px;
-  padding: 1.5rem;
-  transition: 0.3s;
-  height: 160px;
-  width: 100%;
-  max-width: 220px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  font-size: 26px;
   cursor: pointer;
-  text-align: center;
+  letter-spacing: 1px;
+  text-shadow: 0 0 10px #39ff14, 0 0 20px #8000ff;
+  transition: transform 0.3s ease;
 }
 
-.category-card:hover {
-  background-color: #262626;
-  transform: translateY(-5px);
+.brand-admin span {
+  color: #8000ff;
+  font-weight: 700;
 }
 
-/* 🔥 Wrapper para íconos e imágenes (alineación uniforme) */
-.icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  margin-bottom: 0.8rem;
+.brand-admin:hover {
+  transform: scale(1.05);
+  text-shadow: 0 0 20px #39ff14, 0 0 40px #8000ff;
 }
 
-/* Íconos de Bootstrap */
-.icon-wrapper i {
-  font-size: 2.5rem;
-  color: #39ff14;
-  filter: drop-shadow(0 0 5px #39ff14);
+.navbar-admin .nav-link {
+  color: #fff !important;
+  font-weight: 500;
+  font-size: 17px;
+  text-transform: uppercase;
+  transition: color 0.3s ease, text-shadow 0.3s ease;
 }
 
-/* Imágenes externas (icons8, etc.) */
-.icon-wrapper img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 5px #39ff14);
+.navbar-admin .nav-link:hover {
+  color: #39ff14 !important;
+  text-shadow: 0 0 10px #39ff14, 0 0 20px #8000ff;
 }
 
-/* Texto debajo del ícono */
-.category-card p {
-  color: #fff;
-  font-size: 1rem;
-  font-weight: bold;
-  margin: 0;
+.navbar-admin .nav-link.active {
+  color: #8000ff !important;
+  text-shadow: 0 0 10px #8000ff, 0 0 25px #39ff14;
 }
 
-/* 🔹 Responsivo */
-@media (max-width: 768px) {
-  .icon-wrapper {
-    width: 45px;
-    height: 45px;
-  }
-
-  .icon-wrapper i {
-    font-size: 2rem;
-  }
-
-  .icon-wrapper img {
-    width: 45px;
-    height: 45px;
-  }
-
-  .category-card p {
-    font-size: 0.85rem;
-  }
+.navbar-toggler {
+  border: 1px solid #39ff14;
+  background-color: #111;
 }
 
-/* ======== FOOTER ======== */
-footer {
+
+/* ======== ADMIN - USUARIOS ======== */
+.admin-usuarios-section {
   background-color: #000;
-  color: #888;
-  text-align: center;
-  padding: 20px 10px;
-  font-size: 0.9rem;
-  margin-top: 40px;
-  border-top: 1px solid #111;
+  min-height: 100vh;
+  padding: 120px 40px 60px 40px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
 }
-footer p { margin: 0; }
+
+.admin-usuarios-box {
+  width: 95%;
+  max-width: 1100px;
+  background-color: rgba(10, 10, 10, 0.95);
+  border-radius: 16px;
+  border: 2px solid #8000ff;
+  box-shadow: 0 0 40px #39ff14, 0 0 70px #8000ff;
+  padding: 40px 30px;
+  color: white;
+}
+
+.admin-title {
+  font-size: 32px;
+  font-weight: bold;
+  color: #39ff14;
+  text-align: center;
+  text-shadow: 0 0 20px #39ff14, 0 0 30px #8000ff;
+  margin-bottom: 30px;
+}
+
+.tabla-usuarios {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: center;
+  color: white;
+}
+
+.tabla-usuarios th {
+  background-color: #111;
+  color: #39ff14;
+  padding: 14px;
+  font-weight: 700;
+  border-bottom: 2px solid #8000ff;
+}
+
+.tabla-usuarios td {
+  padding: 12px;
+  border-bottom: 1px solid #222;
+}
+
+.tabla-usuarios tr:hover {
+  background-color: rgba(128, 0, 255, 0.15);
+  transition: 0.3s;
+}
+
+.sin-usuarios {
+  color: #ff4040;
+  text-align: center;
+  font-size: 18px;
+}
+
+/* ======== DASHBOARD ADMIN ======== */
+.admin-dashboard {
+  background-color: #050005;
+  min-height: 100vh;
+  padding: 120px 50px;
+  color: #fff;
+}
+
+.admin-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.admin-header h1 {
+  font-size: 42px;
+  color: #39ff14;
+  text-shadow: 0 0 15px #39ff14, 0 0 25px #8000ff;
+  font-weight: bold;
+}
+
+.admin-header p {
+  font-size: 18px;
+  color: #bdbdbd;
+  margin-top: 10px;
+}
+
+/* ======== TABLA DE USUARIOS ======== */
+.table-container {
+  overflow-x: auto;
+  background-color: rgba(15, 15, 15, 0.9);
+  border-radius: 12px;
+  padding: 20px;
+  box-shadow: 0 0 25px #39ff14, 0 0 45px #8000ff;
+}
+
+.user-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.user-table th,
+.user-table td {
+  padding: 14px 18px;
+  text-align: center;
+}
+
+.user-table th {
+  background-color: #111;
+  color: #39ff14;
+  border-bottom: 2px solid #8000ff;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.user-table tr:nth-child(even) {
+  background-color: rgba(128, 0, 255, 0.1);
+}
+
+.user-table tr:hover {
+  background-color: rgba(57, 255, 20, 0.1);
+  transition: 0.3s;
+}
+
+.user-table td {
+  color: #f0f0f0;
+  font-size: 15px;
+}
+
+.no-users {
+  text-align: center;
+  color: #ff4040;
+  font-size: 20px;
+  font-weight: 500;
+  text-shadow: 0 0 10px #ff4040;
+}
