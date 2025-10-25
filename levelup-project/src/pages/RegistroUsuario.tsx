@@ -39,22 +39,23 @@ export const RegistroUsuario = () => {
     "Magallanes": ["Punta Arenas", "Puerto Natales", "Porvenir"],
   };
 
+  // Maneja cambios del formulario
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-  const { name, value } = e.target;
+    const { name, value } = e.target;
 
     if (name === "region") {
-      setFormData(prev => ({ ...prev, region: value, comuna: "" }));
+      setFormData((prev) => ({ ...prev, region: value, comuna: "" }));
       setComunas(regionesConComunas[value] || []);
     } else {
-      setFormData(prev => ({ ...prev, [name]: value }));
+      setFormData((prev) => ({ ...prev, [name]: value }));
     }
 
-    // verifiac si e scorreo duoc
-      if (name === "email") {
-        setDescuento(value.toLowerCase().endsWith("@duocuc.cl"));
-      }
+    // Verificar correo DUOC
+    if (name === "email") {
+      setDescuento(value.toLowerCase().endsWith("@duocuc.cl"));
+    }
   };
-  
+
   // Calcular edad a partir de fecha
   const calcularEdad = (fechaNacimiento: string) => {
     const hoy = new Date();
@@ -65,40 +66,48 @@ export const RegistroUsuario = () => {
     return edad;
   };
 
-  // Maneja envío del formulario
+  // Manejar envío del formulario
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const { nombre, email, contrasena, confirmarContrasena, fechaNacimiento } = formData;
 
+    // Validaciones
     if (!nombre || !email || !contrasena || !confirmarContrasena || !fechaNacimiento) {
-      setMensaje(" Completa todos los campos obligatorios.");
+      setMensaje("⚠️ Completa todos los campos obligatorios.");
       return;
     }
 
     if (contrasena !== confirmarContrasena) {
-      setMensaje(" Las contraseñas no coinciden.");
+      setMensaje("❌ Las contraseñas no coinciden.");
       return;
     }
 
     const edad = calcularEdad(fechaNacimiento);
     if (edad < 18) {
-      setMensaje(" Debes ser mayor de 18 años para registrarte.");
+      setMensaje("🚫 Debes ser mayor de 18 años para registrarte.");
       return;
     }
 
-    // Guardar usuario
+    // Obtener usuarios guardados
     const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios") || "[]");
-    const nuevoUsuario = { ...formData, descuento: descuento ? 20 : 0 };
-    usuariosGuardados.push(nuevoUsuario);
 
+    // Crear usuario con ID único
+    const nuevoUsuario = {
+      id: usuariosGuardados.length > 0 ? usuariosGuardados[usuariosGuardados.length - 1].id + 1 : 1,
+      ...formData,
+      descuento: descuento ? 20 : 0,
+    };
+
+    // Guardar en localStorage
+    usuariosGuardados.push(nuevoUsuario);
     localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
     localStorage.setItem("usuario", nombre);
 
-    // Mensaje de éxito
+    // Mensaje final
     if (descuento) {
-      setMensaje("¡Bienvenido a LEVEL-UP GAMER! Has obtenido un 20% de descuento por ser estudiante DUOC UC.");
+      setMensaje("🎉 ¡Bienvenido a LEVEL-UP GAMER! Has obtenido un 20% de descuento por ser estudiante DUOC UC.");
     } else {
-      setMensaje(` ¡Bienvenido a LEVEL-UP GAMER, ${nombre}!`);
+      setMensaje(`✅ ¡Bienvenido a LEVEL-UP GAMER, ${nombre}!`);
     }
 
     // Redirección
@@ -126,78 +135,65 @@ export const RegistroUsuario = () => {
           <fieldset>
             <legend className="Registro1">Registro de Usuario</legend>
 
-            <div className="Nombre-usuario-registro">
-              <label htmlFor="nombre">Nombre Completo</label>
-              <input
-                type="text"
-                id="nombre"
-                name="nombre"
-                placeholder="Ingrese su nombre completo"
-                value={formData.nombre}
-                onChange={handleChange}
-              />
-            </div>
+            <label>Nombre Completo</label>
+            <input
+              type="text"
+              id="nombre"
+              name="nombre"
+              placeholder="Ingrese su nombre completo"
+              value={formData.nombre}
+              onChange={handleChange}
+            />
 
-            <div className="email-registro">
-              <label htmlFor="email">Correo Electrónico</label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                placeholder="Ingrese su correo electrónico"
-                value={formData.email}
-                onChange={handleChange}
-              />
-            </div>
+            <label>Correo Electrónico</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Ingrese su correo electrónico"
+              value={formData.email}
+              onChange={handleChange}
+            />
 
-            <div className="constraseña-registro">
-              <label htmlFor="contrasena">Contraseña</label>
-              <input
-                type="password"
-                id="contrasena"
-                name="contrasena"
-                placeholder="Ingrese su contraseña"
-                value={formData.contrasena}
-                onChange={handleChange}
-              />
-            </div>
+            <label>Contraseña</label>
+            <input
+              type="password"
+              id="contrasena"
+              name="contrasena"
+              placeholder="Ingrese su contraseña"
+              value={formData.contrasena}
+              onChange={handleChange}
+            />
 
-            <div className="constraseña-registro-confirmacion">
-              <label htmlFor="confirmarContrasena">Confirmar Contraseña</label>
-              <input
-                type="password"
-                id="confirmarContrasena"
-                name="confirmarContrasena"
-                placeholder="Ingrese nuevamente su contraseña"
-                value={formData.confirmarContrasena}
-                onChange={handleChange}
-              />
-            </div>
+            <label>Confirmar Contraseña</label>
+            <input
+              type="password"
+              id="confirmarContrasena"
+              name="confirmarContrasena"
+              placeholder="Ingrese nuevamente su contraseña"
+              value={formData.confirmarContrasena}
+              onChange={handleChange}
+            />
 
-            <div className="telefono-registro">
-              <label htmlFor="telefono">Teléfono (Opcional)</label>
-              <input
-                type="tel"
-                id="telefono"
-                name="telefono"
-                placeholder="Ingrese su número de teléfono"
-                value={formData.telefono}
-                onChange={handleChange}
-              />
-            </div>
+            <label>Teléfono (Opcional)</label>
+            <input
+              type="tel"
+              id="telefono"
+              name="telefono"
+              placeholder="Ingrese su número de teléfono"
+              value={formData.telefono}
+              onChange={handleChange}
+            />
 
-            <div className="fechaNacimiento-registro">
-              <label htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
-              <input
-                type="date"
-                id="fechaNacimiento"
-                name="fechaNacimiento"
-                value={formData.fechaNacimiento}
-                onChange={handleChange}
-              />
-            </div>
+            <label>Fecha de Nacimiento</label>
+            <input
+              type="date"
+              id="fechaNacimiento"
+              name="fechaNacimiento"
+              value={formData.fechaNacimiento}
+              onChange={handleChange}
+            />
 
-            {/* Región y comuna */}
             <div className="selector-region">
               <select id="region" name="region" value={formData.region} onChange={handleChange}>
                 <option value="">Selecciona tu Región</option>
@@ -223,7 +219,12 @@ export const RegistroUsuario = () => {
             </button>
 
             {mensaje && (
-              <p style={{ color: mensaje.startsWith("✅") ? "#39ff14" : "#ff4040", marginTop: "15px" }}>
+              <p
+                style={{
+                  color: mensaje.includes("✅") || mensaje.includes("🎉") ? "#39ff14" : "#ff4040",
+                  marginTop: "15px",
+                }}
+              >
                 {mensaje}
               </p>
             )}
