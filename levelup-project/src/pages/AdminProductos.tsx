@@ -9,7 +9,7 @@ interface Producto {
   categoria: string;
   stock: number;
   precio: number;
-  imagen: string;
+  imagenes: string[];
   descripcion: string;
 }
 
@@ -39,25 +39,45 @@ export const AdminProductos = () => {
   const [busqueda, setBusqueda] = useState<string>("");
   const [paginaActual, setPaginaActual] = useState(1);
   const productosPorPagina = 20;
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const cargarDatos = async () => {
+      setLoading(true);
       try {
-        const [productosResponse, categoriasResponse] = await Promise.all([
-          fetch("/products.json"),
-          fetch("/categories.json")
-        ]);
-        
-        const productosData = await productosResponse.json();
+        // Cargar categorías
+        const categoriasResponse = await fetch("/categories.json");
         const categoriasData = await categoriasResponse.json();
-        
-        setProductos(productosData);
         setCategorias(categoriasData);
+
+        // Cargar productos desde localStorage o JSON
+        let productosData: Producto[] = [];
+        const productosGuardados = localStorage.getItem("productos");
+        if (productosGuardados) {
+          productosData = JSON.parse(productosGuardados);
+        } else {
+          const productosResponse = await fetch("/products.json");
+          productosData = await productosResponse.json();
+          localStorage.setItem("productos", JSON.stringify(productosData));
+        }
+        setProductos(productosData);
       } catch (error) {
         console.error("Error al cargar los datos:", error);
+      } finally {
+        setLoading(false);
       }
     };
+
     cargarDatos();
+
+    // Escuchar cambios en localStorage para actualizar en tiempo real
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'productos_lastUpdate' || event.key === 'productos') {
+        cargarDatos();
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
   }, []);
 
   const getEstadoProducto = (stock: number): string => {
