@@ -10,12 +10,12 @@ body {
 
 /* ======== NAVBAR ======== */
 .navbar {
-  padding: 0.8rem 1rem;
+  padding: 13px 16px; /* 0.8rem 1rem */
 }
 .navbar-brand {
   color: #39ff14 !important;
   font-weight: bold;
-  font-size: 1.3rem;
+  font-size: 21px; /* 1.3rem */
 }
 
 .search-bar input {
@@ -32,164 +32,153 @@ body {
   color: #000;
 }
 
-.nav-link-carrito {
-  display: inline-flex;
-  align-items: center;
-  gap: 5px;
-}
-.nav-link-carrito i.bi-cart3 {
-  font-size: 22px;
-  position: relative;
-}
-.cantidad-carrito {
-  position: absolute;
-  top: -6px;
-  right: -6px;
-  font-size: 0.7rem;
-  padding: 0.25em 0.4em;
-  border-radius: 50%;
-  background-color: #39ff14;
-  color: black;
-  font-weight: bold;
-  min-width: 18px;
-  height: 18px;
-  text-align: center;
-}
-
-/* ======== HERO / BANNER ======== */
-.title {
-  margin-top: 80px;
+/* ======== LOGIN PAGE ======== */
+.login-section {
   display: flex;
-  justify-content: center; /* 🔥 centra horizontalmente */
-  align-items: center;     /* 🔥 centra verticalmente */
+  justify-content: center;
+  align-items: center;
   width: 100%;
-  padding: 40px;   
-}
-
-.title-wrapper {
-
- width: 100%;       /* ancho total */
- height: 400px;      /* o la altura que quieras */
- display: flex;      /* flexbox para centrar */
- justify-content: center; /* centrar horizontal */
- align-items: center;   /* centrar vertical */
- overflow: hidden;     /* recortar excedentes */
- position: static;
- margin-left: 250px;
-
-}
-
-.title-img {
- min-width: 100%;     /* mínimo ancho 100% para cubrir */
- height: auto;       /* mantiene proporción */
- object-fit: cover;    /* recorta para cubrir */
- object-position: center; /* centra imagen dentro */
- display: block;
-
-}
-
-.title-text {
-  position: absolute;
-  top: 50%;                 /* 🔥 centrado vertical */
-  left: 50%;                /* 🔥 centrado horizontal */
-  transform: translate(-50%, -50%);
-  color: #39ff14;
-  font-weight: bold;
-  font-size: 2.2rem;
-  width: 90%;
-  padding-bottom: 10%;
-}
-
-
-
-
-/* ======== CATEGORÍAS ======== */
-.container h2 {
-  color: #fff;
-  font-weight: bold;
-  margin-bottom: 1.5rem;
-  letter-spacing: 1px;
-}
-
-/* grilla responsiva que centra las tarjetas */
-.row.g-4 {
-  justify-content: center;
-  gap: 1rem;
-}
-
-.category-card {
-  background-color: #1a1a1a;
-  border-radius: 10px;
-  padding: 1.5rem;
-  transition: 0.3s;
-  height: 160px;
-  width: 100%;
-  max-width: 220px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  text-align: center;
-}
-
-.category-card:hover {
-  background-color: #262626;
-  transform: translateY(-5px);
-}
-
-/* 🔥 Wrapper para íconos e imágenes (alineación uniforme) */
-.icon-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 60px;
-  height: 60px;
-  margin-bottom: 0.8rem;
-}
-
-/* Íconos de Bootstrap */
-.icon-wrapper i {
-  font-size: 2.5rem;
-  color: #39ff14;
-  filter: drop-shadow(0 0 5px #39ff14);
-}
-
-/* Imágenes externas (icons8, etc.) */
-.icon-wrapper img {
-  width: 60px;
-  height: 60px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 5px #39ff14);
-}
-
-/* Texto debajo del ícono */
-.category-card p {
-  color: #fff;
-  font-size: 1rem;
-  font-weight: bold;
+  min-height: 100vh;
+  background-color: #000;
+  padding: 60px 0;
   margin: 0;
 }
 
-/* 🔹 Responsivo */
+/* FORMULARIO LOGIN */
+.login-box {
+  background: rgba(0, 0, 0, 0.95);
+  border-radius: 20px;
+  padding: 56px 48px;
+  width: 95%;
+  max-width: 550px;
+  text-align: center;
+  box-shadow: 0 0 25px #39ff14, 0 0 45px #1e90ff;
+}
+
+/* TÍTULO */
+.login-title {
+  font-size: 38px; 
+  font-weight: bold;
+  color: #39ff14;
+  margin-bottom: 29px; 
+}
+
+/* LABELS */
+label {
+  display: block;
+  text-align: left;
+  margin-bottom: 6px;
+  font-weight: bold;
+  color: #fff;
+  font-size: 18px;
+}
+
+/* INPUTS */
+input {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  text-align: center;
+  font-size: 16px; 
+  color: #39ff14;
+  background-color: #111;
+  outline: none;
+  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.email-login,
+.password-login {
+  margin-bottom: 35px; 
+}
+
+label {
+  margin-bottom: 10px; 
+}
+
+input:focus {
+  background-color: #0b0b0b;
+  box-shadow: 0 0 15px #1e90ff, 0 0 25px #39ff14;
+}
+
+/* BOTÓN */
+.boton-login {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(90deg, #00ff00, #00ffff);
+  color: #000;
+  font-weight: bold;
+  font-size: 16px; /* 1rem */
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.boton-login:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 25px #00ffff, 0 0 50px #00ff00;
+}
+
+/* ======== BOTÓN ADMIN ======== */
+.boton-admin {
+  width: 70%;
+  padding: 10px;
+  border: none;
+  border-radius: 12px;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 10px;
+  margin-top: 25px;
+  transition: all 0.3s ease;
+}
+
+.boton-admin:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 30px #39ff14, 0 0 50px #1e90ff;
+}
+
+
+/* MENSAJE */
+.mensaje-login {
+  margin-top: 15px;
+  font-size: 16px; /* 1rem */
+  color: #ff4040;
+}
+
+.mensaje-login.exito {
+  color: #39ff14;
+}
+
+/* RESPONSIVE */
 @media (max-width: 768px) {
-  .icon-wrapper {
-    width: 45px;
-    height: 45px;
+  .login-box {
+    width: 90%;
+    padding: 32px 24px; /* 2rem 1.5rem */
   }
 
-  .icon-wrapper i {
-    font-size: 2rem;
+  .login-title {
+    font-size: 27px; /* 1.7rem */
   }
+}
 
-  .icon-wrapper img {
-    width: 45px;
-    height: 45px;
-  }
+/* ======== ESTRUCTURA GLOBAL ======== */
+html, body {
+  background-color: #000 !important;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
 
-  .category-card p {
-    font-size: 0.85rem;
-  }
+body > * {
+  flex-shrink: 0;
+}
+
+main, section, .container {
+  margin: 0 auto !important;
+  padding: 0 !important;
+  width: 100% !important;
 }
 
 /* ======== FOOTER ======== */
@@ -198,8 +187,11 @@ footer {
   color: #888;
   text-align: center;
   padding: 20px 10px;
-  font-size: 0.9rem;
-  margin-top: 40px;
+  font-size: 14px; /* 0.9rem */
   border-top: 1px solid #111;
+  margin-top: auto;
 }
-footer p { margin: 0; }
+
+footer p {
+  margin: 0;
+}

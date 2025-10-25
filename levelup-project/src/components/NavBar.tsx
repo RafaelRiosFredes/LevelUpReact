@@ -49,13 +49,6 @@ export const Navbar = () => {
             <li className="nav-item"><a className="nav-link active" href="#">Inicio</a></li>
             <li className="nav-item"><a className="nav-link" href="#">Productos</a></li>
             <li className="nav-item"><a className="nav-link" href="#">Noticias</a></li>
-            <li className="nav-item">
-              <a className="nav-link nav-link-carrito" href="#">
-                <i className="bi bi-cart3">
-                  <span className="badge cantidad-carrito">0</span>
-                </i> Carrito
-              </a>
-            </li>
             <li className="nav-item"><a className="nav-link" href="#">Contacto</a></li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" role="button">
