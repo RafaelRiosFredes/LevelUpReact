@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 export const NavBar = () => {
   const [cantidadCarrito, setCantidadCarrito] = useState(0);
 
-  // 🔁 Actualiza el badge del carrito cada vez que cambia el localStorage
   useEffect(() => {
     const actualizarBadge = () => {
       const carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
@@ -16,13 +15,13 @@ export const NavBar = () => {
       setCantidadCarrito(total);
     };
 
-    actualizarBadge(); // Llamada inicial
-
-    // Escucha cambios de localStorage (por ejemplo, desde DetalleProducto)
+    actualizarBadge(); // Primera carga
     window.addEventListener("storage", actualizarBadge);
+    window.addEventListener("carritoActualizado", actualizarBadge);
 
     return () => {
       window.removeEventListener("storage", actualizarBadge);
+      window.removeEventListener("carritoActualizado", actualizarBadge);
     };
   }, []);
 
@@ -38,13 +37,7 @@ export const NavBar = () => {
             <Nav.Link as={Link} to="/">Inicio</Nav.Link>
             <Nav.Link as={Link} to="/productos">Productos</Nav.Link>
             <Nav.Link as={Link} to="/noticias">Noticias</Nav.Link>
-
-            {/* 🛒 CARRITO CON CONTADOR */}
-            <Nav.Link
-              as={Link}
-              to="/carrito"
-              className="position-relative nav-link-carrito"
-            >
+            <Nav.Link as={Link} to="/carrito" className="position-relative">
               <i className="bi bi-cart3 me-1" style={{ fontSize: "1.2rem" }}></i>
               Carrito
               {cantidadCarrito > 0 && (
@@ -56,7 +49,6 @@ export const NavBar = () => {
                 </span>
               )}
             </Nav.Link>
-
             <Nav.Link as={Link} to="/login">Inicia sesión</Nav.Link>
           </Nav>
         </Navbar.Collapse>
