@@ -1,104 +1,124 @@
 import { useEffect, useState } from "react";
-import type { Producto, Categoria } from "../types";
-import { CategoryList } from "../components/CategoryList";
-import { ProductCard } from "../components/ProductCard";
-import { Container, Row, Col, Spinner } from "react-bootstrap";
+import { Container, Row, Col, Button } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import "../assets/styles.css";
+
+interface Producto {
+  id: number;
+  nombre: string;
+  categoria: string;
+  stock: number;
+  precio: number;
+  imagen: string;
+  descripcion: string;
+}
 
 export const ProductosPublic = () => {
   const [productos, setProductos] = useState<Producto[]>([]);
-  const [categorias, setCategorias] = useState<Categoria[]>([]);
-  const [filtro, setFiltro] = useState("todos");
-  const [loading, setLoading] = useState(true);
+  const [categorias, setCategorias] = useState<string[]>([]);
+  const [categoriaSeleccionada, setCategoriaSeleccionada] =
+    useState<string>("Todos");
+  const [busqueda, setBusqueda] = useState<string>("");
 
-  /*useEffect(() => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
     const cargarDatos = async () => {
       try {
-        const [prodRes, catRes] = await Promise.all([
+        const [productosRes, categoriasRes] = await Promise.all([
           fetch("/products.json"),
           fetch("/categories.json"),
         ]);
-        setProductos(await prodRes.json());
-        setCategorias(await catRes.json());
-      } catch (e) {
-        console.error("Error cargando productos:", e);
-      } finally {
-        setLoading(false);
+
+        const productosData = await productosRes.json();
+        const categoriasData = await categoriasRes.json();
+
+        setProductos(productosData);
+        setCategorias(["Todos", ...categoriasData.map((c: any) => c.nombre)]);
+      } catch (err) {
+        console.error("Error al cargar datos:", err);
       }
     };
+
     cargarDatos();
-  }, []);*/
+  }, []);
 
-  useEffect(() => {
-  const cargarDatos = async () => {
-    try {
-      const [prodRes, catRes] = await Promise.all([
-        fetch("/products.json"),
-        fetch("/categories.json"),
-      ]);
+  const formatPrice = (value: number) =>
+    "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-      if (!prodRes.ok || !catRes.ok) {
-        throw new Error("Archivos JSON no encontrados");
-      }
-
-      const productosData = await prodRes.json();
-      const categoriasData = await catRes.json();
-
-      console.log("✅ Productos cargados:", productosData);
-      console.log("✅ Categorías cargadas:", categoriasData);
-
-      setProductos(productosData);
-      setCategorias(categoriasData);
-    } catch (e) {
-      console.error("❌ Error cargando datos:", e);
-    } finally {
-      setLoading(false);
-    }
-  };
-  cargarDatos();
-}, []);
-
-
-  const productosFiltrados =
-    filtro === "todos"
-      ? productos
-      : productos.filter((p) => p.categoria === filtro);
+  const productosFiltrados = productos.filter((p) => {
+    const coincideCategoria =
+      categoriaSeleccionada === "Todos" ||
+      p.categoria === categoriaSeleccionada;
+    const coincideBusqueda = p.nombre
+      .toLowerCase()
+      .includes(busqueda.toLowerCase());
+    return coincideCategoria && coincideBusqueda;
+  });
 
   return (
-    
-    <section className="mt-4">
-      <Container>
-        <h5 className="mb-4 titulo-categoria text-success">
-          INICIO &gt; CATEGORÍAS
-        </h5>
-        <Row>
-          <Col md={3}>
-            <CategoryList
-              categorias={categorias}
-              filtro={filtro}
-              onFiltrar={setFiltro}
-            />
-          </Col>
-          <Col md={9}>
-            {loading ? (
-              <div className="text-center">
-                <Spinner animation="border" variant="success" />
+    <Container fluid className="py-5 text-white">
+      {/* MIGAS DE PAN */}
+      <div className="mb-3">
+        <span className="highlight">INICIO</span> &gt;{" "}
+        <span className="highlight">CATEGORÍAS</span>
+      </div>
+
+      <Row>
+        {/* LISTA DE CATEGORÍAS */}
+        <Col md={2}>
+          <div className="categorias p-3 rounded">
+            {categorias.map((cat) => (
+              <div
+                key={cat}
+                className={`list-group-item ${
+                  cat === categoriaSeleccionada ? "active" : ""
+                }`}
+                onClick={() => setCategoriaSeleccionada(cat)}
+                style={{ cursor: "pointer" }}
+              >
+                {cat}
               </div>
+            ))}
+          </div>
+        </Col>
+
+        {/* PRODUCTOS */}
+        <Col md={10}>
+          <Row className="g-3">
+            {productosFiltrados.length === 0 ? (
+              <p>No hay productos disponibles.</p>
             ) : (
-              <Row className="g-4">
-                {productosFiltrados.length > 0 ? (
-                  productosFiltrados.map((p) => (
-                    <ProductCard key={p.id} producto={p} />
-                  ))
-                ) : (
-                  <div className="alert alert-info">
-                    No hay productos en esta categoría.
+              productosFiltrados.map((p) => (
+                <Col key={p.id} xs={6} md={3} lg={2}>
+                  <div
+                    className="producto bg-dark p-2 rounded text-center h-100"
+                    style={{ cursor: "pointer" }}
+                    onClick={() => navigate(`/detalle?id=${p.id}`)}
+                  >
+                    <div className="imagen-wrapper">
+                      <img
+                        src={p.imagen || "https://via.placeholder.com/200"}
+                        alt={p.nombre}
+                        className="imagen-producto img-fluid"
+                      />
+                    </div>
+                    <div className="nombre-producto text-white mt-2">
+                      {p.nombre}
+                    </div>
+                    <div className="precio-producto text-info">
+                      {formatPrice(p.precio)}
+                    </div>
+                    <Button className="btn-custom anadir-carrito mt-2">
+                      Añadir al carrito
+                    </Button>
                   </div>
-                )}
-              </Row>
+                </Col>
+              ))
             )}
-          </Col>
-        </Row>
-      </Container>
-    </section>
-  )
+          </Row>
+        </Col>
+      </Row>
+    </Container>
+  );
 };
