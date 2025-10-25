@@ -15,7 +15,7 @@ export const NavBar = () => {
       setCantidadCarrito(total);
     };
 
-    actualizarBadge(); // Primera carga
+    actualizarBadge(); // Inicializa
     window.addEventListener("storage", actualizarBadge);
     window.addEventListener("carritoActualizado", actualizarBadge);
 

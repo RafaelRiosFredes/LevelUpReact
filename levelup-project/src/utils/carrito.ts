@@ -7,9 +7,7 @@ export function agregarAlCarrito(producto: {
 }) {
   let carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
 
-  const index = carrito.findIndex(
-    (item: any) => item.nombre === producto.nombre
-  );
+  const index = carrito.findIndex((item: any) => item.nombre === producto.nombre);
 
   if (index !== -1) {
     carrito[index].cantidad += producto.cantidad;
@@ -19,6 +17,6 @@ export function agregarAlCarrito(producto: {
 
   localStorage.setItem("carrito", JSON.stringify(carrito));
 
-  // 🔁 Dispara evento para actualizar el NavBar
+  // 🔁 Notifica al NavBar que el carrito cambió
   window.dispatchEvent(new Event("carritoActualizado"));
 }
