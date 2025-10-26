@@ -3,6 +3,7 @@ import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "../assets/styles.css";
 import type { Producto } from "../types";
+import { useCart } from "../context/CartContext";
 
 export const DetalleProducto = () => {
   const [producto, setProducto] = useState<Producto | null>(null);
@@ -10,11 +11,15 @@ export const DetalleProducto = () => {
   const [error, setError] = useState<string | null>(null);
   const [relacionados, setRelacionados] = useState<Producto[]>([]);
   const [calificacion, setCalificacion] = useState(0);
-  const [imagenSeleccionada, setImagenSeleccionada] = useState<string | null>(null);
+  const [imagenSeleccionada, setImagenSeleccionada] = useState<string | null>(
+    null
+  );
+  const [cantidad, setCantidad] = useState(1);
+  const { addToCart } = useCart();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const idProducto = searchParams.get("id");
-  
+
   const cargarDatos = useCallback(async () => {
     if (!idProducto) {
       setError("No se ha especificado un ID de producto.");
@@ -23,53 +28,54 @@ export const DetalleProducto = () => {
     }
     setLoading(true);
     setError(null);
-      try {
-        let productos: Producto[] = [];
-        const productosGuardados = localStorage.getItem("productos");
+    try {
+      let productos: Producto[] = [];
+      const productosGuardados = localStorage.getItem("productos");
 
-        if (productosGuardados) {
-          try {
-            productos = JSON.parse(productosGuardados);
-          } catch (e) {
-            console.error("Error al parsear productos de localStorage", e);
-            productos = [];
-          }
+      if (productosGuardados) {
+        try {
+          productos = JSON.parse(productosGuardados);
+        } catch (e) {
+          console.error("Error al parsear productos de localStorage", e);
+          productos = [];
         }
-
-        if (productos.length === 0) {
-          const res = await fetch("/products.json");
-          productos = await res.json();
-          localStorage.setItem("productos", JSON.stringify(productos));
-        }
-
-        const encontrado = productos.find(
-          (p) => String(p.id) === String(idProducto)
-        );
-
-        if (!encontrado) {
-          throw new Error("Producto no encontrado.");
-        }
-
-        setProducto(encontrado);
-
-        if (encontrado?.imagenes?.length) {
-          setImagenSeleccionada(encontrado.imagenes[0]);
-        }
-
-        if (encontrado) {
-          const rel = productos.filter(
-            (p) =>
-              p.categoria === encontrado.categoria && p.id !== encontrado.id
-          );
-          setRelacionados(rel.slice(0, 10));
-        }
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Ocurrió un error desconocido";
-        console.error("❌ Error al cargar producto:", errorMessage);
-        setError(errorMessage);
-      } finally {
-        setLoading(false);
       }
+
+      if (productos.length === 0) {
+        const res = await fetch("/products.json");
+        productos = await res.json();
+        localStorage.setItem("productos", JSON.stringify(productos));
+      }
+
+      const encontrado = productos.find(
+        (p) => String(p.id) === String(idProducto)
+      );
+
+      if (!encontrado) {
+        throw new Error("Producto no encontrado.");
+      }
+
+      setProducto(encontrado);
+
+      if (encontrado?.imagenes?.length) {
+        setImagenSeleccionada(encontrado.imagenes[0]);
+      }
+
+      if (encontrado) {
+        const rel = productos.filter(
+          (p) =>
+            p.categoria === encontrado.categoria && p.id !== encontrado.id
+        );
+        setRelacionados(rel.slice(0, 10));
+      }
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Ocurrió un error desconocido";
+      console.error("❌ Error al cargar producto:", errorMessage);
+      setError(errorMessage);
+    } finally {
+      setLoading(false);
+    }
   }, [idProducto]);
 
   useEffect(() => {
@@ -83,15 +89,26 @@ export const DetalleProducto = () => {
     setCalificacion(valor);
   };
 
+  const handleAddToCart = () => {
+    if (producto) {
+      addToCart(producto, cantidad);
+      // Opcional: Mostrar una notificación de que el producto fue añadido
+      alert(`${cantidad} ${producto.nombre}(s) añadido(s) al carrito.`);
+    }
+  };
+
   const cambiarImagen = (direccion: "prev" | "next") => {
     if (!producto || !producto.imagenes || producto.imagenes.length < 2) return;
 
     const totalImagenes = producto.imagenes.length;
-    const indiceActual = producto.imagenes.findIndex(img => img === imagenSeleccionada);
-    
-    let nuevoIndice = direccion === "next" 
-      ? (indiceActual + 1) % totalImagenes
-      : (indiceActual - 1 + totalImagenes) % totalImagenes;
+    const indiceActual = producto.imagenes.findIndex(
+      (img) => img === imagenSeleccionada
+    );
+
+    let nuevoIndice =
+      direccion === "next"
+        ? (indiceActual + 1) % totalImagenes
+        : (indiceActual - 1 + totalImagenes) % totalImagenes;
 
     setImagenSeleccionada(producto.imagenes[nuevoIndice]);
   };
@@ -145,13 +162,26 @@ export const DetalleProducto = () => {
           <div className="main-image-container bg-dark rounded text-center mb-3 position-relative">
             {producto.imagenes && producto.imagenes.length > 1 && (
               <>
-                <Button variant="dark" className="gallery-arrow prev" onClick={() => cambiarImagen('prev')}>&#10094;</Button>
-                <Button variant="dark" className="gallery-arrow next" onClick={() => cambiarImagen('next')}>&#10095;</Button>
+                <Button
+                  variant="dark"
+                  className="gallery-arrow prev"
+                  onClick={() => cambiarImagen("prev")}
+                >
+                  &#10094;
+                </Button>
+                <Button
+                  variant="dark"
+                  className="gallery-arrow next"
+                  onClick={() => cambiarImagen("next")}
+                >
+                  &#10095;
+                </Button>
               </>
             )}
             <img
               src={
-                imagenSeleccionada || "https://via.placeholder.com/500x400?text=Sin+Imagen"
+                imagenSeleccionada ||
+                "https://via.placeholder.com/500x400?text=Sin+Imagen"
               }
               alt={producto.nombre}
               className="rounded main-image-detalle"
@@ -191,10 +221,13 @@ export const DetalleProducto = () => {
               type="number"
               id="cantidad"
               className="form-control w-25"
-              defaultValue={1}
+              value={cantidad}
+              onChange={(e) => setCantidad(Math.max(1, parseInt(e.target.value) || 1))}
               min={1}
             />
-            <Button className="btn-custom mt-3">Añadir al carrito</Button>
+            <Button className="btn-custom mt-3" onClick={handleAddToCart}>
+              Añadir al carrito
+            </Button>
           </div>
         </Col>
       </Row>

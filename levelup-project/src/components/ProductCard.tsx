@@ -1,16 +1,31 @@
+import { useNavigate } from "react-router-dom";
 import type { Producto } from "../types";
+import { useCart } from "../context/CartContext";
 
 interface Props {
   producto: Producto;
 }
 
 export const ProductCard = ({ producto }: Props) => {
+  const navigate = useNavigate();
+  const { addToCart } = useCart();
+
   const formatPrice = (price: number) =>
     "$" + price.toLocaleString("es-CL", { minimumFractionDigits: 0 });
 
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.stopPropagation(); // Evita que se active el onClick del div padre
+    addToCart(producto, 1);
+    alert(`${producto.nombre} ha sido añadido al carrito.`);
+  };
+
   return (
     <div className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center">
-      <div className="producto">
+      <div
+        className="producto"
+        style={{ cursor: "pointer" }}
+        onClick={() => navigate(`/detalle?id=${producto.id}`)}
+      >
         <div className="imagen-wrapper">
           <img
             src={
@@ -24,7 +39,9 @@ export const ProductCard = ({ producto }: Props) => {
         </div>
         <div className="nombre-producto">{producto.nombre}</div>
         <div className="precio-producto">{formatPrice(producto.precio)}</div>
-        <button className="btn btn-custom anadir-carrito">Añadir al carrito</button>
+        <button className="btn btn-custom anadir-carrito" onClick={handleAddToCart}>
+          Añadir al carrito
+        </button>
       </div>
     </div>
   );
