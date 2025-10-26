@@ -1,58 +1,81 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
+import type { Producto } from "../types";
 import "../assets/styles.css";
 
 interface ProductoCarrito {
-  nombre: string;
-  precio: number;
+  id: number;
   cantidad: number;
-  imagen: string;
+}
+
+interface ProductoCarritoCompleto extends Producto {
+  cantidad: number;
 }
 
 export const CarroCompras = () => {
   const [carrito, setCarrito] = useState<ProductoCarrito[]>([]);
+  const [productosCompletos, setProductosCompletos] = useState<ProductoCarritoCompleto[]>([]);
   const [total, setTotal] = useState<number>(0);
   const [cupon, setCupon] = useState<string>("");
 
-  // Cargar carrito desde localStorage
   useEffect(() => {
-    const data = localStorage.getItem("carrito");
-    if (data) {
-      const parsed = JSON.parse(data);
-      setCarrito(parsed);
-      calcularTotal(parsed);
-    }
+    const cargarCarrito = () => {
+      const carritoGuardado: ProductoCarrito[] = JSON.parse(localStorage.getItem("carrito") || "[]");
+      const productosGuardados: Producto[] = JSON.parse(localStorage.getItem("productos") || "[]");
+
+      const carritoCompleto = carritoGuardado.map(item => {
+        const productoInfo = productosGuardados.find(p => p.id === item.id);
+        return { ...productoInfo, ...item } as ProductoCarritoCompleto;
+      }).filter(item => item.nombre); // Filtrar por si un producto fue eliminado
+
+      setCarrito(carritoGuardado);
+      setProductosCompletos(carritoCompleto);
+      calcularTotal(carritoCompleto);
+    };
+
+    cargarCarrito();
+
+    // Escuchar cambios para actualizar el carrito
+    window.addEventListener('carritoActualizado', cargarCarrito);
+    return () => {
+      window.removeEventListener('carritoActualizado', cargarCarrito);
+    };
   }, []);
 
-  // Función para formatear precios CLP
+  // ✅ Formatear precios CLP
   const formatearPrecio = (valor: number) =>
     "$" + valor.toLocaleString("es-CL");
 
-  // Calcular total
-  const calcularTotal = (items: ProductoCarrito[]) => {
-    const total = items.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+  // ✅ Calcular total
+  const calcularTotal = (items: ProductoCarritoCompleto[]) => {
+    const total = items.reduce(
+      (acc, item) => acc + item.precio * item.cantidad,
+      0
+    );
     setTotal(total);
   };
 
-  // Cambiar cantidad
-  const cambiarCantidad = (index: number, cambio: number) => {
-    const copia = [...carrito];
-    copia[index].cantidad += cambio;
-    if (copia[index].cantidad < 1) copia[index].cantidad = 1;
-    setCarrito(copia);
-    localStorage.setItem("carrito", JSON.stringify(copia));
-    calcularTotal(copia);
+  // ✅ Cambiar cantidad
+  const cambiarCantidad = (idProducto: number, cambio: number) => {
+    const nuevoCarrito = carrito.map(item => {
+      if (item.id === idProducto) {
+        return { ...item, cantidad: Math.max(1, item.cantidad + cambio) };
+      }
+      return item;
+    });
+    localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
+    window.dispatchEvent(new Event('carritoActualizado'));
   };
 
-  // Eliminar producto
-  const eliminarProducto = (index: number) => {
-    const copia = carrito.filter((_, i) => i !== index);
-    setCarrito(copia);
-    localStorage.setItem("carrito", JSON.stringify(copia));
-    calcularTotal(copia);
+  // ✅ Eliminar producto
+  const eliminarProducto = (idProducto: number) => {
+    const nuevoCarrito = carrito.filter(item => item.id !== idProducto);
+    localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
+    window.dispatchEvent(new Event('carritoActualizado'));
   };
 
-  // Aplicar cupón (simulado)
+  // ✅ Aplicar cupón (simulado)
   const aplicarCupon = () => {
     if (cupon.toLowerCase() === "levelup10") {
       const descuento = total * 0.1;
@@ -67,21 +90,21 @@ export const CarroCompras = () => {
     <Container className="py-5 text-white">
       <h2 className="highlight mb-4">Mi carrito de compras</h2>
       <Row className="g-4">
-        {/* Lista de productos */}
+        {/* 🛒 Lista de productos */}
         <Col md={8}>
-          {carrito.length === 0 ? (
+          {productosCompletos.length === 0 ? (
             <p className="text-white">Tu carrito está vacío 🛒</p>
           ) : (
-            carrito.map((item, index) => (
+            productosCompletos.map((item) => (
               <div
-                key={index}
+                key={item.id}
                 className="d-flex align-items-center bg-dark p-3 rounded mb-3"
               >
                 <img
-                  src={item.imagen}
+                  src={item.imagenes && item.imagenes.length > 0 ? item.imagenes[0] : 'https://via.placeholder.com/100'}
                   alt={item.nombre}
                   className="rounded me-3"
-                  style={{ width: "100px" }}
+                  style={{ width: "100px", height: "100px", objectFit: "cover" }}
                 />
                 <div className="flex-grow-1">
                   <h5 className="mb-1">{item.nombre}</h5>
@@ -92,7 +115,7 @@ export const CarroCompras = () => {
                     <Button
                       variant="outline-light"
                       size="sm"
-                      onClick={() => cambiarCantidad(index, -1)}
+                      onClick={() => cambiarCantidad(item.id, -1)}
                     >
                       <i className="bi bi-dash"></i>
                     </Button>
@@ -106,7 +129,7 @@ export const CarroCompras = () => {
                     <Button
                       variant="outline-light"
                       size="sm"
-                      onClick={() => cambiarCantidad(index, 1)}
+                      onClick={() => cambiarCantidad(item.id, 1)}
                     >
                       <i className="bi bi-plus"></i>
                     </Button>
@@ -118,7 +141,7 @@ export const CarroCompras = () => {
                 <Button
                   variant="danger"
                   size="sm"
-                  onClick={() => eliminarProducto(index)}
+                  onClick={() => eliminarProducto(item.id)}
                 >
                   <i className="bi bi-trash"></i>
                 </Button>
@@ -127,7 +150,7 @@ export const CarroCompras = () => {
           )}
         </Col>
 
-        {/* Resumen */}
+        {/* 🧾 Resumen y botones */}
         <Col md={4}>
           <div className="bg-dark p-4 rounded">
             <h5 className="mb-3">
@@ -146,9 +169,18 @@ export const CarroCompras = () => {
                   Aplicar
                 </Button>
               </div>
-              <Button variant="success" className="w-100 fw-bold">
-                PAGAR
-              </Button>
+
+              {/* 🔹 Botón que lleva a DetalleCompra */}
+              <div className="d-grid gap-2 mt-3">
+                <Link
+                  to="/detalle-compra"
+                  className={`btn btn-success btn-lg w-100 ${
+                    carrito.length === 0 ? "disabled" : ""
+                  }`}
+                >
+                  Ir a Detalle de Compra 🧾
+                </Link>
+              </div>
             </Form>
           </div>
         </Col>

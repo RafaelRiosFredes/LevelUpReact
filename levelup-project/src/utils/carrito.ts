@@ -1,22 +1,28 @@
-// src/utils/carrito.ts
-export function agregarAlCarrito(producto: {
-  nombre: string;
-  precio: number;
+interface ProductoCarrito {
+  id: number;
   cantidad: number;
-  imagen: string;
-}) {
-  let carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
+}
 
-  const index = carrito.findIndex((item: any) => item.nombre === producto.nombre);
+export const agregarAlCarrito = (idProducto: number, cantidad: number) => {
+  // 1. Leer el carrito actual desde localStorage
+  const carritoActual: ProductoCarrito[] = JSON.parse(
+    localStorage.getItem("carrito") || "[]"
+  );
 
-  if (index !== -1) {
-    carrito[index].cantidad += producto.cantidad;
+  // 2. Buscar si el producto ya existe en el carrito
+  const productoExistenteIndex = carritoActual.findIndex(
+    (item) => item.id === idProducto
+  );
+
+  if (productoExistenteIndex !== -1) {
+    // Si existe, actualiza la cantidad
+    carritoActual[productoExistenteIndex].cantidad += cantidad;
   } else {
-    carrito.push(producto);
+    // Si no existe, lo añade como un nuevo ítem
+    carritoActual.push({ id: idProducto, cantidad: cantidad });
   }
 
-  localStorage.setItem("carrito", JSON.stringify(carrito));
-
-  // 🔁 Notifica al NavBar que el carrito cambió
+  // 3. Guardar el carrito actualizado en localStorage
+  localStorage.setItem("carrito", JSON.stringify(carritoActual));
   window.dispatchEvent(new Event("carritoActualizado"));
-}
+};

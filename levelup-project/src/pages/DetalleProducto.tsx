@@ -1,124 +1,238 @@
 import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import "../assets/styles.css";
-
-interface Producto {
-  id: number;
-  nombre: string;
-  categoria: string;
-  precio: number;
-  descripcion: string;
-  imagen: string;
-}
+import type { Producto } from "../types";
+import { agregarAlCarrito } from "../utils/carrito";
 
 export const DetalleProducto = () => {
   const [producto, setProducto] = useState<Producto | null>(null);
+  const [relacionados, setRelacionados] = useState<Producto[]>([]);
+  const [calificacion, setCalificacion] = useState(0);
+  const [imagenSeleccionada, setImagenSeleccionada] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
   const [cantidad, setCantidad] = useState(1);
-  const location = useLocation();
-
-  // Obtener id del producto desde la URL
-  const query = new URLSearchParams(location.search);
-  const id = Number(query.get("id"));
+  const navigate = useNavigate();
+  const idProducto = searchParams.get("id");
 
   useEffect(() => {
-    const cargarProducto = async () => {
-      const res = await fetch("/products.json");
-      const data = await res.json();
-      const encontrado = data.find((p: Producto) => p.id === id);
-      setProducto(encontrado);
+    if (!idProducto) return;
+
+    const cargarDatos = async () => {
+      try {
+        let productos: Producto[] = [];
+        const productosGuardados = localStorage.getItem("productos");
+
+        if (productosGuardados) {
+          try {
+            productos = JSON.parse(productosGuardados);
+          } catch (e) {
+            console.error("Error al parsear productos de localStorage", e);
+            productos = [];
+          }
+        }
+
+        if (productos.length === 0) {
+          const res = await fetch("/products.json");
+          productos = await res.json();
+          localStorage.setItem("productos", JSON.stringify(productos));
+        }
+
+        const encontrado = productos.find(
+          (p) => String(p.id) === String(idProducto)
+        );
+        setProducto(encontrado || null);
+
+        if (encontrado?.imagenes?.length) {
+          setImagenSeleccionada(encontrado.imagenes[0]);
+        }
+
+        if (encontrado) {
+          const rel = productos.filter(
+            (p) =>
+              p.categoria === encontrado.categoria && p.id !== encontrado.id
+          );
+          setRelacionados(rel.slice(0, 10));
+        }
+      } catch (err) {
+        console.error("Error al cargar producto:", err);
+      }
     };
-    cargarProducto();
-  }, [id]);
 
-  const formatearPrecio = (precio: number) =>
-    "$" + precio.toLocaleString("es-CL");
+    cargarDatos();
+  }, [idProducto]); // se ejecuta cada vez que el id del producto cambia
 
-  const agregarAlCarrito = () => {
-    if (!producto) return;
+  const formatPrice = (value: number) =>
+    "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-    const nuevoProducto = {
-      nombre: producto.nombre,
-      precio: producto.precio,
-      cantidad,
-      imagen: producto.imagen,
-    };
-
-    const carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
-    const existente = carrito.findIndex(
-      (item: any) => item.nombre === producto.nombre
-    );
-
-    if (existente >= 0) {
-      carrito[existente].cantidad += cantidad;
-    } else {
-      carrito.push(nuevoProducto);
-    }
-
-    localStorage.setItem("carrito", JSON.stringify(carrito));
-    window.dispatchEvent(new Event("storage")); // actualiza NavBar
-    alert(`${producto.nombre} agregado al carrito 🛒`);
+  const manejarCalificacion = (valor: number) => {
+    setCalificacion(valor);
   };
+
+  const cambiarImagen = (direccion: "prev" | "next") => {
+    if (!producto || !producto.imagenes || producto.imagenes.length < 2) return;
+
+    const totalImagenes = producto.imagenes.length;
+    const indiceActual = producto.imagenes.findIndex(img => img === imagenSeleccionada);
+    
+    let nuevoIndice = direccion === "next" 
+      ? (indiceActual + 1) % totalImagenes
+      : (indiceActual - 1 + totalImagenes) % totalImagenes;
+
+    setImagenSeleccionada(producto.imagenes[nuevoIndice]);
+  };
+
+  const handleAgregarAlCarrito = () => {
+    if (!producto) return;
+    agregarAlCarrito(producto.id, cantidad);
+    alert(`${cantidad} x ${producto.nombre} agregado(s) al carrito 🛒`);
+  };
+
 
   if (!producto)
     return (
-      <Container className="text-white py-5">
-        <h3>Cargando producto...</h3>
+      <Container className="text-center py-5 text-white">
+        <p>Cargando producto...</p>
       </Container>
     );
 
   return (
     <Container className="py-5 text-white">
-      <Row className="align-items-center">
-        <Col md={5} className="text-center">
-          <img
-            src={producto.imagen}
-            alt={producto.nombre}
-            className="img-fluid rounded"
-          />
+      {/* Migas de pan */}
+      <p className="text-secondary">
+        <a href="/" className="text-info text-decoration-none">
+          Inicio
+        </a>{" "}
+        &gt;{" "}
+        <span className="text-info">{producto.categoria}</span> &gt;{" "}
+        <span>{producto.nombre}</span>
+      </p>
+
+      {/* Detalle principal */}
+      <Row className="g-4 align-items-center">
+        <Col md={6}>
+          <div className="main-image-container bg-dark rounded text-center mb-3 position-relative">
+            {producto.imagenes && producto.imagenes.length > 1 && (
+              <>
+                <Button variant="dark" className="gallery-arrow prev" onClick={() => cambiarImagen('prev')}>&#10094;</Button>
+                <Button variant="dark" className="gallery-arrow next" onClick={() => cambiarImagen('next')}>&#10095;</Button>
+              </>
+            )}
+            <img
+              src={
+                imagenSeleccionada || "https://via.placeholder.com/500x400?text=Sin+Imagen"
+              }
+              alt={producto.nombre}
+              className="rounded main-image-detalle"
+            />
+          </div>
+          {producto.imagenes && producto.imagenes.length > 1 && (
+            <div className="thumbnail-gallery-wrapper">
+              {producto.imagenes.map((img, index) => (
+                <div
+                  key={index}
+                  className={`thumbnail-container ${
+                    img === imagenSeleccionada ? "active" : ""
+                  }`}
+                  onClick={() => setImagenSeleccionada(img)}
+                >
+                  <img
+                    src={img}
+                    alt={`Miniatura ${producto.nombre} ${index + 1}`}
+                    className="thumbnail-image"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </Col>
 
-        <Col md={7}>
-          <h1 className="highlight mb-3">{producto.nombre}</h1>
-          <p className="text-muted mb-2">{producto.categoria}</p>
-          <h3 className="text-success mb-4">
-            {formatearPrecio(producto.precio)}
-          </h3>
-          <p>{producto.descripcion}</p>
+        <Col md={6}>
+          <h1 className="highlight">{producto.nombre}</h1>
+          <p className="price">{formatPrice(producto.precio)}</p>
+          <p className="desc">{producto.descripcion}</p>
 
-          <div className="d-flex align-items-center mt-4">
-            <Button
-              variant="outline-light"
-              size="sm"
-              onClick={() => setCantidad(Math.max(1, cantidad - 1))}
-            >
-              <i className="bi bi-dash"></i>
-            </Button>
+          <div className="mt-4">
+            <label htmlFor="cantidad" className="form-label">
+              Cantidad
+            </label>
             <input
               type="number"
+              id="cantidad"
+              className="form-control w-25 bg-dark text-white"
               value={cantidad}
-              readOnly
-              className="form-control text-center mx-2"
-              style={{ width: "60px" }}
+              onChange={(e) => setCantidad(Math.max(1, parseInt(e.target.value) || 1))}
+              min={1}
             />
-            <Button
-              variant="outline-light"
-              size="sm"
-              onClick={() => setCantidad(cantidad + 1)}
-            >
-              <i className="bi bi-plus"></i>
+            <Button className="btn-custom mt-3" onClick={handleAgregarAlCarrito}>
+              Añadir al carrito
             </Button>
           </div>
-
-          <Button
-            variant="success"
-            className="mt-4 fw-bold"
-            onClick={agregarAlCarrito}
-          >
-            Añadir al carrito 🛒
-          </Button>
         </Col>
       </Row>
+
+      {/* Calificación */}
+      <div className="rating mt-5">
+        <label className="form-label">Calificación:</label>
+        <div className="estrellas">
+          {[1, 2, 3, 4, 5].map((n) => (
+            <i
+              key={n}
+              className={`bi bi-star-fill ${
+                n <= calificacion ? "selected" : ""
+              }`}
+              onClick={() => manejarCalificacion(n)}
+              onMouseOver={(e) => (e.currentTarget.style.color = "gold")}
+              onMouseOut={(e) => (e.currentTarget.style.color = "")}
+              style={{ cursor: "pointer", fontSize: "1.8rem" }}
+            ></i>
+          ))}
+        </div>
+      </div>
+
+      {/* Productos relacionados */}
+      <div className="related mt-5">
+        <h3 className="highlight">Productos Relacionados</h3>
+        <Row className="g-3 mt-2">
+          {relacionados.map((r) => (
+            <Col key={r.id} xs={6} md={3} lg={2}>
+              <div
+                className="producto bg-dark p-2 rounded text-center h-100"
+                onClick={() => navigate(`/detalle?id=${r.id}`)}
+                style={{ cursor: "pointer" }}
+              >
+                <div className="imagen-wrapper">
+                  <img
+                    src={
+                      r.imagenes && r.imagenes.length > 0
+                        ? r.imagenes[0]
+                        : "https://via.placeholder.com/200?text=Sin+Imagen"
+                    }
+                    alt={r.nombre}
+                    className="imagen-producto img-fluid"
+                  />
+                </div>
+                <div className="nombre-producto text-white mt-2">
+                  {r.nombre}
+                </div>
+                <div className="precio-producto text-info">
+                  {formatPrice(r.precio)}
+                </div>
+                <Button
+                  className="btn-custom anadir-carrito mt-2"
+                  onClick={(e) => {
+                    e.stopPropagation(); // Evita que se navegue a la página de detalle
+                    agregarAlCarrito(r.id, 1);
+                    alert(`${r.nombre} agregado al carrito 🛒`);
+                  }}
+                >
+                  Añadir
+                </Button>
+              </div>
+            </Col>
+          ))}
+        </Row>
+      </div>
     </Container>
   );
 };

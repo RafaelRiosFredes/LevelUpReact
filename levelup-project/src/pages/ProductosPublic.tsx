@@ -10,44 +10,29 @@ export const ProductosPublic = () => {
   const [filtro, setFiltro] = useState("todos");
   const [loading, setLoading] = useState(true);
 
-  /*useEffect(() => {
-    const cargarDatos = async () => {
-      try {
-        const [prodRes, catRes] = await Promise.all([
-          fetch("/products.json"),
-          fetch("/categories.json"),
-        ]);
-        setProductos(await prodRes.json());
-        setCategorias(await catRes.json());
-      } catch (e) {
-        console.error("Error cargando productos:", e);
-      } finally {
-        setLoading(false);
-      }
-    };
-    cargarDatos();
-  }, []);*/
-
   useEffect(() => {
   const cargarDatos = async () => {
+    setLoading(true);
     try {
-      const [prodRes, catRes] = await Promise.all([
-        fetch("/products.json"),
-        fetch("/categories.json"),
-      ]);
-
-      if (!prodRes.ok || !catRes.ok) {
-        throw new Error("Archivos JSON no encontrados");
-      }
-
-      const productosData = await prodRes.json();
+      // Cargar categorías
+      const catRes = await fetch("/categories.json");
+      if (!catRes.ok) throw new Error("No se pudieron cargar las categorías");
       const categoriasData = await catRes.json();
-
-      console.log("✅ Productos cargados:", productosData);
-      console.log("✅ Categorías cargadas:", categoriasData);
-
-      setProductos(productosData);
       setCategorias(categoriasData);
+
+      // Cargar productos desde localStorage o JSON como fallback
+      let productosData: Producto[] = [];
+      const productosGuardados = localStorage.getItem("productos");
+
+      if (productosGuardados) {
+        productosData = JSON.parse(productosGuardados);
+      } else {
+        const prodRes = await fetch("/products.json");
+        if (!prodRes.ok) throw new Error("No se pudieron cargar los productos");
+        productosData = await prodRes.json();
+        localStorage.setItem("productos", JSON.stringify(productosData));
+      }
+      setProductos(productosData);
     } catch (e) {
       console.error("❌ Error cargando datos:", e);
     } finally {
@@ -55,6 +40,14 @@ export const ProductosPublic = () => {
     }
   };
   cargarDatos();
+
+  const handleStorageChange = (event: StorageEvent) => {
+    if (event.key === 'productos_lastUpdate' || event.key === 'productos') {
+      cargarDatos();
+    }
+  };
+  window.addEventListener('storage', handleStorageChange);
+  return () => window.removeEventListener('storage', handleStorageChange);
 }, []);
 
 
