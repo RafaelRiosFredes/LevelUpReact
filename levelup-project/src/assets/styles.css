@@ -209,6 +209,20 @@ input:focus {
   outline: none;
 }
 
+/* Estilo para el placeholder del input de búsqueda */
+.product-list-box .form-control::placeholder {
+  color: rgba(255, 255, 255, 0.7) !important; /* Blanco semi-transparente */
+  opacity: 1; /* Asegura visibilidad en Firefox */
+}
+
+.product-list-box .form-control:-ms-input-placeholder { /* IE 10-11 */
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
+.product-list-box .form-control::-ms-input-placeholder { /* Edge */
+  color: rgba(255, 255, 255, 0.7) !important;
+}
+
 /* Icono del dropdown (select) en verde neón */
 .product-list-box .form-select {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2339ff14' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
@@ -302,4 +316,61 @@ input:focus {
   border-color: #39ff14;
   color: #fff;
   box-shadow: 0 0 15px #8000ff, 0 0 25px #39ff14;
+}
+
+/* ======== VISTA LISTA ADMIN (Órdenes) ======== */
+
+.accordion-admin .accordion-item {
+  background-color: #1a1a1a;
+  border: 1px solid #1E90FF;
+  margin-bottom: 10px;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.accordion-admin .accordion-header button {
+  background-color: #111;
+  color: #fff;
+  font-weight: bold;
+  box-shadow: none; /* Reset bootstrap shadow */
+}
+
+/* Estilo del header cuando el acordeón está abierto */
+.accordion-admin .accordion-header button:not(.collapsed) {
+  background-color: #1E90FF;
+  color: #fff;
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.7);
+}
+
+/* Cambiar color del ícono de flecha de bootstrap */
+.accordion-admin .accordion-header button::after {
+  filter: invert(1) grayscale(100%) brightness(200%);
+}
+
+.accordion-admin .accordion-header button:not(.collapsed)::after {
+ filter: none;
+}
+
+
+/* Usar el color azul eléctrico para información clave en el header */
+.accordion-admin .accordion-header .order-id {
+  color: #1E90FF;
+  font-weight: bold;
+}
+
+.accordion-admin .accordion-header button:not(.collapsed) .order-id {
+  color: #fff; /* Cambiar a blanco cuando el fondo es azul */
+}
+
+
+.accordion-admin .accordion-body {
+  background-color: #0a0a0a;
+  color: #ccc;
+}
+
+.accordion-admin .accordion-body h5 {
+  color: #1E90FF;
+  border-bottom: 1px solid #1E90FF;
+  padding-bottom: 5px;
+  margin-bottom: 15px;
 }
