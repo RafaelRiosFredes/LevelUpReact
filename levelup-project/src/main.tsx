@@ -1,19 +1,14 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import { Navbar } from './components/NavBar.tsx'
-import { Home } from './pages/Home.tsx'
-import { Footer } from './components/footer.tsx'
+import { StrictMode } from "react";
+import { createRoot } from "react-dom/client";
+import App from "./App";
+
+// CSS: importa primero Bootstrap y luego tus estilos para que los puedas sobrescribir
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
-import "./assets/styles.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import "./assets/styles.css";   // <- o "./index.css" si ese es tu archivo
 
-createRoot(document.getElementById('root')!).render(
+createRoot(document.getElementById("root")!).render(
   <StrictMode>
-    <Navbar />
-    <Home />
-    <Footer/>
-  
-  </StrictMode>,
-)
+    <App />
+  </StrictMode>
+);
