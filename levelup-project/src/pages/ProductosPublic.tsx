@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback, useMemo } from "react";
 import type { Producto, Categoria } from "../types";
 import { CategoryList } from "../components/CategoryList";
 import { ProductCard } from "../components/ProductCard";
@@ -9,21 +9,22 @@ export const ProductosPublic = () => {
   const [categorias, setCategorias] = useState<Categoria[]>([]);
   const [filtro, setFiltro] = useState("todos");
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  useEffect(() => {
-  const cargarDatos = async () => {
+  const cargarDatos = useCallback(async () => {
     setLoading(true);
+    setError(null);
     try {
       // Cargar categorías
       const catRes = await fetch("/categories.json");
       if (!catRes.ok) throw new Error("No se pudieron cargar las categorías");
       const categoriasData = await catRes.json();
       setCategorias(categoriasData);
-
+  
       // Cargar productos desde localStorage o JSON como fallback
       let productosData: Producto[] = [];
       const productosGuardados = localStorage.getItem("productos");
-
+  
       if (productosGuardados) {
         productosData = JSON.parse(productosGuardados);
       } else {
@@ -33,29 +34,33 @@ export const ProductosPublic = () => {
         localStorage.setItem("productos", JSON.stringify(productosData));
       }
       setProductos(productosData);
-    } catch (e) {
-      console.error("❌ Error cargando datos:", e);
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : "Ocurrió un error desconocido";
+      console.error("❌ Error cargando datos:", errorMessage);
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
-  };
-  cargarDatos();
+  }, []);
 
-  // Escuchar cambios en localStorage para actualizar en tiempo real
-  const handleStorageChange = (event: StorageEvent) => {
-    if (event.key === 'productos_lastUpdate' || event.key === 'productos') {
-      cargarDatos();
-    }
-  };
-  window.addEventListener('storage', handleStorageChange);
-  return () => window.removeEventListener('storage', handleStorageChange);
-}, []);
+  useEffect(() => {
+    cargarDatos();
 
+    // Escuchar cambios en localStorage para actualizar en tiempo real
+    const handleStorageChange = (event: StorageEvent) => {
+      if (event.key === 'productos_lastUpdate' || event.key === 'productos') {
+        cargarDatos();
+      }
+    };
+    window.addEventListener('storage', handleStorageChange);
+    return () => window.removeEventListener('storage', handleStorageChange);
+  }, [cargarDatos]);
 
-  const productosFiltrados =
+  const productosFiltrados = useMemo(() => 
     filtro === "todos"
       ? productos
-      : productos.filter((p) => p.categoria === filtro);
+      : productos.filter((p) => p.categoria === filtro)
+  , [productos, filtro]);
 
   return (
     
@@ -76,6 +81,10 @@ export const ProductosPublic = () => {
             {loading ? (
               <div className="text-center">
                 <Spinner animation="border" variant="success" />
+              </div>
+            ) : error ? (
+              <div className="alert alert-danger">
+                <strong>Error:</strong> {error}
               </div>
             ) : (
               <Row className="g-4">
