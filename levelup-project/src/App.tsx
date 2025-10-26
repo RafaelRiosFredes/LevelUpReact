@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./assets/styles.css";
-
+import { DetalleCompra } from "./pages/DetalleCompra";
 import { ProductosPublic } from "./pages/ProductosPublic";
 import { DetalleProducto } from "./pages/DetalleProducto";
 import { CarroCompras } from "./pages/CarroCompras";
@@ -17,6 +17,8 @@ function App() {
         <Route path="/" element={<ProductosPublic />} />
         <Route path="/detalle" element={<DetalleProducto />} />
         <Route path="/carrito" element={<CarroCompras />} />
+        <Route path="/detalle-compra" element={<DetalleCompra />} />
+
       </Routes>
       <Footer />
     </BrowserRouter>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import { Container, Row, Col, Button, Form } from "react-bootstrap";
+import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import "../assets/styles.css";
 
 interface ProductoCarrito {
@@ -14,7 +15,7 @@ export const CarroCompras = () => {
   const [total, setTotal] = useState<number>(0);
   const [cupon, setCupon] = useState<string>("");
 
-  // Cargar carrito desde localStorage
+  // ✅ Cargar carrito desde localStorage
   useEffect(() => {
     const data = localStorage.getItem("carrito");
     if (data) {
@@ -24,17 +25,20 @@ export const CarroCompras = () => {
     }
   }, []);
 
-  // Función para formatear precios CLP
+  // ✅ Formatear precios CLP
   const formatearPrecio = (valor: number) =>
     "$" + valor.toLocaleString("es-CL");
 
-  // Calcular total
+  // ✅ Calcular total
   const calcularTotal = (items: ProductoCarrito[]) => {
-    const total = items.reduce((acc, item) => acc + item.precio * item.cantidad, 0);
+    const total = items.reduce(
+      (acc, item) => acc + item.precio * item.cantidad,
+      0
+    );
     setTotal(total);
   };
 
-  // Cambiar cantidad
+  // ✅ Cambiar cantidad
   const cambiarCantidad = (index: number, cambio: number) => {
     const copia = [...carrito];
     copia[index].cantidad += cambio;
@@ -44,7 +48,7 @@ export const CarroCompras = () => {
     calcularTotal(copia);
   };
 
-  // Eliminar producto
+  // ✅ Eliminar producto
   const eliminarProducto = (index: number) => {
     const copia = carrito.filter((_, i) => i !== index);
     setCarrito(copia);
@@ -52,7 +56,7 @@ export const CarroCompras = () => {
     calcularTotal(copia);
   };
 
-  // Aplicar cupón (simulado)
+  // ✅ Aplicar cupón (simulado)
   const aplicarCupon = () => {
     if (cupon.toLowerCase() === "levelup10") {
       const descuento = total * 0.1;
@@ -67,7 +71,7 @@ export const CarroCompras = () => {
     <Container className="py-5 text-white">
       <h2 className="highlight mb-4">Mi carrito de compras</h2>
       <Row className="g-4">
-        {/* Lista de productos */}
+        {/* 🛒 Lista de productos */}
         <Col md={8}>
           {carrito.length === 0 ? (
             <p className="text-white">Tu carrito está vacío 🛒</p>
@@ -127,7 +131,7 @@ export const CarroCompras = () => {
           )}
         </Col>
 
-        {/* Resumen */}
+        {/* 🧾 Resumen y botones */}
         <Col md={4}>
           <div className="bg-dark p-4 rounded">
             <h5 className="mb-3">
@@ -146,9 +150,18 @@ export const CarroCompras = () => {
                   Aplicar
                 </Button>
               </div>
-              <Button variant="success" className="w-100 fw-bold">
-                PAGAR
-              </Button>
+
+              {/* 🔹 Botón que lleva a DetalleCompra */}
+              <div className="d-grid gap-2 mt-3">
+                <Link
+                  to="/detalle-compra"
+                  className={`btn btn-success btn-lg w-100 ${
+                    carrito.length === 0 ? "disabled" : ""
+                  }`}
+                >
+                  Ir a Detalle de Compra 🧾
+                </Link>
+              </div>
             </Form>
           </div>
         </Col>
