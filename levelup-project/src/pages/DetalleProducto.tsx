@@ -1,36 +1,49 @@
 import { useEffect, useState } from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import "../assets/styles.css";
-
-interface Producto {
-  id: number;
-  nombre: string;
-  categoria: string;
-  stock: number;
-  precio: number;
-  imagen: string;
-  descripcion: string;
-}
+import type { Producto } from "../types";
 
 export const DetalleProducto = () => {
   const [producto, setProducto] = useState<Producto | null>(null);
   const [relacionados, setRelacionados] = useState<Producto[]>([]);
   const [calificacion, setCalificacion] = useState(0);
+  const [imagenSeleccionada, setImagenSeleccionada] = useState<string | null>(null);
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const idProducto = searchParams.get("id");
 
   useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const idProducto = params.get("id");
     if (!idProducto) return;
 
     const cargarDatos = async () => {
       try {
-        const res = await fetch("/products.json");
-        const productos: Producto[] = await res.json();
+        let productos: Producto[] = [];
+        const productosGuardados = localStorage.getItem("productos");
+
+        if (productosGuardados) {
+          try {
+            productos = JSON.parse(productosGuardados);
+          } catch (e) {
+            console.error("Error al parsear productos de localStorage", e);
+            productos = [];
+          }
+        }
+
+        if (productos.length === 0) {
+          const res = await fetch("/products.json");
+          productos = await res.json();
+          localStorage.setItem("productos", JSON.stringify(productos));
+        }
 
         const encontrado = productos.find(
           (p) => String(p.id) === String(idProducto)
         );
         setProducto(encontrado || null);
+
+        if (encontrado?.imagenes?.length) {
+          setImagenSeleccionada(encontrado.imagenes[0]);
+        }
 
         if (encontrado) {
           const rel = productos.filter(
@@ -45,7 +58,7 @@ export const DetalleProducto = () => {
     };
 
     cargarDatos();
-  }, []);
+  }, [idProducto]); // se ejecuta cada vez que el id del producto cambia
 
   const formatPrice = (value: number) =>
     "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -53,6 +66,20 @@ export const DetalleProducto = () => {
   const manejarCalificacion = (valor: number) => {
     setCalificacion(valor);
   };
+
+  const cambiarImagen = (direccion: "prev" | "next") => {
+    if (!producto || !producto.imagenes || producto.imagenes.length < 2) return;
+
+    const totalImagenes = producto.imagenes.length;
+    const indiceActual = producto.imagenes.findIndex(img => img === imagenSeleccionada);
+    
+    let nuevoIndice = direccion === "next" 
+      ? (indiceActual + 1) % totalImagenes
+      : (indiceActual - 1 + totalImagenes) % totalImagenes;
+
+    setImagenSeleccionada(producto.imagenes[nuevoIndice]);
+  };
+
 
   if (!producto)
     return (
@@ -76,13 +103,40 @@ export const DetalleProducto = () => {
       {/* Detalle principal */}
       <Row className="g-4 align-items-center">
         <Col md={6}>
-          <div className="border p-2 bg-dark rounded text-center">
+          <div className="main-image-container bg-dark rounded text-center mb-3 position-relative">
+            {producto.imagenes && producto.imagenes.length > 1 && (
+              <>
+                <Button variant="dark" className="gallery-arrow prev" onClick={() => cambiarImagen('prev')}>&#10094;</Button>
+                <Button variant="dark" className="gallery-arrow next" onClick={() => cambiarImagen('next')}>&#10095;</Button>
+              </>
+            )}
             <img
-              src={producto.imagen || "https://via.placeholder.com/500x400"}
+              src={
+                imagenSeleccionada || "https://via.placeholder.com/500x400?text=Sin+Imagen"
+              }
               alt={producto.nombre}
-              className="img-fluid rounded"
+              className="rounded main-image-detalle"
             />
           </div>
+          {producto.imagenes && producto.imagenes.length > 1 && (
+            <div className="thumbnail-gallery-wrapper">
+              {producto.imagenes.map((img, index) => (
+                <div
+                  key={index}
+                  className={`thumbnail-container ${
+                    img === imagenSeleccionada ? "active" : ""
+                  }`}
+                  onClick={() => setImagenSeleccionada(img)}
+                >
+                  <img
+                    src={img}
+                    alt={`Miniatura ${producto.nombre} ${index + 1}`}
+                    className="thumbnail-image"
+                  />
+                </div>
+              ))}
+            </div>
+          )}
         </Col>
 
         <Col md={6}>
@@ -133,12 +187,16 @@ export const DetalleProducto = () => {
             <Col key={r.id} xs={6} md={3} lg={2}>
               <div
                 className="producto bg-dark p-2 rounded text-center h-100"
-                onClick={() => (window.location.href = `/detalle?id=${r.id}`)}
+                onClick={() => navigate(`/detalle?id=${r.id}`)}
                 style={{ cursor: "pointer" }}
               >
                 <div className="imagen-wrapper">
                   <img
-                    src={r.imagen || "https://via.placeholder.com/200"}
+                    src={
+                      r.imagenes && r.imagenes.length > 0
+                        ? r.imagenes[0]
+                        : "https://via.placeholder.com/200?text=Sin+Imagen"
+                    }
                     alt={r.nombre}
                     className="imagen-producto img-fluid"
                   />

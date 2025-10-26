@@ -4,7 +4,7 @@ export interface Producto {
   categoria: string;
   stock: number;
   precio: number;
-  imagen: string;
+  imagenes: string[];
   descripcion: string;
 }
 
