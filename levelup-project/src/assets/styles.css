@@ -62,7 +62,7 @@ html, body, #root {
 
 .admin-header h1 {
   font-size: 42px;
-  color: #8000ff;
+  color: #fff;
   margin: 0;
 }
 
@@ -98,7 +98,7 @@ html, body, #root {
 
 .user-table th {
   background-color: #111;
-  color: #bdbdbd;
+  color: #fff;
   border-bottom: 2px solid #8000ff;
   font-weight: bold;
 }
@@ -112,7 +112,7 @@ html, body, #root {
 }
 
 .user-table td {
-  color: #f0f0f0;
+  color: #fff;
 }
 
 .no-users {

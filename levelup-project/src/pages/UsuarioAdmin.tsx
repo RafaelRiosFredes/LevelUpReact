@@ -30,7 +30,7 @@ export const UsuarioAdmin = () => {
       <section className="admin-dashboard">
         <div className="admin-content">
           <div className="admin-header">
-            <h1>👥 Gestión de Usuarios</h1>
+            <h1>Gestión de Usuarios</h1>
             <p>Visualiza y administra todos los usuarios registrados en el sistema.</p>
           </div>
 
@@ -45,10 +45,9 @@ export const UsuarioAdmin = () => {
                     <th>Nombre</th>
                     <th>Correo</th>
                     <th>Teléfono</th>
-                    <th>Nacimiento</th>
+                    <th>Fecha de nacimiento</th>
                     <th>Región</th>
                     <th>Comuna</th>
-                    <th>Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -62,7 +61,7 @@ export const UsuarioAdmin = () => {
                       <td>{user.region}</td>
                       <td>{user.comuna}</td>
                       <td>
-                        {/* boton editar*/}
+                        {/* boton para editar*/}
                         <button
                           className="btn btn-sm btn-outline-success me-2"
                           onClick={() => navigate(`/admin/editarUsuario/${user.id}`)}
@@ -70,7 +69,7 @@ export const UsuarioAdmin = () => {
                           <i className="bi bi-pencil-square"></i> Editar
                         </button>
 
-                        {/* boton historial*/}
+                        {/* boton para historial*/}
                         <button
                           className="btn btn-sm btn-outline-info"
                           onClick={() => navigate(`/admin/historialUsuario/${user.id}`)}
