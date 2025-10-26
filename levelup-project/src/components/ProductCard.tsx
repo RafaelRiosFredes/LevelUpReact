@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import type { Producto } from "../types";
 
 interface Props {
@@ -5,12 +6,18 @@ interface Props {
 }
 
 export const ProductCard = ({ producto }: Props) => {
+  const navigate = useNavigate();
+
   const formatPrice = (price: number) =>
     "$" + price.toLocaleString("es-CL", { minimumFractionDigits: 0 });
 
   return (
     <div className="col-12 col-sm-6 col-md-4 col-lg-3 d-flex justify-content-center">
-      <div className="producto">
+      <div
+        className="producto"
+        style={{ cursor: "pointer" }}
+        onClick={() => navigate(`/detalle?id=${producto.id}`)}
+      >
         <div className="imagen-wrapper">
           <img
             src={
