@@ -5,7 +5,7 @@ import "./assets/styles.css";
 import { DetalleCompra } from "./pages/DetalleCompra";
 import { NavBar } from "./components/NavBar";
 import { Footer } from "./components/Footer";
-import { CartProvider } from "./pages/CartContext";
+import { CartProvider } from "./context/CartContext";
 
 function App() {
   return (

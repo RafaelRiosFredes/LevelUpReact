@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Container, Table, Form, Row, Col, Button, Card, Alert, Spinner } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/styles.css";
-import { useCart } from "./CartContext";
+import { useCart } from "../context/CartContext";
 
 export const DetalleCompra = () => {
   // ✅ Usamos el contexto para obtener el estado y las funciones del carrito
