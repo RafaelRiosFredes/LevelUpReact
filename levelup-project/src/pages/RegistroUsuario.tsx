@@ -19,7 +19,7 @@ export const RegistroUsuario = () => {
   const [descuento, setDescuento] = useState(false);
   const [comunas, setComunas] = useState<string[]>([]);
 
-  // 🔹 Regiones con comunas
+  // Regiones con comunas
   const regionesConComunas: Record<string, string[]> = {
     "Arica y Parinacota": ["Arica", "Putre", "Camarones", "General Lagos"],
     "Tarapacá": ["Iquique", "Alto Hospicio", "Pozo Almonte", "Camiña", "Pica"],
@@ -28,7 +28,7 @@ export const RegistroUsuario = () => {
     "Coquimbo": ["La Serena", "Coquimbo", "Ovalle", "Illapel", "Vicuña"],
     "Valparaíso": ["Valparaíso", "Viña del Mar", "Quilpué", "Villa Alemana", "San Antonio"],
     "Metropolitana": ["Santiago", "Maipú", "Puente Alto", "Las Condes", "Ñuñoa", "Providencia"],
-    "O’Higgins": ["Rancagua", "Machalí", "San Vicente", "Santa Cruz"],
+    "O'Higgins": ["Rancagua", "Machalí", "San Vicente", "Santa Cruz"],
     "Maule": ["Talca", "Curicó", "Linares", "Cauquenes"],
     "Ñuble": ["Chillán", "Bulnes", "San Carlos", "Quillón"],
     "Biobío": ["Concepción", "Los Ángeles", "Coronel", "Talcahuano", "San Pedro de la Paz"],
@@ -73,29 +73,36 @@ export const RegistroUsuario = () => {
 
     // Validaciones
     if (!nombre || !email || !contrasena || !confirmarContrasena || !fechaNacimiento) {
-      setMensaje("⚠️ Completa todos los campos obligatorios.");
+      setMensaje("Completa todos los campos obligatorios.");
       return;
     }
 
     if (contrasena !== confirmarContrasena) {
-      setMensaje("❌ Las contraseñas no coinciden.");
+      setMensaje("Las contraseñas no coinciden.");
       return;
     }
 
     const edad = calcularEdad(fechaNacimiento);
     if (edad < 18) {
-      setMensaje("🚫 Debes ser mayor de 18 años para registrarte.");
+      setMensaje("Solo +18 pueden registrarse.");
       return;
     }
 
     // Obtener usuarios guardados
     const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios") || "[]");
 
-    // Crear usuario con ID único
+    // Crear usuario con ID 
     const nuevoUsuario = {
       id: usuariosGuardados.length > 0 ? usuariosGuardados[usuariosGuardados.length - 1].id + 1 : 1,
-      ...formData,
+      nombre: formData.nombre,
+      email: formData.email,
+      contrasena: formData.contrasena,
+      telefono: formData.telefono,
+      fechaNacimiento: formData.fechaNacimiento,
+      region: formData.region,
+      comuna: formData.comuna,
       descuento: descuento ? 20 : 0,
+      fechaRegistro: new Date().toISOString().split('T')[0] // Fecha de registro
     };
 
     // Guardar en localStorage
@@ -105,9 +112,9 @@ export const RegistroUsuario = () => {
 
     // Mensaje final
     if (descuento) {
-      setMensaje("🎉 ¡Bienvenido a LEVEL-UP GAMER! Has obtenido un 20% de descuento por ser estudiante DUOC UC.");
+      setMensaje("¡Bienvenido a LEVEL-UP! Tienes un 20% de descuento por ser estudiante DUOC UC.");
     } else {
-      setMensaje(`✅ ¡Bienvenido a LEVEL-UP GAMER, ${nombre}!`);
+      setMensaje(`¡Bienvenido a LEVEL-UP, ${nombre}!`);
     }
 
     // Redirección
@@ -140,7 +147,7 @@ export const RegistroUsuario = () => {
               type="text"
               id="nombre"
               name="nombre"
-              placeholder="Ingrese su nombre completo"
+              placeholder="Ingresa tu nombre completo"
               value={formData.nombre}
               onChange={handleChange}
             />
@@ -150,7 +157,7 @@ export const RegistroUsuario = () => {
               type="email"
               id="email"
               name="email"
-              placeholder="Ingrese su correo electrónico"
+              placeholder="Ingresa tu correo electrónico"
               value={formData.email}
               onChange={handleChange}
             />
@@ -160,7 +167,7 @@ export const RegistroUsuario = () => {
               type="password"
               id="contrasena"
               name="contrasena"
-              placeholder="Ingrese su contraseña"
+              placeholder="Ingresa tu contraseña"
               value={formData.contrasena}
               onChange={handleChange}
             />
@@ -170,7 +177,7 @@ export const RegistroUsuario = () => {
               type="password"
               id="confirmarContrasena"
               name="confirmarContrasena"
-              placeholder="Ingrese nuevamente su contraseña"
+              placeholder="Ingresa nuevamente tu contraseña"
               value={formData.confirmarContrasena}
               onChange={handleChange}
             />
@@ -180,7 +187,7 @@ export const RegistroUsuario = () => {
               type="tel"
               id="telefono"
               name="telefono"
-              placeholder="Ingrese su número de teléfono"
+              placeholder="Ingresa tu número de teléfono"
               value={formData.telefono}
               onChange={handleChange}
             />
@@ -195,6 +202,7 @@ export const RegistroUsuario = () => {
             />
 
             <div className="selector-region">
+                 <label className="titulo-RC"> Selecciona tu región y comuna</label>
               <select id="region" name="region" value={formData.region} onChange={handleChange}>
                 <option value="">Selecciona tu Región</option>
                 {Object.keys(regionesConComunas).map((r, i) => (
@@ -215,13 +223,13 @@ export const RegistroUsuario = () => {
             </div>
 
             <button className="boton-registro" type="submit">
-              Registrar
+              Registrarse
             </button>
 
             {mensaje && (
               <p
                 style={{
-                  color: mensaje.includes("✅") || mensaje.includes("🎉") ? "#39ff14" : "#ff4040",
+                  color: mensaje.includes("¡Bienvenido") ? "#39ff14" : "#ff4040",
                   marginTop: "15px",
                 }}
               >
