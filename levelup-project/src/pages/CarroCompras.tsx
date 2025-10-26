@@ -1,90 +1,53 @@
-import { useEffect, useState } from "react";
-import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useState } from "react";
+import { Container, Row, Col, Form, Button, Alert } from "react-bootstrap";
 import { Link } from "react-router-dom";
-import type { Producto } from "../types";
 import "../assets/styles.css";
-
-interface ProductoCarrito {
-  id: number;
-  cantidad: number;
-}
-
-interface ProductoCarritoCompleto extends Producto {
-  cantidad: number;
-}
+import { useCart } from "./CartContext";
 
 export const CarroCompras = () => {
-  const [carrito, setCarrito] = useState<ProductoCarrito[]>([]);
-  const [productosCompletos, setProductosCompletos] = useState<ProductoCarritoCompleto[]>([]);
-  const [total, setTotal] = useState<number>(0);
+  // ✅ Usamos el contexto para obtener el estado y las funciones del carrito
+  const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
   const [cupon, setCupon] = useState<string>("");
-
-  useEffect(() => {
-    const cargarCarrito = () => {
-      const carritoGuardado: ProductoCarrito[] = JSON.parse(localStorage.getItem("carrito") || "[]");
-      const productosGuardados: Producto[] = JSON.parse(localStorage.getItem("productos") || "[]");
-
-      const carritoCompleto = carritoGuardado.map(item => {
-        const productoInfo = productosGuardados.find(p => p.id === item.id);
-        return { ...productoInfo, ...item } as ProductoCarritoCompleto;
-      }).filter(item => item.nombre); // Filtrar por si un producto fue eliminado
-
-      setCarrito(carritoGuardado);
-      setProductosCompletos(carritoCompleto);
-      calcularTotal(carritoCompleto);
-    };
-
-    cargarCarrito();
-
-    // Escuchar cambios para actualizar el carrito
-    window.addEventListener('carritoActualizado', cargarCarrito);
-    return () => {
-      window.removeEventListener('carritoActualizado', cargarCarrito);
-    };
-  }, []);
+  // El total ahora se calcula directamente
+  const [descuento, setDescuento] = useState(0);
 
   // ✅ Formatear precios CLP
   const formatearPrecio = (valor: number) =>
     "$" + valor.toLocaleString("es-CL");
 
-  // ✅ Calcular total
-  const calcularTotal = (items: ProductoCarritoCompleto[]) => {
-    const total = items.reduce(
-      (acc, item) => acc + item.precio * item.cantidad,
-      0
-    );
-    setTotal(total);
-  };
-
-  // ✅ Cambiar cantidad
-  const cambiarCantidad = (idProducto: number, cambio: number) => {
-    const nuevoCarrito = carrito.map(item => {
-      if (item.id === idProducto) {
-        return { ...item, cantidad: Math.max(1, item.cantidad + cambio) };
-      }
-      return item;
-    });
-    localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
-    window.dispatchEvent(new Event('carritoActualizado'));
-  };
-
-  // ✅ Eliminar producto
-  const eliminarProducto = (idProducto: number) => {
-    const nuevoCarrito = carrito.filter(item => item.id !== idProducto);
-    localStorage.setItem("carrito", JSON.stringify(nuevoCarrito));
-    window.dispatchEvent(new Event('carritoActualizado'));
-  };
+  const subtotal = cartItems.reduce(
+    (acc, item) => acc + item.precio * item.quantity,
+    0
+  );
+  const total = subtotal - descuento;
 
   // ✅ Aplicar cupón (simulado)
   const aplicarCupon = () => {
     if (cupon.toLowerCase() === "levelup10") {
-      const descuento = total * 0.1;
-      setTotal(total - descuento);
+      setDescuento(subtotal * 0.1);
       alert("🎉 Cupón aplicado: 10% de descuento");
     } else {
       alert("⚠️ Cupón inválido");
+      setDescuento(0);
     }
   };
+
+  if (cartItems.length === 0) {
+    return (
+      <Container className="py-5 text-center text-white">
+        <Alert variant="info">
+          <Alert.Heading>Tu carrito está vacío</Alert.Heading>
+          <p>
+            Parece que aún no has añadido productos. ¡Explora nuestro catálogo para encontrar algo que te guste!
+          </p>
+          <hr />
+          <Link to="/">
+            <Button variant="success">Ir a la tienda</Button>
+          </Link>
+        </Alert>
+      </Container>
+    );
+  }
 
   return (
     <Container className="py-5 text-white">
@@ -92,10 +55,7 @@ export const CarroCompras = () => {
       <Row className="g-4">
         {/* 🛒 Lista de productos */}
         <Col md={8}>
-          {productosCompletos.length === 0 ? (
-            <p className="text-white">Tu carrito está vacío 🛒</p>
-          ) : (
-            productosCompletos.map((item) => (
+          {cartItems.map((item) => (
               <div
                 key={item.id}
                 className="d-flex align-items-center bg-dark p-3 rounded mb-3"
@@ -115,39 +75,38 @@ export const CarroCompras = () => {
                     <Button
                       variant="outline-light"
                       size="sm"
-                      onClick={() => cambiarCantidad(item.id, -1)}
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
                     >
                       <i className="bi bi-dash"></i>
                     </Button>
                     <Form.Control
                       type="number"
-                      value={item.cantidad}
-                      className="mx-1 text-center"
+                      value={item.quantity}
+                      className="mx-1 text-center bg-dark text-white border-secondary"
                       style={{ width: "60px" }}
                       disabled
                     />
                     <Button
                       variant="outline-light"
                       size="sm"
-                      onClick={() => cambiarCantidad(item.id, 1)}
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
                     >
                       <i className="bi bi-plus"></i>
                     </Button>
                   </div>
                 </div>
                 <p className="price me-3">
-                  {formatearPrecio(item.precio * item.cantidad)}
+                  {formatearPrecio(item.precio * item.quantity)}
                 </p>
                 <Button
                   variant="danger"
                   size="sm"
-                  onClick={() => eliminarProducto(item.id)}
+                  onClick={() => removeFromCart(item.id)}
                 >
                   <i className="bi bi-trash"></i>
                 </Button>
               </div>
-            ))
-          )}
+            ))}
         </Col>
 
         {/* 🧾 Resumen y botones */}
@@ -156,6 +115,11 @@ export const CarroCompras = () => {
             <h5 className="mb-3">
               TOTAL: <span className="price">{formatearPrecio(total)}</span>
             </h5>
+            {descuento > 0 && (
+              <p className="text-success">
+                Descuento: -{formatearPrecio(descuento)}
+              </p>
+            )}
             <Form>
               <Form.Label>Ingrese el cupón de descuento</Form.Label>
               <div className="input-group mb-3">
@@ -175,7 +139,7 @@ export const CarroCompras = () => {
                 <Link
                   to="/detalle-compra"
                   className={`btn btn-success btn-lg w-100 ${
-                    carrito.length === 0 ? "disabled" : ""
+                    cartItems.length === 0 ? "disabled" : ""
                   }`}
                 >
                   Ir a Detalle de Compra 🧾
