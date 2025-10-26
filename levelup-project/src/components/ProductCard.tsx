@@ -13,7 +13,11 @@ export const ProductCard = ({ producto }: Props) => {
       <div className="producto">
         <div className="imagen-wrapper">
           <img
-            src={producto.imagen || "https://via.placeholder.com/300x300"}
+            src={
+              producto.imagenes && producto.imagenes.length > 0
+                ? producto.imagenes[0]
+                : "https://via.placeholder.com/300x300?text=Sin+Imagen"
+            }
             alt={producto.nombre}
             className="imagen-producto"
           />
