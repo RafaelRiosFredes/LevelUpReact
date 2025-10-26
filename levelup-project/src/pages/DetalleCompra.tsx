@@ -52,6 +52,24 @@ export const DetalleCompra = () => {
 
     // Simulación de una llamada a una API de pago
     setTimeout(() => {
+      // 1. Leer las órdenes anteriores de localStorage
+      const ordenesGuardadas = JSON.parse(localStorage.getItem("ordenes_compra") || "[]");
+
+      // 2. Crear el nuevo objeto de la orden
+      const nuevaOrden = {
+        id: Date.now(), // Un ID único basado en la fecha
+        fecha: new Date().toISOString(),
+        cliente: { nombre, apellido, correo, calle, departamento, region, comuna, indicaciones },
+        items: cartItems, // Los items que vienen del contexto del carrito
+        total: total,     // El total calculado
+      };
+
+      // 3. Añadir la nueva orden a la lista
+      const ordenesActualizadas = [...ordenesGuardadas, nuevaOrden];
+
+      // 4. Guardar la lista actualizada en localStorage
+      localStorage.setItem("ordenes_compra", JSON.stringify(ordenesActualizadas));
+
       setMensaje({
         tipo: "success",
         texto: `✅ ¡Gracias por tu compra, ${nombre || "cliente"}! Tu pago por ${formatPrice(total)} fue exitoso.`,
