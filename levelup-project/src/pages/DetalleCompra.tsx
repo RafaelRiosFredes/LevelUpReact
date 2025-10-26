@@ -1,17 +1,13 @@
-import { useEffect, useState } from "react";
-import { Container, Table, Form, Row, Col, Button, Card, Alert } from "react-bootstrap";
+import { useState } from "react";
+import { Container, Table, Form, Row, Col, Button, Card, Alert, Spinner } from "react-bootstrap";
+import { Link, useNavigate } from "react-router-dom";
 import "../assets/styles.css";
-
-interface ProductoCarrito {
-  nombre: string;
-  precio: number;
-  cantidad: number;
-  imagen: string;
-}
+import { useCart } from "./CartContext";
 
 export const DetalleCompra = () => {
-  const [carrito, setCarrito] = useState<ProductoCarrito[]>([]);
-  const [total, setTotal] = useState(0);
+  // ✅ Usamos el contexto para obtener el estado y las funciones del carrito
+  const { cartItems, clearCart } = useCart();
+  const navigate = useNavigate();
 
   // Datos del cliente
   const [nombre, setNombre] = useState("");
@@ -26,37 +22,61 @@ export const DetalleCompra = () => {
   // Pago
   const [tarjeta, setTarjeta] = useState("");
   const [mensaje, setMensaje] = useState<{ tipo: "success" | "danger"; texto: string } | null>(null);
+  const [procesando, setProcesando] = useState(false);
 
-  useEffect(() => {
-    const data = JSON.parse(localStorage.getItem("carrito") || "[]");
-    setCarrito(data);
-    const totalCalc = data.reduce(
-      (acc: number, item: ProductoCarrito) => acc + item.precio * item.cantidad,
-      0
-    );
-    setTotal(totalCalc);
-  }, []);
+  // ✅ El total se calcula directamente desde los items del contexto
+  const total = cartItems.reduce(
+    (acc, item) => acc + item.precio * item.quantity,
+    0
+  );
 
   const formatPrice = (value: number) =>
     "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-  const handlePagar = () => {
-    if (tarjeta.trim().length === 16) {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+
+    // Usamos la validación nativa del navegador
+    if (form.checkValidity() === false || tarjeta.trim().length !== 16) {
+      event.stopPropagation();
+      setMensaje({
+        tipo: "danger",
+        texto: "❌ Por favor, complete todos los campos obligatorios. El número de tarjeta debe tener 16 dígitos.",
+      });
+      return;
+    }
+
+    setProcesando(true);
+    setMensaje(null);
+
+    // Simulación de una llamada a una API de pago
+    setTimeout(() => {
       setMensaje({
         tipo: "success",
         texto: `✅ ¡Gracias por tu compra, ${nombre || "cliente"}! Tu pago por ${formatPrice(total)} fue exitoso.`,
       });
-      localStorage.removeItem("carrito");
-      window.dispatchEvent(new Event("carritoActualizado"));
-      setCarrito([]);
-      setTarjeta("");
-    } else {
-      setMensaje({
-        tipo: "danger",
-        texto: "❌ Error: número de tarjeta inválido. Debe contener 16 dígitos.",
-      });
-    }
+      clearCart();
+      setProcesando(false);
+    }, 2000); // Simula una espera de 2 segundos
   };
+
+  // Si el carrito está vacío y no hay un mensaje de éxito, redirigir o mostrar un aviso.
+  if (cartItems.length === 0 && !mensaje) {
+    return (
+      <Container className="py-5 text-center text-white">
+        <Alert variant="info">
+          <Alert.Heading>Tu carrito está vacío</Alert.Heading>
+          <p>
+            No hay productos para comprar. Vuelve a la tienda para seguir explorando.
+          </p>
+          <Link to="/">
+            <Button variant="success">Ir a la tienda</Button>
+          </Link>
+        </Alert>
+      </Container>
+    );
+  }
 
   return (
     <Container className="py-5 text-white">
@@ -82,20 +102,20 @@ export const DetalleCompra = () => {
             </tr>
           </thead>
           <tbody>
-            {carrito.length > 0 ? (
-              carrito.map((item, index) => (
+            {cartItems.length > 0 ? (
+              cartItems.map((item, index) => (
                 <tr key={index}>
                   <td style={{ width: "80px" }}>
                     <img
-                      src={item.imagen}
+                      src={item.imagenes[0]} // Asumiendo que la primera imagen es la principal
                       alt={item.nombre}
                       style={{ width: "60px", borderRadius: "8px" }}
                     />
                   </td>
                   <td>{item.nombre}</td>
                   <td>{formatPrice(item.precio)}</td>
-                  <td>{item.cantidad}</td>
-                  <td>{formatPrice(item.precio * item.cantidad)}</td>
+                  <td>{item.quantity}</td>
+                  <td>{formatPrice(item.precio * item.quantity)}</td>
                 </tr>
               ))
             ) : (
@@ -109,19 +129,34 @@ export const DetalleCompra = () => {
         </Table>
       </Card>
 
+      {/* Si ya se pagó, no mostrar los formularios */}
+      {mensaje?.tipo === 'success' ? (
+        <Alert
+          variant="success"
+          className="mt-3 text-center fw-bold"
+        >
+          {mensaje.texto}
+          <hr />
+          <Button variant="outline-success" onClick={() => navigate('/')}>Volver a la tienda</Button>
+        </Alert>
+      ) : (
+      <>
+      <Form noValidate onSubmit={handleSubmit}>
       {/* 🧍 Información del cliente */}
       <Card className="bg-dark text-white mb-4 p-4">
         <h5 className="mb-3 text-info">Información del cliente</h5>
         <Row className="g-3">
-          <Col md={6}>
+          <Col md={6}> 
             <Form.Group>
               <Form.Label>Nombre*</Form.Label>
               <Form.Control
                 type="text"
                 placeholder="Ej: Ana"
                 value={nombre}
+                required
                 onChange={(e) => setNombre(e.target.value)}
-              />
+              /> 
+              <Form.Control.Feedback type="invalid">Por favor, ingrese su nombre.</Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md={6}>
@@ -131,8 +166,10 @@ export const DetalleCompra = () => {
                 type="text"
                 placeholder="Ej: Pérez"
                 value={apellido}
+                required
                 onChange={(e) => setApellido(e.target.value)}
-              />
+              /> 
+              <Form.Control.Feedback type="invalid">Por favor, ingrese sus apellidos.</Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md={12}>
@@ -142,8 +179,10 @@ export const DetalleCompra = () => {
                 type="email"
                 placeholder="Ej: ana.perez@email.com"
                 value={correo}
+                required
                 onChange={(e) => setCorreo(e.target.value)}
-              />
+              /> 
+              <Form.Control.Feedback type="invalid">Por favor, ingrese un correo válido.</Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
@@ -160,8 +199,10 @@ export const DetalleCompra = () => {
                 type="text"
                 placeholder="Ej: Av. Los Héroes 1234"
                 value={calle}
+                required
                 onChange={(e) => setCalle(e.target.value)}
-              />
+              /> 
+              <Form.Control.Feedback type="invalid">Por favor, ingrese su calle.</Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md={4}>
@@ -180,6 +221,7 @@ export const DetalleCompra = () => {
               <Form.Label>Región*</Form.Label>
               <Form.Select
                 value={region}
+                required
                 onChange={(e) => setRegion(e.target.value)}
               >
                 <option value="">Seleccione una región</option>
@@ -187,7 +229,8 @@ export const DetalleCompra = () => {
                 <option>Valparaíso</option>
                 <option>Biobío</option>
                 <option>Antofagasta</option>
-              </Form.Select>
+              </Form.Select> 
+              <Form.Control.Feedback type="invalid">Por favor, seleccione una región.</Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md={6}>
@@ -197,8 +240,10 @@ export const DetalleCompra = () => {
                 type="text"
                 placeholder="Ej: Cerrillos"
                 value={comuna}
+                required
                 onChange={(e) => setComuna(e.target.value)}
-              />
+              /> 
+              <Form.Control.Feedback type="invalid">Por favor, ingrese su comuna.</Form.Control.Feedback>
             </Form.Group>
           </Col>
           <Col md={12}>
@@ -228,23 +273,30 @@ export const DetalleCompra = () => {
                 maxLength={16}
                 placeholder="Ej: 1234567812345678"
                 value={tarjeta}
+                required
                 onChange={(e) => setTarjeta(e.target.value.replace(/\D/g, ""))}
-              />
+              /> 
               <Form.Text className="text-muted">
                 Solo se permiten 16 dígitos.
               </Form.Text>
+              <Form.Control.Feedback type="invalid">Por favor, ingrese un número de tarjeta de 16 dígitos.</Form.Control.Feedback>
             </Form.Group>
           </Col>
         </Row>
 
         <div className="text-end mt-4">
           <Button
+            type="submit"
             variant="success"
             size="lg"
-            onClick={handlePagar}
-            disabled={carrito.length === 0}
+            disabled={cartItems.length === 0 || procesando}
           >
-            Pagar ahora {formatPrice(total)}
+            {procesando ? (
+              <>
+                <Spinner as="span" animation="border" size="sm" role="status" aria-hidden="true" />
+                <span className="ms-2">Procesando...</span>
+              </>
+            ) : `Pagar ahora ${formatPrice(total)}`}
           </Button>
         </div>
 
@@ -260,6 +312,9 @@ export const DetalleCompra = () => {
           </Alert>
         )}
       </Card>
+      </Form>
+      </>
+      )}
     </Container>
   );
 };
