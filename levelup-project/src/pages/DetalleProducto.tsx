@@ -1,22 +1,28 @@
-import { useEffect, useState } from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { useEffect, useState, useCallback } from "react";
+import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "../assets/styles.css";
 import type { Producto } from "../types";
 
 export const DetalleProducto = () => {
   const [producto, setProducto] = useState<Producto | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const [relacionados, setRelacionados] = useState<Producto[]>([]);
   const [calificacion, setCalificacion] = useState(0);
   const [imagenSeleccionada, setImagenSeleccionada] = useState<string | null>(null);
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const idProducto = searchParams.get("id");
-
-  useEffect(() => {
-    if (!idProducto) return;
-
-    const cargarDatos = async () => {
+  
+  const cargarDatos = useCallback(async () => {
+    if (!idProducto) {
+      setError("No se ha especificado un ID de producto.");
+      setLoading(false);
+      return;
+    }
+    setLoading(true);
+    setError(null);
       try {
         let productos: Producto[] = [];
         const productosGuardados = localStorage.getItem("productos");
@@ -39,7 +45,12 @@ export const DetalleProducto = () => {
         const encontrado = productos.find(
           (p) => String(p.id) === String(idProducto)
         );
-        setProducto(encontrado || null);
+
+        if (!encontrado) {
+          throw new Error("Producto no encontrado.");
+        }
+
+        setProducto(encontrado);
 
         if (encontrado?.imagenes?.length) {
           setImagenSeleccionada(encontrado.imagenes[0]);
@@ -53,12 +64,17 @@ export const DetalleProducto = () => {
           setRelacionados(rel.slice(0, 10));
         }
       } catch (err) {
-        console.error("Error al cargar producto:", err);
+        const errorMessage = err instanceof Error ? err.message : "Ocurrió un error desconocido";
+        console.error("❌ Error al cargar producto:", errorMessage);
+        setError(errorMessage);
+      } finally {
+        setLoading(false);
       }
-    };
+  }, [idProducto]);
 
+  useEffect(() => {
     cargarDatos();
-  }, [idProducto]); // se ejecuta cada vez que el id del producto cambia
+  }, [cargarDatos]); // se ejecuta cada vez que el id del producto cambia
 
   const formatPrice = (value: number) =>
     "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -80,13 +96,37 @@ export const DetalleProducto = () => {
     setImagenSeleccionada(producto.imagenes[nuevoIndice]);
   };
 
-
-  if (!producto)
+  if (loading) {
     return (
       <Container className="text-center py-5 text-white">
-        <p>Cargando producto...</p>
+        <Spinner animation="border" variant="success" />
+        <p className="mt-2">Cargando producto...</p>
       </Container>
     );
+  }
+
+  if (error) {
+    return (
+      <Container className="py-5">
+        <Alert variant="danger">
+          <Alert.Heading>¡Oh, no! Ha ocurrido un error.</Alert.Heading>
+          <p>{error}</p>
+        </Alert>
+      </Container>
+    );
+  }
+
+  // Si la carga terminó, no hay error, pero el producto es null, mostramos un mensaje.
+  // Esto satisface a TypeScript y maneja un caso borde.
+  if (!producto) {
+    return (
+      <Container className="py-5">
+        <Alert variant="warning">
+          <p>No se pudo cargar la información del producto.</p>
+        </Alert>
+      </Container>
+    );
+  }
 
   return (
     <Container className="py-5 text-white">
@@ -95,8 +135,7 @@ export const DetalleProducto = () => {
         <a href="/" className="text-info text-decoration-none">
           Inicio
         </a>{" "}
-        &gt;{" "}
-        <span className="text-info">{producto.categoria}</span> &gt;{" "}
+        &gt; <span className="text-info">{producto.categoria}</span> &gt;{" "}
         <span>{producto.nombre}</span>
       </p>
 
