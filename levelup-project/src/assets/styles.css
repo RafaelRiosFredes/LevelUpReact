@@ -8,125 +8,165 @@ body {
   padding: 0;
 }
 
-/* ===== FORMULARIO DE EDICIÓN ===== */
-
-.table-container form,
-.table-container .row {
+/* ======== ESTILO GENERAL ======== */
+body {
+  background-color: #000;
   color: #fff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
 }
 
-.form-label {
-  color: #39ff14 !important;
-  font-weight: 500;
-  text-shadow: 0 0 8px #39ff14;
+/* ======== SECCIÓN PRINCIPAL ======== */
+.admin-dashboard {
+  background-color: #000;
+  min-height: 100vh;
+  padding-top: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
-.form-control {
-  background-color: rgba(20, 20, 20, 0.9);
-  border: 1px solid #8000ff;
-  color: #fff;
-  border-radius: 8px;
-  transition: all 0.3s ease;
+/* ======== CONTENIDO INTERIOR ======== */
+.admin-content {
+  width: 100%;
+  max-width: 800px;
+  background-color: #111;
+  border: 2px solid #6f00ff;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(111, 0, 255, 0.6);
+  padding: 30px;
+  margin-top: 40px;
 }
 
-.form-control:focus {
+/* ======== ENCABEZADO ======== */
+.admin-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.admin-header h1 {
+  color: #ccc;
+  font-size: 1.8rem;
+  text-shadow: 0 0 10px #6f00ff;
+}
+
+.admin-header p {
+  color: #ccc;
+  font-size: 1rem;
+}
+
+/* ======== FORMULARIO ======== */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  color: #39ff14;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.edit-form input {
+  background-color: #1a1a1a;
+  border: 1px solid #6f00ff;
+  border-radius: 6px;
+  color: white;
+  padding: 10px;
+  font-size: 1rem;
+}
+
+.edit-form input:focus {
+  outline: none;
   border-color: #39ff14;
-  box-shadow: 0 0 12px #39ff14;
-  background-color: rgba(25, 25, 25, 1);
-  color: #fff;
+  box-shadow: 0 0 8px #39ff14;
 }
 
-.form-control::placeholder {
-  color: #bbb;
+/* ======== BOTONES ======== */
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
 }
-
-/* ===== BOTONES ===== */
 
 .btn {
+  border: none;
   border-radius: 8px;
-  font-weight: 500;
-  transition: all 0.25s ease;
+  padding: 10px 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
 }
 
 .btn-success {
   background-color: #39ff14;
-  border: 1px solid #39ff14;
   color: #000;
 }
 
 .btn-success:hover {
-  background-color: #4cff24;
-  box-shadow: 0 0 10px #39ff14;
-}
-
-.btn-danger {
-  background-color: #8000ff;
-  border: 1px solid #8000ff;
-  color: #fff;
-}
-
-.btn-danger:hover {
-  background-color: #a020ff;
-  box-shadow: 0 0 15px #8000ff;
+  background-color: #2ecc71;
 }
 
 .btn-secondary {
-  background-color: #222;
-  border: 1px solid #666;
+  background-color: #6f00ff;
   color: #fff;
 }
 
 .btn-secondary:hover {
-  background-color: #333;
-  box-shadow: 0 0 10px #8000ff;
+  background-color: #5800cc;
 }
 
-/* ===== AJUSTES DE CONTENEDOR ===== */
-.table-container {
-  background-color: rgba(10, 10, 10, 0.95);
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px #39ff14, 0 0 40px #8000ff;
-}
-
-.d-flex.gap-2 button i {
-  margin-right: 6px;
-}
-
-/* ===== FEEDBACK VISUAL ===== */
-.alerta-exito {
+/* ======== MENSAJES ======== */
+.mensaje-exito {
+  margin-top: 20px;
+  text-align: center;
   color: #39ff14;
   font-weight: bold;
+  text-shadow: 0 0 10px #39ff14;
 }
 
-.alerta-error {
-  color: #ff4040;
-  font-weight: bold;
+.no-users {
+  text-align: center;
+  color: #bbb;
+  margin-top: 50px;
+  font-size: 1.1rem;
+}
+
+/* ======== RESPONSIVO ======== */
+@media (max-width: 768px) {
+  .admin-content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .btn {
+    width: 48%;
+  }
 }
 
 /* ======== NAVBAR ======== */
-.navbar {
-  padding: 0.8rem 1rem;
+.navbar-admin {
+  background-color: #000;
+  border-bottom: 2px solid #8000ff;
+  padding: 16px 24px;
+  box-shadow: 0 0 15px #39ff14, 0 0 30px #8000ff;
 }
-.navbar-brand {
-  color: #39ff14 !important;
-  font-weight: bold;
-  font-size: 1.3rem;
+.navbar-admin .navbar-brand {
+  cursor: pointer;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+.navbar-admin .navbar-brand span {
+  color: #39ff14;
 }
 
-.search-bar input {
-  border-radius: 20px;
-  padding: 5px 15px;
-}
-.search-bar button {
-  border-radius: 20px;
-  color: #39ff14;
-  border-color: #39ff14;
-}
-.search-bar button:hover {
-  background-color: #39ff14;
-  color: #000;
-}
 
 /* ======== FOOTER ======== */
 footer {

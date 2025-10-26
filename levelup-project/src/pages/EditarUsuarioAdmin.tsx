@@ -1,3 +1,4 @@
+import { useNavigate, useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { NavBarAdmin } from "../components/NavBarAdmin";
 import "../assets/styles.css";
@@ -22,50 +23,31 @@ function guardarUsuarios(arr: Usuario[]) {
 }
 
 export const EditarUsuarioAdmin = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
   const [usuario, setUsuario] = useState<Usuario | null>(null);
+  const [mensaje, setMensaje] = useState<string>("");
 
-  // Como solo estamos en "/", toma el primer usuario disponible
   useEffect(() => {
-    const lista = leerUsuarios();
-    setUsuario(lista[0] ?? null);
-  }, []);
+    const data = JSON.parse(localStorage.getItem("usuarios") || "[]");
+    const user = data.find((u: Usuario) => String(u.id) === String(id));
+    setUsuario(user || null);
+  }, [id]);
 
-  const crearUsuarioDemo = () => {
-    const demo: Usuario = {
-      id: 1,
-      nombre: "Francisca Arancibia",
-      email: "fran@levelup.cl",
-      telefono: "+56912345678",
-      fechaNacimiento: "2001-07-12",
-      region: "Valparaíso",
-      comuna: "Los Andes",
-      descuento: 10,
-    };
-    guardarUsuarios([demo]);
-    setUsuario(demo);
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (usuario) {
+      setUsuario({ ...usuario, [e.target.name]: e.target.value });
+    }
   };
 
-  const handleChange = (campo: keyof Usuario, valor: string | number) => {
+  const handleGuardar = (e: React.FormEvent) => {
+    e.preventDefault();
     if (!usuario) return;
-    setUsuario({ ...usuario, [campo]: valor as any });
-  };
 
-  const handleSave = () => {
-    if (!usuario) return;
-    const lista = leerUsuarios();
-    const i = lista.findIndex(u => u.id === usuario.id);
-    if (i >= 0) lista[i] = usuario; else lista.push(usuario);
-    guardarUsuarios(lista);
-    alert("✅ Usuario actualizado");
-  };
-
-  const handleDelete = () => {
-    if (!usuario) return;
-    if (!confirm(`¿Eliminar a "${usuario.nombre}" (ID ${usuario.id})?`)) return;
-    const lista = leerUsuarios().filter(u => u.id !== usuario.id);
-    guardarUsuarios(lista);
-    setUsuario(lista[0] ?? null);
-    alert("🗑️ Usuario eliminado");
+    const data = JSON.parse(localStorage.getItem("usuarios") || "[]");
+    const actualizados = data.map((u: Usuario) => (u.id === usuario.id ? usuario : u));
+    localStorage.setItem("usuarios", JSON.stringify(actualizados));
+    setMensaje(" Usuario actualizado.");
   };
 
   return (
@@ -74,90 +56,61 @@ export const EditarUsuarioAdmin = () => {
       <section className="admin-dashboard">
         <div className="admin-content">
           <div className="admin-header">
-            <h1>✏️ Editar Usuario</h1>
-            <p>Vista de edición funcionando directamente en <code>/</code>.</p>
+            <h1>Edita un  usuario</h1>
+            <p>¡Recuerda guardar los cambios!</p>
           </div>
 
-          {!usuario ? (
-            <div className="table-container" style={{ padding: 24, textAlign: "center" }}>
-              <p className="no-users">No hay usuarios en el sistema.</p>
-              <button className="btn btn-success" onClick={crearUsuarioDemo}>
-                Crear usuario de prueba
-              </button>
-            </div>
-          ) : (
-            <div className="table-container" style={{ padding: 24 }}>
-              <div className="row g-3">
-                <div className="col-md-6">
-                  <label className="form-label text-light">Nombre</label>
-                  <input
-                    className="form-control"
-                    value={usuario.nombre}
-                    onChange={(e) => handleChange("nombre", e.target.value)}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <label className="form-label text-light">Correo</label>
-                  <input
-                    className="form-control"
-                    value={usuario.email}
-                    onChange={(e) => handleChange("email", e.target.value)}
-                  />
-                </div>
-                <div className="col-md-4">
-                  <label className="form-label text-light">Teléfono</label>
-                  <input
-                    className="form-control"
-                    value={usuario.telefono || ""}
-                    onChange={(e) => handleChange("telefono", e.target.value)}
-                  />
-                </div>
-                <div className="col-md-4">
-                  <label className="form-label text-light">Nacimiento</label>
-                  <input
-                    type="date"
-                    className="form-control"
-                    value={usuario.fechaNacimiento || ""}
-                    onChange={(e) => handleChange("fechaNacimiento", e.target.value)}
-                  />
-                </div>
-                <div className="col-md-4">
-                  <label className="form-label text-light">Descuento (%)</label>
-                  <input
-                    type="number"
-                    className="form-control"
-                    value={usuario.descuento ?? 0}
-                    onChange={(e) => handleChange("descuento", Number(e.target.value))}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <label className="form-label text-light">Región</label>
-                  <input
-                    className="form-control"
-                    value={usuario.region}
-                    onChange={(e) => handleChange("region", e.target.value)}
-                  />
-                </div>
-                <div className="col-md-6">
-                  <label className="form-label text-light">Comuna</label>
-                  <input
-                    className="form-control"
-                    value={usuario.comuna}
-                    onChange={(e) => handleChange("comuna", e.target.value)}
-                  />
-                </div>
+          {usuario && (
+            <form onSubmit={handleGuardar} className="edit-form neon-box">
+              <div className="form-group">
+                <label>Nombre</label>
+                <input type="text" name="nombre" value={usuario.nombre} onChange={handleChange} />
               </div>
 
-              <div className="d-flex gap-2 mt-4">
-                <button className="btn btn-success" onClick={handleSave}>
-                  <i className="bi bi-check2"></i> Guardar cambios
-                </button>
-                <button className="btn btn-danger" onClick={handleDelete}>
-                  <i className="bi bi-trash3"></i> Eliminar usuario
+              <div className="form-group">
+                <label>Correo</label>
+                <input type="email" name="email" value={usuario.email} onChange={handleChange} />
+              </div>
+
+              <div className="form-group">
+                <label>Teléfono</label>
+                <input type="text" name="telefono" value={usuario.telefono} onChange={handleChange} />
+              </div>
+
+              <div className="form-group">
+                <label>Fecha de Nacimiento</label>
+                <input
+                  type="date"
+                  name="fechaNacimiento"
+                  value={usuario.fechaNacimiento}
+                  onChange={handleChange}
+                />
+              </div>
+
+              <div className="form-group">
+                <label>Región</label>
+                <input type="text" name="region" value={usuario.region} onChange={handleChange} />
+              </div>
+
+              <div className="form-group">
+                <label>Comuna</label>
+                <input type="text" name="comuna" value={usuario.comuna} onChange={handleChange} />
+              </div>
+
+              <div className="form-actions">
+                <button type="submit" className="btn btn-success">Guardar cambios</button>
+                <button
+                  type="button"
+                  className="btn btn-secondary"
+                  onClick={() => navigate("/admin/usuarios")}
+                >
+                  Volver
                 </button>
               </div>
-            </div>
+            </form>
           )}
+
+          {mensaje && <p className="mensaje-exito">{mensaje}</p>}
         </div>
       </section>
     </>
