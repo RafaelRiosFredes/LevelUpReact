@@ -10,14 +10,11 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        {/* 🔹 Historial de usuario (vista por ID) */}
-        <Route path="/admin/historialUsuario/:id" element={<HistorialUsuarioAdmin />} />
+        {/* Historial de usuario*/}
+        <Route path="/admin/historial/:id" element={<HistorialUsuarioAdmin />} />
 
-        {/*  Detalle de compra (con ID de orden) */}
-       {/*  <Route path="/admin/detalleCompra/:id" element={<DetalleCompra />} /> */} 
-
-        {/* Ruta de prueba (opcional, se puede borrar luego del merge) */}
-        <Route path="/" element={<HistorialUsuarioAdmin />} />
+        {/*  Detalle de compra con ID de orden */}
+       {/* <Route path="/admin/detalleCompra/:id" element={<DetalleCompra />} /> */} 
         
       </Routes>
     </BrowserRouter>
