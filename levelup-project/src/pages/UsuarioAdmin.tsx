@@ -31,7 +31,6 @@ export const UsuarioAdmin = () => {
         <div className="admin-content">
           <div className="admin-header">
             <h1>Gestión de Usuarios</h1>
-            <p>Visualiza y administra todos los usuarios registrados en el sistema.</p>
           </div>
 
           {usuarios.length === 0 ? (
