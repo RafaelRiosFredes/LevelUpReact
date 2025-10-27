@@ -143,6 +143,7 @@ export const AdminProductos = () => {
                   placeholder="Buscar producto..."
                   value={busqueda}
                   onChange={(e) => setBusqueda(e.target.value)}
+                  className="admin-search-input"
                   style={{ textAlign: 'left' }}
                 />
               </Col>
