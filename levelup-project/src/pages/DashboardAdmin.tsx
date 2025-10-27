@@ -24,17 +24,21 @@ export const DashboardAdmin = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(true);
-    try {
-      const ordenesGuardadas = localStorage.getItem("ordenes_compra");
-      const ordenesData = ordenesGuardadas ? JSON.parse(ordenesGuardadas) : [];
-      setOrdenes(Array.isArray(ordenesData) ? ordenesData : []);
-    } catch (error) {
-      console.error("Error al cargar o parsear las órdenes:", error);
-      setOrdenes([]);
-    } finally {
-      setLoading(false);
-    }
+    const fetchOrdenes = async () => {
+      setLoading(true);
+      try {
+        // Use a promise to better simulate real-world data fetching
+        const ordenesGuardadas = await Promise.resolve(localStorage.getItem("ordenes_compra"));
+        const ordenesData = ordenesGuardadas ? JSON.parse(ordenesGuardadas) : [];
+        setOrdenes(Array.isArray(ordenesData) ? ordenesData : []);
+      } catch (error) {
+        console.error("Error al cargar o parsear las órdenes:", error);
+        setOrdenes([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchOrdenes();
   }, []);
 
   // --- Cálculos de Métricas (Versión Robusta) ---
@@ -88,7 +92,11 @@ export const DashboardAdmin = () => {
   const formatPrice = (value: number) => "$" + Math.round(value || 0).toLocaleString("es-CL");
 
   if (loading) {
-    return <div className="text-center mt-5"><Spinner animation="border" variant="success" /></div>;
+    return (
+      <div className="text-center mt-5" role="status" data-testid="loading-spinner">
+        <Spinner animation="border" variant="success" />
+      </div>
+    );
   }
 
   return (
@@ -139,7 +147,7 @@ export const DashboardAdmin = () => {
                           <CartesianGrid strokeDasharray="3 3" stroke="#333" />
                           <XAxis dataKey="name" stroke="#888" />
                           <YAxis stroke="#888" tickFormatter={formatPrice} />
-                          <Tooltip contentStyle={{ backgroundColor: '#111', border: '1px solid #1E90FF' }} formatter={(value: unknown) => typeof value === 'number' ? formatPrice(value) : value} />
+                          <Tooltip contentStyle={{ backgroundColor: '#111', border: '1px solid #1E90FF' }} formatter={(value: number) => formatPrice(value)} />
                           <Legend />
                           <Bar dataKey="ingresos" fill="#1E90FF" name="Ingresos" />
                         </BarChart>

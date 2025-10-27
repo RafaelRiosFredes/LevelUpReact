@@ -1,15 +1,15 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "./assets/styles.css";
 import { DashboardAdmin } from "./pages/DashboardAdmin";
+import { NotFound } from "./pages/NotFound";
 
 const App = () => (
-  <BrowserRouter>
     <Routes>
       <Route path="/admin/dashboard" element={<DashboardAdmin/>} />
+      <Route path="*" element={<NotFound />} />
     </Routes>
-  </BrowserRouter>
 );
 
 export default App;
