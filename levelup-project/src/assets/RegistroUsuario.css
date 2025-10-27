@@ -1,14 +1,17 @@
-/* ======== ESTILO BASE ======== */
-body {
-  background-color: #000;
-  color: #fff;
-  font-family: "Roboto", sans-serif;
-  overflow-x: hidden;
-  margin: 0;
-  padding: 0;
+/*  ESTILO BASE  */
+.title-wrapper {
+  display: none; /* si ya no usas el banner */
 }
 
-/*=== Navbar === */
+body, html {
+  background-color: #000 !important;
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+
+/*  Navbar  */
 .navbar {
   padding: 0.8rem 1rem;
 }
@@ -32,7 +35,7 @@ body {
   color: #000;
 }
 
-/* ======== CONTENEDOR PRINCIPAL ======== */
+/*  CONTENEDOR PRINCIPAL  */
 .RegistroUsuario-box {
   width: 40%;
   min-width: 500px;
@@ -43,11 +46,11 @@ body {
   background: rgba(0, 0, 0, 0.92);
   box-shadow: 0 0 10px #39ff14, 0 0 35px #1e90ff;
   text-align: center;
-
+  padding-top: 100px;
 }
 
 
-/* ======== TÍTULO ======== */
+/*  TÍTULO  */
 .Registro1 {
   font-weight: bold;
   font-size: 2.8rem;
@@ -57,7 +60,7 @@ body {
   letter-spacing: 1px;
 }
 
-/* ======== CAMPOS DEL FORMULARIO ======== */
+/*  CAMPOS DEL FORMULARIO  */
 label {
   font-weight: bold;
   color: #ededed;
@@ -91,7 +94,7 @@ select:focus {
 
 
 
-/* ======== BOTÓN PRINCIPAL ======== */
+/*  BOTÓN PRINCIPAL  */
 .boton-registro {
   width: 30%;
   padding: 5px;
@@ -109,14 +112,14 @@ select:focus {
   box-shadow: 0 0 10px #00ffff, 0 0 20px #00ff00;
 }
 
-/* ======== MENSAJES DE VALIDACIÓN ======== */
+/*  MENSAJES DE VALIDACIÓN  */
 p {
   font-size: 1rem;
   margin-top: 15px;
   line-height: 1.4;
 }
 
-/* ======== BANNER SUPERIOR ======== */
+/*  BANNER SUPERIOR  */
 .title-wrapper {
   width: 100%;
   height: 400px;
@@ -152,19 +155,7 @@ p {
   letter-spacing: 2px;
 }
 
-/* ======== SCROLLBAR PERSONALIZADO ======== */
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-thumb {
-  background: linear-gradient(#39ff14, #1e90ff);
-  border-radius: 10px;
-}
-::-webkit-scrollbar-track {
-  background: #000;
-}
-
-/* ======== AJUSTES SEGÚN RESOLUCIÓN ======== */
+/* ======= AJUSTES SEGÚN RESOLUCIÓN  */
 /* Monitores grandes (2K y 4K) */
 @media (min-width: 1600px) {
   .RegistroUsuario-box {
