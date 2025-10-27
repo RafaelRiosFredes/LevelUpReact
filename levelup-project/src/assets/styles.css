@@ -13,7 +13,6 @@ body {
   background-color: #000;
   color: #fff;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-
 }
 
 /* BOX PRINCIPAL */
@@ -45,12 +44,12 @@ body {
 
 .admin-header h1 {
   color: #fff;
-  font-size: 1.8rem;
+  font-size: 28.8px; 
 }
 
 .admin-header p {
   color: #ccc;
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 /* FORMULARIO  */
@@ -64,6 +63,7 @@ body {
   display: flex;
   flex-direction: column;
 }
+
 /*lABELS */
 .form-group label {
   color: #fff;
@@ -86,7 +86,7 @@ body {
   border-radius: 6px;
   color: white;
   padding: 10px;
-  font-size: 1rem;
+  font-size: 16px; 
 }
 
 .edit-form input:focus {
@@ -95,27 +95,49 @@ body {
 }
 
 /*  CAMPOS DE REGIÓN Y COMUNA */
-.edit-form select {
-  background-color: #1a1a1a;      
-  border: 1px solid #1a1a1a;      
-  color: white;                   
-  padding: 10px;                 
-  border-radius: 8px;            
-  font-size: 1rem;                
-  transition: 0.3s ease;          
-  cursor: pointer;                
+.selector-region {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
 }
 
-/* Efecto al enfocar o seleccionar */
+.titulo-RC {
+  color: #ccc;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 16px; 
+}
+
+.select-row {
+  display: flex;
+  gap: 20px; 
+  justify-content: space-between;
+}
+
+.select-row select {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background-color: #1e1e1e;
+  color: #fff;
+  font-size: 15.2px; 
+  transition: background-color 0.3s;
+}
+
+.select-row select:focus {
+  outline: none;
+  background-color: #2b2b2b;
+}
+
 .edit-form select:focus {
   outline: none;
   border-color: #6f00ff;
   box-shadow: 0 0 8px #39ff14;  
 } 
 
-
 /*BOTONES*/
-
 .btn {
   background-color: transparent !important;
   border: 1px solid #6f00ff !important;
@@ -133,7 +155,6 @@ body {
   transform: scale(1.05);
 }
 
-
 /*  MENSAJES */
 .mensaje-exito {
   margin-top: 20px;
@@ -146,7 +167,7 @@ body {
   text-align: center;
   color: #bbb;
   margin-top: 50px;
-  font-size: 1.1rem;
+  font-size: 17.6px; 
 }
 
 /*  RESPONSIVO  */
@@ -177,14 +198,13 @@ body {
   color: #39ff14;
 }
 
-
 /* FOOTER*/
 footer {
   background-color: #000;
   color: #888;
   text-align: center;
   padding: 20px 10px;
-  font-size: 0.9rem;
+  font-size: 14.4px; 
   margin-top: 40px;
   border-top: 1px solid #111;
 }

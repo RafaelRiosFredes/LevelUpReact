@@ -10,7 +10,7 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<EditarUsuarioAdmin />} />
+        <Route path="/editar/:id" element={<EditarUsuarioAdmin />} />
       </Routes>
     </BrowserRouter>
   );
