@@ -1,9 +1,10 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UsuarioAdmin } from "./pages/UsuarioAdmin";
 
-// LAS RUTAS DEBEN SER DESCOMENTADAS DESPUÉS DEL MERGE
+// Rutas que se habilitarán después del merge
 // import { EditarUsuarioAdmin } from "./pages/EditarUsuarioAdmin";
-// import { HistorialUsuario } from "./pages/HistorialUsuario";
+// import { HistorialUsuarioAdmin } from "./pages/HistorialUsuarioAdmin";
+// import { Home } from "./pages/Home";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -12,21 +13,21 @@ import "./assets/styles.css";
 const App = () => {
   return (
     <BrowserRouter>
-<Routes>
+      <Routes>
 
-  <Route path="/" element={<UsuarioAdmin />} />
+        {/* Ruta temporal  */}
+        <Route path="/" element={<UsuarioAdmin />} />
 
-  {/* LAS RUTAS DEBEN SER DESCOMENTADAS DESPUÉS DEL MERGE*/}
-  {/* Página pública */}
-  {/*<Route path="/" element={<Home />} />*/}
+        {/* Rutas del panel admin (activar después del merge) */}
+        {/*
+        <Route path="/admin/usuarios" element={<UsuarioAdmin />} />
+        <Route path="/admin/editar/:id" element={<EditarUsuarioAdmin />} />
+        <Route path="/admin/historialUsuario/:id" element={<HistorialUsuarioAdmin />} />
+        */}
 
-  {/* Panel de administración */}
-  {/*<Route path="/admin/usuarios" element={<UsuarioAdmin />} />*/}
-  {/*<Route path="editar/:id" element={<EditarUsuarioAdmin />} />*/}
-  {/*<Route path="/historial/:id" element={<HistorialUsuario />} />*/}
-  {/* LAS RUTAS DEBEN SER DESCOMENTADAS DESPUÉS DEL MERGE*/}
-</Routes>
-
+        {/*  Ruta home del sitio web) */}
+        {/* <Route path="/" element={<Home />} /> */}
+      </Routes>
     </BrowserRouter>
   );
 };
