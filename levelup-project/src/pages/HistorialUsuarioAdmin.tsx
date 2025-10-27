@@ -24,27 +24,35 @@ interface Orden {
 
 export const HistorialUsuarioAdmin = () => {
   const { id } = useParams<{ id: string }>();
+ 
   const navigate = useNavigate();
 
+  // Estado donde se guardan las órdenes del usuario
   const [ordenes, setOrdenes] = useState<Orden[]>([]);
+  
+  // Estado para controlar si carga la información
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Lee las órdenes desde localStorage
     const ordenesGuardadas = JSON.parse(localStorage.getItem("ordenes_compra") || "[]");
 
-    // Si hay un ID, filtra solo las del usuario
+    //  filtra solo las del usuario por ID
     const filtradas = id
       ? ordenesGuardadas.filter((orden: Orden) => String(orden.cliente?.id) === String(id))
       : ordenesGuardadas;
 
+      // guarda las órdenes filtradas 
     setOrdenes(filtradas);
+  
     setLoading(false);
   }, [id]);
 
+  // Función para darle formato al precio 
   const formatPrice = (value: number) =>
     "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
+  // Función para mostrar la fecha en formato (dd-mm-aaaa)
   const formatDate = (dateString: string) => {
     const date = new Date(dateString);
     return date.toLocaleString("es-CL", {
@@ -54,6 +62,7 @@ export const HistorialUsuarioAdmin = () => {
     });
   };
 
+  // pantalla de historial de compras del usuario
   return (
     <>
       <NavBarAdmin />

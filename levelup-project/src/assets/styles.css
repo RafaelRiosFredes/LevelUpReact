@@ -17,7 +17,7 @@ body {
   padding: 0;
 }
 
-/* ======== HISTORIAL DE COMPRAS ======== */
+/*  HISTORIAL DE COMPRAS  */
 .admin-dashboard {
   background-color: #000;
   min-height: 100vh;
@@ -80,7 +80,7 @@ body {
   border: none;
 }
 
-/* ======== MENSAJE SIN USUARIOS ======== */
+/*  MENSAJE SIN USUARIOS  */
 .no-users {
   text-align: center;
   margin-top: 40px;
