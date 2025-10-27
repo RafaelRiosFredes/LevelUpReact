@@ -79,7 +79,7 @@ export const ProductosPublic = () => {
           </Col>
           <Col md={9}>
             {loading ? (
-              <div className="text-center">
+              <div className="text-center" role="status">
                 <Spinner animation="border" variant="success" />
               </div>
             ) : error ? (
