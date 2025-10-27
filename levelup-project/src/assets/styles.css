@@ -56,50 +56,104 @@ body {
   text-align: center;
 }
 
-.noticias-gamer .news-grid {
+/* ======== NOTICIAS ======== */
+.noticias-gamer {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 60px 0;
+  background: linear-gradient(180deg, #000 0%, #070011 100%);
+  min-height: 100vh;
+}
+
+.noticias-content {
+  width: 100%;
+  max-width: 1200px;
+  padding: 0 30px;
+}
+
+.noticias-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.titulo-noticias {
+  font-size: 2.4rem;
+  color: #39ff14;
+  font-weight: 900;
+  text-shadow: 0 0 10px #39ff14;
+}
+
+.subtitulo-noticias {
+  color: #aaa;
+  font-size: 1.1rem;
+}
+
+.news-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-  gap: 24px;
-  margin-top: 24px;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 30px;
+  justify-items: center;
 }
 
 .news-card {
-  display: flex;
-  flex-direction: column;
-  background: rgba(30,30,30,0.85);
+  background: rgba(20, 20, 20, 0.9);
   border-radius: 14px;
   overflow: hidden;
   text-decoration: none;
   color: #fff;
-  box-shadow: 0 0 15px rgba(111,0,255,0.4);
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition: 0.3s ease;
+  border: 1px solid rgba(111, 0, 255, 0.3);
+  box-shadow: 0 0 10px rgba(111, 0, 255, 0.2);
+  width: 100%;
+  max-width: 360px;
 }
 
 .news-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 0 25px rgba(57,255,20,0.6);
+  transform: translateY(-6px);
+  box-shadow: 0 0 15px #39ff14;
+  border-color: #39ff14;
 }
 
 .news-img {
   width: 100%;
-  height: 160px;
+  height: 180px;
   object-fit: cover;
 }
 
 .news-info {
-  padding: 16px;
+  padding: 18px 20px;
 }
 
 .news-info h2 {
   font-size: 1.2rem;
-  margin: 0 0 8px;
+  margin: 0 0 10px;
+  color: #fff;
+}
+
+.news-info h2:hover {
+  color: #39ff14;
 }
 
 .news-meta {
   font-size: 0.9rem;
-  color: #9aa0a6;
+  color: #aaa;
 }
 
+/* ==== RESPONSIVE ==== */
+@media (max-width: 600px) {
+  .noticias-gamer {
+    padding: 40px 20px;
+  }
+
+  .news-info h2 {
+    font-size: 1rem;
+  }
+
+  .titulo-noticias {
+    font-size: 2rem;
+  }
+}
 
 /* ======== FOOTER ======== */
 footer {
@@ -111,4 +165,6 @@ footer {
   margin-top: 40px;
   border-top: 1px solid #111;
 }
-footer p { margin: 0; }
+footer p {
+  margin: 0;
+}

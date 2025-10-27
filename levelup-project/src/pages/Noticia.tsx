@@ -52,11 +52,13 @@ export const Noticia = () => {
   return (
     <>
       <NavBar />
-      <section className="admin-dashboard noticias-gamer">
-        <div className="admin-content">
-          <div className="admin-header">
-            <h1>Noticias</h1>
-            <p>Las últimas novedades del mundo gamer.</p>
+      <section className="noticias-gamer">
+        <div className="noticias-content">
+          <div className="noticias-header">
+            <h1 className="titulo-noticias">Noticias</h1>
+            <p className="subtitulo-noticias">
+              Las últimas novedades del mundo gamer.
+            </p>
           </div>
 
           {loading ? (
