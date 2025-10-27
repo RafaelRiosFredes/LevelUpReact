@@ -1,0 +1,92 @@
+import { useEffect, useState } from "react";
+import { NavBar } from "../components/NavBar";
+import "../assets/styles.css";
+
+interface Noticia {
+  id: string;
+  titulo: string;
+  fecha: string;
+  fuente: string;
+  imagenUrl?: string;
+  enlace: string;
+}
+
+export const Noticia = () => {
+  const [noticias, setNoticias] = useState<Noticia[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const mock: Noticia[] = [
+      {
+        id: "1",
+        titulo: "Nuevo juego AAA anunciado para 2026",
+        fecha: "2025-10-28",
+        fuente: "GamingWorld",
+        imagenUrl: "https://via.placeholder.com/400x200",
+        enlace: "#",
+      },
+      {
+        id: "2",
+        titulo: "Torneo de eSports con premio de $1M",
+        fecha: "2025-10-27",
+        fuente: "eSportsNews",
+        imagenUrl: "https://via.placeholder.com/400x200",
+        enlace: "#",
+      },
+      {
+        id: "3",
+        titulo: "Hardware gamer 2025: lo que debes saber",
+        fecha: "2025-10-26",
+        fuente: "TechGamer",
+        imagenUrl: "https://via.placeholder.com/400x200",
+        enlace: "#",
+      },
+    ];
+
+    setTimeout(() => {
+      setNoticias(mock);
+      setLoading(false);
+    }, 800);
+  }, []);
+
+  return (
+    <>
+      <NavBar />
+      <section className="admin-dashboard noticias-gamer">
+        <div className="admin-content">
+          <div className="admin-header">
+            <h1>Noticias</h1>
+            <p>Las últimas novedades del mundo gamer.</p>
+          </div>
+
+          {loading ? (
+            <p className="text-center text-light">Cargando noticias...</p>
+          ) : (
+            <div className="news-grid">
+              {noticias.map((n) => (
+                <a
+                  key={n.id}
+                  href={n.enlace}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="news-card"
+                >
+                  {n.imagenUrl && (
+                    <img src={n.imagenUrl} alt={n.titulo} className="news-img" />
+                  )}
+                  <div className="news-info">
+                    <h2>{n.titulo}</h2>
+                    <p className="news-meta">
+                      {n.fuente} •{" "}
+                      {new Date(n.fecha).toLocaleDateString("es-CL")}
+                    </p>
+                  </div>
+                </a>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+    </>
+  );
+};

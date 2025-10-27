@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-export const Navbar = () => {
+export const NavBar = () => {
   const [usuario, setUsuario] = useState<string | null>(null);
 
   useEffect(() => {
