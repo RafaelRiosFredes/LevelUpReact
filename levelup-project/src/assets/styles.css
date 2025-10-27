@@ -13,8 +13,7 @@ body {
   background-color: #000;
   color: #fff;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  margin: 0;
-  padding: 0;
+
 }
 
 /* BOX PRINCIPAL */
@@ -32,9 +31,8 @@ body {
   width: 100%;
   max-width: 800px;
   background-color: #111;
-  border: 1px solid #6f00ff;
+  border: 1px solid #39ff14;
   border-radius: 25px;
-  box-shadow: 0 0 20px #39ff14, 0 0 40px #6f00ff;
   padding: 30px;
   margin-top: 40px;
 }
@@ -46,9 +44,8 @@ body {
 }
 
 .admin-header h1 {
-  color: #ccc;
+  color: #fff;
   font-size: 1.8rem;
-  text-shadow: 0 0 10px #6f00ff;
 }
 
 .admin-header p {
@@ -74,6 +71,13 @@ body {
   margin-bottom: 6px;
 }
 
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  justify-content: center;  
+  align-items: center; 
+}
 
 /*  INPUTS */
 .edit-form input {
@@ -92,32 +96,25 @@ body {
 
 /*  CAMPOS DE REGIÓN Y COMUNA */
 .edit-form select {
-  background-color: #1a1a1a;      /* mismo fondo oscuro que los inputs */
-  border: 1px solid #1a1a1a;      /* borde neón morado */
-  color: white;                   /* texto blanco */
-  padding: 10px;                  /* espacio interno igual que los inputs */
-  border-radius: 8px;             /* esquinas redondeadas */
-  font-size: 1rem;                /* tamaño de texto uniforme */
-  transition: 0.3s ease;          /* transición suave */
-  cursor: pointer;                /* cursor de mano al pasar */
+  background-color: #1a1a1a;      
+  border: 1px solid #1a1a1a;      
+  color: white;                   
+  padding: 10px;                 
+  border-radius: 8px;            
+  font-size: 1rem;                
+  transition: 0.3s ease;          
+  cursor: pointer;                
 }
 
 /* Efecto al enfocar o seleccionar */
 .edit-form select:focus {
   outline: none;
   border-color: #6f00ff;
-  box-shadow: 0 0 8px #39ff14;  /* resplandor verde */
-}
+  box-shadow: 0 0 8px #39ff14;  
+} 
 
 
 /*BOTONES*/
-.form-actions {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 20px;
-  justify-content: center;  
-  align-items: center; 
-}
 
 .btn {
   border: none;

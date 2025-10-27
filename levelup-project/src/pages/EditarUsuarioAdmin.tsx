@@ -163,23 +163,10 @@ const regionesYComunas: Record<string, string[]> = {
 
   // 🔹 Usuario de prueba solo para diseño
   useEffect(() => {
-    const usuarioPrueba = {
-      id: 1,
-      nombre: "Francisca Arancibia",
-      email: "fran@levelup.cl",
-      telefono: "+56 9 1234 5678",
-      fechaNacimiento: "2001-07-12",
-      region: "Valparaíso",
-      comuna: "Los Andes",
-      descuento: 15,
-    };
-    /**/ 
-    
-    localStorage.setItem("usuarios", JSON.stringify([usuarioPrueba]));
     const data = JSON.parse(localStorage.getItem("usuarios") || "[]");
-    const user = data.find((u: Usuario) => String(u.id) === "1");
+    const user = data.find((u: Usuario) => String(u.id) === String(id));
     setUsuario(user || null);
-  }, []);
+  }, [id]);
 
   // Actualiza valores 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -206,7 +193,6 @@ const regionesYComunas: Record<string, string[]> = {
         <div className="admin-content">
           <div className="admin-header">
             <h1>Editar usuario</h1>
-            <p>Modifica los datos y recuerda guardar los cambios.</p>
           </div>
 
           {usuario && (
