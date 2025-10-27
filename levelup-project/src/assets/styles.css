@@ -60,97 +60,60 @@ body {
   background-color: #111;
 }
 
-/* ======== LOGIN ADMIN ======== */
-.login-section {
+/* === PERFIL ADMIN === */
+.perfil-admin {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  min-height: 100vh;
-  background-color: #000;
-  padding: 100px 0;
-  margin: 0;
-}
-
-.login-admin-box {
-  background: rgba(0, 0, 0, 0.95);
-  border-radius: 25px;
-  padding: 60px 50px;
-  width: 95%;
-  max-width: 550px;
-  text-align: center;
-  box-shadow: 0 0 35px #8000ff, 0 0 60px #39ff14;
-  border: 2px solid #8000ff;
-}
-
-.login-admin-box:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 45px #39ff14, 0 0 80px #8000ff;
-}
-
-.login-title {
-  font-size: 38px;
-  font-weight: bold;
-  color: #39ff14;
-  text-shadow: 0 0 25px #39ff14, 0 0 40px #8000ff;
-  margin-bottom: 40px;
-}
-
-label {
-  display: block;
-  text-align: left;
-  margin-bottom: 8px;
-  font-weight: bold;
+  flex-direction: column;
+  padding: 40px;
   color: #fff;
 }
 
-input {
-  width: 100%;
-  padding: 12px;
-  margin-bottom: 20px;
-  border: none;
-  border-radius: 10px;
-  font-size: 16px;
-  color: #39ff14;
-  background-color: #111;
-  outline: none;
+.perfil-header {
   text-align: center;
-  box-shadow: inset 0 0 10px #8000ff;
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  margin-bottom: 30px;
 }
 
-input:focus {
-  background-color: #0b0b0b;
-  box-shadow: 0 0 15px #1e90ff, 0 0 25px #39ff14;
-}
-
-.boton-login {
+.perfil-card {
+  background: rgba(30, 30, 30, 0.8);
+  border-radius: 16px;
+  padding: 30px;
   width: 70%;
-  padding: 14px;
-  border: none;
-  border-radius: 12px;
-  background: linear-gradient(90deg, #8000ff, #39ff14);
-  color: #000;
-  font-weight: bold;
-  font-size: 18px;
-  cursor: pointer;
-  margin-top: 20px;
-  box-shadow: 0 0 25px #8000ff, 0 0 45px #39ff14;
-  transition: all 0.3s ease;
+  max-width: 700px;
+  box-shadow: 0 0 20px rgba(111, 0, 255, 0.5);
+  backdrop-filter: blur(8px);
 }
 
-.boton-login:hover {
-  transform: scale(1.07);
-  box-shadow: 0 0 35px #39ff14, 0 0 65px #8000ff;
+.perfil-info p {
+  margin: 10px 0;
+  font-size: 1.1rem;
 }
 
-.mensaje-login {
-  margin-top: 15px;
-  font-size: 16px;
-  color: #ff4040;
-}
-
-.mensaje-login.exito {
+.perfil-info strong {
   color: #39ff14;
+  font-weight: 600;
 }
+
+.perfil-footer {
+  text-align: center;
+  margin-top: 40px;
+}
+
+.perfil-footer .btn-success {
+  background-color: #39ff14;
+  border: none;
+  color: black;
+  font-weight: bold;
+  border-radius: 10px;
+  padding: 10px 25px;
+  transition: 0.3s ease;
+}
+
+.perfil-footer .btn-success:hover {
+  background-color: #6f00ff;
+  color: white;
+  box-shadow: 0 0 12px #6f00ff;
+}
+
 
