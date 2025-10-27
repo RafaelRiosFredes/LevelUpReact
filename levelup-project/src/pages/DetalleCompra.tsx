@@ -42,7 +42,7 @@ export const DetalleCompra = () => {
       event.stopPropagation();
       setMensaje({
         tipo: "danger",
-        texto: "❌ El pago no puso ser realizado. Intentalo Denuevo",
+        texto: "❌ El pago no pudo ser realizado. Intentalo Denuevo",
       });
       return;
     }
