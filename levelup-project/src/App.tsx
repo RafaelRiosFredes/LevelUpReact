@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { EditarUsuarioAdmin } from "./pages/EditarUsuarioAdmin";
+import { HistorialUsuarioAdmin } from "./pages/HistorialUsuarioAdmin";
 
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -10,8 +10,15 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-       
-        <Route path="/" element={<EditarUsuarioAdmin />} />
+        {/* 🔹 Historial de usuario (vista por ID) */}
+        <Route path="/admin/historialUsuario/:id" element={<HistorialUsuarioAdmin />} />
+
+        {/*  Detalle de compra (con ID de orden) */}
+       {/*  <Route path="/admin/detalleCompra/:id" element={<DetalleCompra />} /> */} 
+
+        {/* Ruta de prueba (opcional, se puede borrar luego del merge) */}
+        <Route path="/" element={<HistorialUsuarioAdmin />} />
+        
       </Routes>
     </BrowserRouter>
   );
