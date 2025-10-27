@@ -42,7 +42,7 @@ export const DetalleCompra = () => {
       event.stopPropagation();
       setMensaje({
         tipo: "danger",
-        texto: "❌ Por favor, complete todos los campos obligatorios. El número de tarjeta debe tener 16 dígitos.",
+        texto: "❌ El pago no puso ser realizado. Intentalo Denuevo",
       });
       return;
     }
