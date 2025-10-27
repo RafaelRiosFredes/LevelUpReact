@@ -1,4 +1,4 @@
-/* ======== ESTILO BASE ======== */
+/*  ESTILO BASE  */
 body { 
   background-color: #000;
   color: white;
@@ -8,7 +8,7 @@ body {
   padding: 0;
 }
 
-/* ======== ESTILO GENERAL ======== */
+/*  ESTILO GENERAL*/
 body {
   background-color: #000;
   color: #fff;
@@ -17,7 +17,7 @@ body {
   padding: 0;
 }
 
-/* ======== SECCIÓN PRINCIPAL ======== */
+/* BOX PRINCIPAL */
 .admin-dashboard {
   background-color: #000;
   min-height: 100vh;
@@ -27,19 +27,19 @@ body {
   align-items: center;
 }
 
-/* ======== CONTENIDO INTERIOR ======== */
+/*  CONTENIDO INTERIOR */
 .admin-content {
   width: 100%;
   max-width: 800px;
   background-color: #111;
-  border: 2px solid #6f00ff;
-  border-radius: 12px;
-  box-shadow: 0 0 10px rgba(111, 0, 255, 0.6);
+  border: 1px solid #6f00ff;
+  border-radius: 25px;
+  box-shadow: 0 0 20px #39ff14, 0 0 40px #6f00ff;
   padding: 30px;
   margin-top: 40px;
 }
 
-/* ======== ENCABEZADO ======== */
+/* ENCABEZADO */
 .admin-header {
   text-align: center;
   margin-bottom: 25px;
@@ -56,7 +56,7 @@ body {
   font-size: 1rem;
 }
 
-/* ======== FORMULARIO ======== */
+/* FORMULARIO  */
 .edit-form {
   display: flex;
   flex-direction: column;
@@ -67,16 +67,18 @@ body {
   display: flex;
   flex-direction: column;
 }
-
+/*lABELS */
 .form-group label {
-  color: #39ff14;
+  color: #fff;
   font-weight: bold;
   margin-bottom: 6px;
 }
 
+
+/*  INPUTS */
 .edit-form input {
   background-color: #1a1a1a;
-  border: 1px solid #6f00ff;
+  border: 1px solid #1a1a1a;
   border-radius: 6px;
   color: white;
   padding: 10px;
@@ -85,15 +87,36 @@ body {
 
 .edit-form input:focus {
   outline: none;
-  border-color: #39ff14;
-  box-shadow: 0 0 8px #39ff14;
+  border-color: #6f00ff;
 }
 
-/* ======== BOTONES ======== */
+/*  CAMPOS DE REGIÓN Y COMUNA */
+.edit-form select {
+  background-color: #1a1a1a;      /* mismo fondo oscuro que los inputs */
+  border: 1px solid #1a1a1a;      /* borde neón morado */
+  color: white;                   /* texto blanco */
+  padding: 10px;                  /* espacio interno igual que los inputs */
+  border-radius: 8px;             /* esquinas redondeadas */
+  font-size: 1rem;                /* tamaño de texto uniforme */
+  transition: 0.3s ease;          /* transición suave */
+  cursor: pointer;                /* cursor de mano al pasar */
+}
+
+/* Efecto al enfocar o seleccionar */
+.edit-form select:focus {
+  outline: none;
+  border-color: #6f00ff;
+  box-shadow: 0 0 8px #39ff14;  /* resplandor verde */
+}
+
+
+/*BOTONES*/
 .form-actions {
   display: flex;
   justify-content: space-between;
   margin-top: 20px;
+  justify-content: center;  
+  align-items: center; 
 }
 
 .btn {
@@ -105,31 +128,19 @@ body {
   transition: 0.3s ease;
 }
 
-.btn-success {
-  background-color: #39ff14;
-  color: #000;
-}
-
 .btn-success:hover {
-  background-color: #2ecc71;
+  background-color: #39ff14;
+  box-shadow: 0 0 12px #39ff14;
+  transform: scale(1.05);
 }
 
-.btn-secondary {
-  background-color: #6f00ff;
-  color: #fff;
-}
 
-.btn-secondary:hover {
-  background-color: #5800cc;
-}
-
-/* ======== MENSAJES ======== */
+/*  MENSAJES */
 .mensaje-exito {
   margin-top: 20px;
   text-align: center;
-  color: #39ff14;
+  color: #fff;
   font-weight: bold;
-  text-shadow: 0 0 10px #39ff14;
 }
 
 .no-users {
@@ -139,7 +150,7 @@ body {
   font-size: 1.1rem;
 }
 
-/* ======== RESPONSIVO ======== */
+/*  RESPONSIVO  */
 @media (max-width: 768px) {
   .admin-content {
     width: 90%;
@@ -151,7 +162,7 @@ body {
   }
 }
 
-/* ======== NAVBAR ======== */
+/*  NAVBAR */
 .navbar-admin {
   background-color: #000;
   border-bottom: 2px solid #8000ff;
@@ -168,7 +179,7 @@ body {
 }
 
 
-/* ======== FOOTER ======== */
+/* FOOTER*/
 footer {
   background-color: #000;
   color: #888;
