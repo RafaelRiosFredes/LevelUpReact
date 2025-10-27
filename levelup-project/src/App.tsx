@@ -7,6 +7,7 @@ import { NotFound } from "./pages/NotFound";
 
 const App = () => (
     <Routes>
+      <Route path="/" element={<DashboardAdmin />} />
       <Route path="/admin/dashboard" element={<DashboardAdmin/>} />
       <Route path="*" element={<NotFound />} />
     </Routes>
