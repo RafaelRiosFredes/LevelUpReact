@@ -10,7 +10,6 @@ const App = () => {
   return (
     <BrowserRouter>
       <Routes>
-       
         <Route path="/" element={<EditarUsuarioAdmin />} />
       </Routes>
     </BrowserRouter>

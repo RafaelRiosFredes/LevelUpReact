@@ -161,8 +161,7 @@ const regionesYComunas: Record<string, string[]> = {
 };
 
 
-  // 🔹 Usuario de prueba solo para diseño
-  useEffect(() => {
+    useEffect(() => {
     const data = JSON.parse(localStorage.getItem("usuarios") || "[]");
     const user = data.find((u: Usuario) => String(u.id) === String(id));
     setUsuario(user || null);
