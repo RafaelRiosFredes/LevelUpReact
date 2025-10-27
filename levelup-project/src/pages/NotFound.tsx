@@ -1,8 +1,7 @@
-import React from 'react';
+import React from "react";
 
-export const NotFound = () => (
-  <div style={{ textAlign: 'center', marginTop: '50px' }}>
-    <h1>404 - Not Found</h1>
-    <p>La página que buscas no existe.</p>
-  </div>
+export const NotFound: React.FC = () => (
+  <main className="container pt-5">
+    <h1>404 - No Encontrado</h1>
+  </main>
 );
