@@ -124,7 +124,7 @@ export const RegistroUsuario = () => {
     // Redirección
     setTimeout(() => {
       window.location.href = "/";
-    }, 1000);
+    }, 2000);
   };
 
   return (
