@@ -1,4 +1,15 @@
 /* ======== ESTILO BASE ======== */
+:root{
+  --ink: #000;
+  --text: #fff;
+  --gamer-green: #39ff14;
+  --electric-blue: #1E90FF;
+  --neon-purple: #8000ff;
+  --axis: #bfbfbf;
+  --grid: rgba(128,0,255,0.25);
+}
+
+
 body { 
   background-color: #000;
   color: white;
@@ -10,55 +21,23 @@ body {
 
 
 /* ======== NAVBAR ADMIN ======== */
+
+
 .navbar-admin {
   background-color: #000;
   border-bottom: 2px solid #8000ff;
   padding: 16px 24px;
   box-shadow: 0 0 15px #39ff14, 0 0 30px #8000ff;
 }
-
-.brand-admin {
-  color: #39ff14 !important;
-  font-weight: bold;
-  font-size: 26px;
+.navbar-admin .navbar-brand {
   cursor: pointer;
+  font-weight: 800;
   letter-spacing: 1px;
-  text-shadow: 0 0 10px #39ff14, 0 0 20px #8000ff;
-  transition: transform 0.3s ease;
+}
+.navbar-admin .navbar-brand span {
+  color: #39ff14;
 }
 
-.brand-admin span {
-  color: #8000ff;
-  font-weight: 700;
-}
-
-.brand-admin:hover {
-  transform: scale(1.05);
-  text-shadow: 0 0 20px #39ff14, 0 0 40px #8000ff;
-}
-
-.navbar-admin .nav-link {
-  color: #fff !important;
-  font-weight: 500;
-  font-size: 17px;
-  text-transform: uppercase;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-
-.navbar-admin .nav-link:hover {
-  color: #39ff14 !important;
-  text-shadow: 0 0 10px #39ff14, 0 0 20px #8000ff;
-}
-
-.navbar-admin .nav-link.active {
-  color: #8000ff !important;
-  text-shadow: 0 0 10px #8000ff, 0 0 25px #39ff14;
-}
-
-.navbar-toggler {
-  border: 1px solid #39ff14;
-  background-color: #111;
-}
 
 /* ======== LOGIN ADMIN ======== */
 .login-section {
@@ -321,12 +300,15 @@ input:focus {
 /* ======== VISTA DASHBOARD ADMIN ======== */
 
 .dashboard-card {
-  background-color: #111;
-  border: 1px solid #8000ff;
-  border-radius: 15px;
-  color: #fff;
-  height: 100%;
-  transition: all 0.3s ease;
+  background:#0b0b0b;
+  border:1.5px solid var(--neon-purple);
+  border-radius:14px;
+  box-shadow: 0 0 0 1px rgba(128,0,255,.25) inset;
+}
+
+/* PADDING para que los títulos no toquen el borde */
+.dashboard-card .card-body{
+  padding: 12px 14px 14px;
 }
 
 .dashboard-card:hover {
@@ -350,23 +332,55 @@ input:focus {
 }
 
 .card-title-section {
-  color: #fff;
-  font-size: 1.2rem;
-  font-weight: bold;
-  border-bottom: 2px solid #1E90FF;
-  padding-bottom: 10px;
-  margin-bottom: 20px;
+  color: var(--neon-purple);
+  margin: 0 0 .65rem;
+  line-height: 1.1;
+  text-shadow: 0 0 6px rgba(128,0,255,.5);
 }
 
-.table-dashboard thead th {
-  color: #1E90FF;
-  background-color: #1a1a1a;
-  border-bottom: 2px solid #1E90FF;
+/* Tabla oscura: sin fondo blanco ni celdas blancas */
+.table-dashboard{
+  background: transparent !important;
+  color: var(--text);
+  border-color: rgba(128,0,255,.35);
+
+    /* anula Bootstrap por completo */
+  --bs-table-bg: transparent !important;
+  --bs-table-accent-bg: transparent !important;
+  --bs-table-striped-color: var(--text) !important;
+  --bs-table-striped-bg: rgba(128,0,255,.06) !important;  /* opcional: rayado tenue */
+  --bs-table-hover-color: var(--text) !important;
+  --bs-table-hover-bg: rgba(57,255,20,.06) !important;
+}
+
+.table-dashboard thead th{
+  background: linear-gradient(90deg, rgba(128,0,255,.22), rgba(30,144,255,.20)) !important;
+  border-bottom: 1px solid var(--neon-purple);
+  font-weight: 600;
+}
+
+.table-dashboard td,
+.table-dashboard th{
+  border-color: rgba(128,0,255,.35) !important;
 }
 
 .table-dashboard tbody td {
   font-size: 0.9rem;
   vertical-align: middle;
+}
+
+/* Mata cualquier fondo blanco que meta Bootstrap o estilos previos */
+.table-dashboard tbody tr,
+.table-dashboard tbody td{
+  background: transparent !important;
+}
+
+.table-dashboard tbody tr{
+  transition: background .15s ease, transform .06s ease;
+}
+
+.table-dashboard tbody tr:hover{
+  background: rgba(57,255,20,.06);
 }
 
 
@@ -425,4 +439,76 @@ input:focus {
   border-bottom: 1px solid #1E90FF;
   padding-bottom: 5px;
   margin-bottom: 15px;
+}
+
+/* Columna nombre: ellipsis para nombres largos */
+.name-cell .name-ellipsis{
+  display:block;
+  max-width: 26ch;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Estado vacío coherente con el tema */
+.empty-hint{ color: var(--axis); }
+
+
+/* Grid responsivo: 2/3 gráfico, 1/3 top 5 */
+.dashboard-split{
+  display:grid; gap:12px;
+  grid-template-columns: 1fr;
+}
+@media (min-width: 992px){
+  .dashboard-split{ grid-template-columns: 2fr 1fr; }
+}
+
+/* Alturas y scroll coherentes */
+.chart-card, .top5-card{ height:100%; }
+.chart-wrap{ width:100%; height:340px; }
+.top5-scroll{ max-height:340px; overflow:auto; }
+
+
+.top5-card .table-striped > tbody > tr:nth-of-type(odd) > *{
+  background: transparent !important;
+}
+
+.top5-card .table-dashboard,
+.top5-card .table-dashboard thead th,
+.top5-card .table-dashboard tbody td,
+.top5-card .table-dashboard tbody th,
+.top5-card .name-ellipsis{
+  color: #fff !important;
+  opacity: 1 !important;
+}
+
+/* Títulos y tabla (skin neon) */
+.card-title-section{ color:var(--neon-purple); margin-bottom:.75rem; text-shadow:0 0 6px rgba(128,0,255,.5); }
+.table-dashboard thead th{
+  background:linear-gradient(90deg, rgba(128,0,255,.22), rgba(30,144,255,.20));
+  border-bottom:1px solid var(--neon-purple); font-weight:600;
+}
+.table-dashboard thead th:first-child { border-top-left-radius: 8px; }
+
+.table-dashboard thead th:last-child  { border-top-right-radius: 8px; }
+.table-dashboard th, .table-dashboard td { padding: 8px 10px; } /* compacta y parejo */
+
+.table-dashboard td,.table-dashboard th{ border-color:rgba(128,0,255,.35); }
+.table-dashboard tbody tr:hover{ background:rgba(57,255,20,.06); }
+
+.dashboard-card .card-body,
+.dashboard-card .card-body-metric{
+  padding: 16px 18px 16px;   /* más aire para que no “toque” el borde */
+}
+
+.name-cell .name-ellipsis{ display:block; max-width:28ch; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.qty-cell .qty-chip{
+  display:inline-block;
+  min-width:3.5ch;
+  padding:.15rem .5rem;
+  border-radius:.75rem;
+  background: radial-gradient(120% 120% at 0% 0%, rgba(57,255,20,.18), rgba(128,0,255,.14));
+  border:1px solid rgba(57,255,20,.45);
+  font-variant-numeric: tabular-nums;
+  color: var(--text);
 }

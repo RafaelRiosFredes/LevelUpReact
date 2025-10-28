@@ -25,6 +25,15 @@ type Orden = {
   items: Item[];
 };
 
+const THEME = {
+  text: "var(--text)",
+  green: "var(--gamer-green)",
+  blue: "var(--electric-blue)",
+  purple: "var(--neon-purple)",
+  axis: "var(--axis)",
+  grid: "var(--grid)",
+};
+
 const IS_TEST =
   (typeof process !== "undefined" && process.env.NODE_ENV === "test") ||
   (typeof import.meta !== "undefined" && (import.meta as any).vitest);
@@ -150,93 +159,97 @@ export const DashboardAdmin: React.FC = () => {
             {/* Métricas */}
             <section className="row g-3 my-2">
               <div className="col-12 col-md-4">
-                <div className="card h-100">
+                <div className="dashboard-card">
                   <div className="card-body">
-                    <h5 className="card-title">Ingresos Totales</h5>
-                    <p className="card-text fs-4">
-                      {formatCLP(ingresosTotales)}
-                    </p>
+                    <h5 className="card-title-metric">Ingresos Totales</h5>
+                    <p className="card-value">{formatCLP(ingresosTotales)}</p>
                   </div>
                 </div>
               </div>
               <div className="col-12 col-md-4">
-                <div className="card h-100">
+                <div className="dashboard-card">
                   <div className="card-body">
-                    <h5 className="card-title">Órdenes Totales</h5>
-                    <p className="card-text fs-4">{ordenesTotales}</p>
+                    <h5 className="card-title-metric">Órdenes Totales</h5>
+                    <p className="card-value">{ordenesTotales}</p>
                   </div>
                 </div>
               </div>
               <div className="col-12 col-md-4">
-                <div className="card h-100">
-                  <div className="card-body">
+                <div className="dashboard-card">
+                  <div className="card-body-metric">
                     <h5 className="card-title">Valor Promedio Orden</h5>
-                    <p className="card-text fs-4">{formatCLP(valorPromedio)}</p>
+                    <p className="card-value">{formatCLP(valorPromedio)}</p>
                   </div>
                 </div>
               </div>
             </section>
+<section className="my-3">
+  <div className="dashboard-split">
+    {/* Columna izquierda: gráfico */}
+    <div className="dashboard-card chart-card">
+      <div className="card-body">
+        <h5 className="card-title-section">Ventas por día</h5>
+        {ventasPorDia.length === 0 ? (
+          <p className="empty-hint">No hay suficientes datos para mostrar el gráfico.</p>
+        ) : (
+          <div className="chart-wrap">
+            <ResponsiveContainer>
+              <BarChart data={ventasPorDia}>
+                <defs>
+                  <linearGradient id="barFill" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" stopColor="var(--electric-blue)"/>
+                    <stop offset="100%" stopColor="var(--neon-purple)"/>
+                  </linearGradient>
+                </defs>
+                <CartesianGrid stroke="rgba(128,0,255,.25)" strokeDasharray="3 3"/>
+                <XAxis dataKey="dia" tick={{fill:"var(--axis)"}} axisLine={{stroke:"var(--neon-purple)"}} tickLine={{stroke:"var(--neon-purple)"}}/>
+                <YAxis tick={{fill:"var(--axis)"}} axisLine={{stroke:"var(--neon-purple)"}} tickLine={{stroke:"var(--neon-purple)"}}/>
+                <Tooltip
+                  contentStyle={{background:"#111", border:"1px solid var(--neon-purple)", borderRadius:10, color:"var(--text)"}}
+                  labelStyle={{color:"var(--gamer-green)"}}
+                  itemStyle={{color:"var(--text)"}}
+                  cursor={{fill:"rgba(57,255,20,.08)"}}
+                />
+                <Legend wrapperStyle={{color:"var(--text)"}}/>
+                <Bar dataKey="total" name="Total" fill="url(#barFill)" stroke="var(--gamer-green)" strokeWidth={1.5} radius={[6,6,0,0]}/>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+        )}
+      </div>
+    </div>
 
-            {/* Gráfico de ventas por día */}
-            <section className="card my-3">
-              <div className="card-body">
-                <h5 className="card-title">Ventas por día</h5>
-                {ventasPorDia.length === 0 ? (
-                  <p className="text-muted">
-                    No hay suficientes datos para mostrar el gráfico.
-                  </p>
-                ) : IS_TEST ?(
-                    // Placeholder estable en tests aunque el mock fallara
-                  <div style={{ width: '100%', height: 300 }}>
-                  <div data-testid="bar-chart" />
-                  </div>
-                ) : (
-                  <div style={{ width: "100%", height: 300 }}>
-                    <ResponsiveContainer>
-                      <BarChart data={ventasPorDia}>
-                        <CartesianGrid strokeDasharray="3 3" />
-                        <XAxis dataKey="dia" />
-                        <YAxis />
-                        <Tooltip />
-                        <Legend />
-                        <Bar dataKey="total" name="Total" />
-                      </BarChart>
-                    </ResponsiveContainer>
-                  </div>
-                )}
-              </div>
-            </section>
+    {/* Columna derecha: Top 5 productos */}
+    <div className="dashboard-card top5-card">
+      <div className="card-body">
+        <h5 className="card-title-section">Top 5 productos</h5>
+        {topProductos.length === 0 ? (
+          <p className="empty-hint">No hay datos de productos vendidos.</p>
+        ) : (
+          <div className="table-responsive top5-scroll">
+            <table className="table table-sm align-middle table-dashboard">
+              <thead>
+                <tr>
+                  <th>Producto</th>
+                  <th className="text-end">Cantidad</th>
+                </tr>
+              </thead>
+              <tbody>
+                {topProductos.map(p => (
+                  <tr key={p.nombre}>
+                    <td className="name-cell"><span className="name-ellipsis" title={p.nombre}>{p.nombre}</span></td>
+                    <td className="text-end qty-cell"><span className="qty-chip">{p.cantidad}</span></td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        )}
+      </div>
+    </div>
+  </div>
+</section>
 
-            {/* Top 5 productos */}
-            <section className="card my-3">
-              <div className="card-body">
-                <h5 className="card-title">Top 5 productos</h5>
-                {topProductos.length === 0 ? (
-                  <p className="text-muted">
-                    No hay datos de productos vendidos.
-                  </p>
-                ) : (
-                  <div className="table-responsive">
-                    <table className="table table-sm align-middle">
-                      <thead>
-                        <tr>
-                          <th>Producto</th>
-                          <th className="text-end">Cantidad</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {topProductos.map((p) => (
-                          <tr key={p.nombre}>
-                            <td>{p.nombre}</td>
-                            <td className="text-end">{p.cantidad}</td>
-                          </tr>
-                        ))}
-                      </tbody>
-                    </table>
-                  </div>
-                )}
-              </div>
-            </section>
           </>
         )}
       </main>
