@@ -19,7 +19,6 @@ export const RegistroUsuario = () => {
   const [descuento, setDescuento] = useState(false);
   const [comunas, setComunas] = useState<string[]>([]);
 
-  // Regiones con comunas
   const regionesConComunas: Record<string, string[]> = {
     "Arica y Parinacota": ["Arica", "Camarones", "Putre", "General Lagos"],
     "Tarapacá": ["Iquique", "Alto Hospicio", "Pozo Almonte", "Camiña", "Colchane", "Huara", "Pica"],
@@ -39,7 +38,6 @@ export const RegistroUsuario = () => {
     "Magallanes y de la Antártica Chilena": ["Punta Arenas", "Laguna Blanca", "Río Verde", "San Gregorio", "Cabo de Hornos", "Antártica", "Porvenir", "Primavera", "Timaukel", "Natales", "Torres del Paine"]
   };
 
-  // Maneja cambios del formulario
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
 
@@ -51,13 +49,11 @@ export const RegistroUsuario = () => {
       setFormData((prev) => ({ ...prev, [name]: value }));
     }
 
-    // Verificar correo DUOC
     if (name === "email") {
       setDescuento(value.toLowerCase().endsWith("@duocuc.cl"));
     }
   };
 
-  // Calcular edad a partir de fecha
   const calcularEdad = (fechaNacimiento: string) => {
     const hoy = new Date();
     const fechaNac = new Date(fechaNacimiento);
@@ -67,12 +63,10 @@ export const RegistroUsuario = () => {
     return edad;
   };
 
-  // Manejar envío del formulario
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const { nombre, email, contrasena, confirmarContrasena, fechaNacimiento } = formData;
 
-    // Validaciones
     if (!nombre || !email || !contrasena || !confirmarContrasena || !fechaNacimiento) {
       setMensaje("Completa todos los campos obligatorios.");
       return;
@@ -89,15 +83,20 @@ export const RegistroUsuario = () => {
       return;
     }
 
+
+
      // Limpia mensaje de error 
   setMensaje("");
 
     // Obtener usuarios guardados
+
     const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios") || "[]");
 
-    // Crear usuario con ID 
     const nuevoUsuario = {
-      id: usuariosGuardados.length > 0 ? usuariosGuardados[usuariosGuardados.length - 1].id + 1 : 1,
+      id:
+        usuariosGuardados.length > 0
+          ? usuariosGuardados[usuariosGuardados.length - 1].id + 1
+          : 1,
       nombre: formData.nombre,
       email: formData.email,
       contrasena: formData.contrasena,
@@ -106,22 +105,19 @@ export const RegistroUsuario = () => {
       region: formData.region,
       comuna: formData.comuna,
       descuento: descuento ? 20 : 0,
-      fechaRegistro: new Date().toISOString().split('T')[0] // Fecha de registro
+      fechaRegistro: new Date().toISOString().split("T")[0],
     };
 
-    // Guardar en localStorage
     usuariosGuardados.push(nuevoUsuario);
     localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
     localStorage.setItem("usuario", nombre);
 
-    // Mensaje final
     if (descuento) {
       setMensaje("¡Bienvenido a LEVEL-UP! Tienes un 20% de descuento por ser estudiante DUOC UC.");
     } else {
       setMensaje(`¡Bienvenido a LEVEL-UP, ${nombre}!`);
     }
 
-    // Redirección
     setTimeout(() => {
       window.location.href = "/";
     }, 2000);
@@ -135,7 +131,7 @@ export const RegistroUsuario = () => {
           <fieldset>
             <legend className="Registro1">Registro de Usuario</legend>
 
-            <label>Nombre Completo</label>
+            <label htmlFor="nombre">Nombre Completo</label>
             <input
               type="text"
               id="nombre"
@@ -145,7 +141,7 @@ export const RegistroUsuario = () => {
               onChange={handleChange}
             />
 
-            <label>Correo Electrónico</label>
+            <label htmlFor="email">Correo Electrónico</label>
             <input
               type="email"
               id="email"
@@ -155,7 +151,7 @@ export const RegistroUsuario = () => {
               onChange={handleChange}
             />
 
-            <label>Contraseña</label>
+            <label htmlFor="contrasena">Contraseña</label>
             <input
               type="password"
               id="contrasena"
@@ -165,7 +161,7 @@ export const RegistroUsuario = () => {
               onChange={handleChange}
             />
 
-            <label>Confirmar Contraseña</label>
+            <label htmlFor="confirmarContrasena">Confirmar Contraseña</label>
             <input
               type="password"
               id="confirmarContrasena"
@@ -175,7 +171,7 @@ export const RegistroUsuario = () => {
               onChange={handleChange}
             />
 
-            <label>Teléfono (Opcional)</label>
+            <label htmlFor="telefono">Teléfono (Opcional)</label>
             <input
               type="tel"
               id="telefono"
@@ -185,7 +181,7 @@ export const RegistroUsuario = () => {
               onChange={handleChange}
             />
 
-            <label>Fecha de Nacimiento</label>
+            <label htmlFor="fechaNacimiento">Fecha de Nacimiento</label>
             <input
               type="date"
               id="fechaNacimiento"
@@ -195,7 +191,9 @@ export const RegistroUsuario = () => {
             />
 
             <div className="selector-region">
-                 <label className="titulo-RC"> Selecciona tu región y comuna</label>
+              <label htmlFor="region" className="titulo-RC">
+                Selecciona tu región y comuna
+              </label>
               <select id="region" name="region" value={formData.region} onChange={handleChange}>
                 <option value="">Selecciona tu Región</option>
                 {Object.keys(regionesConComunas).map((r, i) => (
