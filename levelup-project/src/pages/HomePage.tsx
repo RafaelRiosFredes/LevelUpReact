@@ -1,4 +1,4 @@
-import { Navbar } from "../components/NavBar";
+import { NavBar } from "../components/NavBar";
 
 const CATEGORIAS = [
   {
@@ -45,7 +45,7 @@ const CATEGORIAS = [
 export default function HomePage() {
   return (
     <>
-      <Navbar />
+      <NavBar />
       <main className="home-wrap">
         {/* Hero */}
         <section className="hero-spot">

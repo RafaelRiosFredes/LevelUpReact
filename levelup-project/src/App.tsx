@@ -1,10 +1,11 @@
 import { Routes, Route } from "react-router-dom";
 import { Footer } from "./components/Footer";
-import { Navbar } from "./components/NavBar";
+import { NavBar } from "./components/NavBar";
 import { Login } from "./pages/Login";
 import { ProductosPublic } from "./pages/ProductosPublic";
 import { DetalleProducto } from "./pages/DetalleProducto";
 import { CartProvider } from "./pages/CartContext";
+import { CarroCompras } from "./pages/CarroCompras";
 import { DashboardAdmin } from "./pages/DashboardAdmin";
 import { LoginAdmin } from "./pages/LoginAdmin";
 import { NotFound } from "./pages/NotFound";
@@ -18,13 +19,14 @@ export default function App() {
   return (
     <>
     <CartProvider>
-      <Navbar />
+      <NavBar />
       <main className="app-container">
         <Routes>
           <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/productos" element={<ProductosPublic />} />
           <Route path="/detalle" element={<DetalleProducto />} />
+          <Route path="/carrito" element={<CarroCompras />} />
           <Route path="/admin/login" element={<LoginAdmin />} />
           <Route path="/admin/dashboard" element={<DashboardAdmin />} />
           <Route path="*" element={<NotFound />} />

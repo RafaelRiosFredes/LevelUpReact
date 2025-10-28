@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import type { Producto } from "../types";
-import { useCart } from "../context/CartContext";
+import { useCart } from "../pages/CartContext";
 
 interface Props {
   producto: Producto;

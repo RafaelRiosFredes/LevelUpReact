@@ -3,7 +3,7 @@ import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import "../assets/styles.css";
 import type { Producto } from "../types";
-import { useCart } from "../context/CartContext";
+import { useCart } from "./CartContext";
 
 export const DetalleProducto = () => {
   const [producto, setProducto] = useState<Producto | null>(null);
@@ -14,12 +14,13 @@ export const DetalleProducto = () => {
   const [imagenSeleccionada, setImagenSeleccionada] = useState<string | null>(
     null
   );
+
   const [cantidad, setCantidad] = useState(1);
-  const { addToCart } = useCart();
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const idProducto = searchParams.get("id");
-
+  const { addToCart } = useCart();
+  
   const cargarDatos = useCallback(async () => {
     if (!idProducto) {
       setError("No se ha especificado un ID de producto.");
@@ -79,6 +80,53 @@ export const DetalleProducto = () => {
     } finally {
       setLoading(false);
     }
+      try {
+        let productos: Producto[] = [];
+        const productosGuardados = localStorage.getItem("productos");
+
+        if (productosGuardados) {
+          try {
+            productos = JSON.parse(productosGuardados);
+          } catch (e) {
+            console.error("Error al parsear productos de localStorage", e);
+            productos = [];
+          }
+        }
+
+        if (productos.length === 0) {
+          const res = await fetch("/products.json");
+          productos = await res.json();
+          localStorage.setItem("productos", JSON.stringify(productos));
+        }
+
+        const encontrado = productos.find(
+          (p) => String(p.id) === String(idProducto)
+        );
+
+        if (!encontrado) {
+          throw new Error("Producto no encontrado.");
+        }
+
+        setProducto(encontrado);
+
+        if (encontrado?.imagenes?.length) {
+          setImagenSeleccionada(encontrado.imagenes[0]);
+        }
+
+        if (encontrado) {
+          const rel = productos.filter(
+            (p) =>
+              p.categoria === encontrado.categoria && p.id !== encontrado.id
+          );
+          setRelacionados(rel.slice(0, 10));
+        }
+      } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : "Ocurrió un error desconocido";
+        console.error("❌ Error al cargar producto:", errorMessage);
+        setError(errorMessage);
+      } finally {
+        setLoading(false);
+      }
   }, [idProducto]);
 
   useEffect(() => {
@@ -107,11 +155,10 @@ export const DetalleProducto = () => {
     const indiceActual = producto.imagenes.findIndex(
       (img) => img === imagenSeleccionada
     );
-
-    let nuevoIndice =
-      direccion === "next"
-        ? (indiceActual + 1) % totalImagenes
-        : (indiceActual - 1 + totalImagenes) % totalImagenes;
+    
+    let nuevoIndice = direccion === "next" 
+      ? (indiceActual + 1) % totalImagenes
+      : (indiceActual - 1 + totalImagenes) % totalImagenes;
 
     setImagenSeleccionada(producto.imagenes[nuevoIndice]);
   };
@@ -179,6 +226,8 @@ export const DetalleProducto = () => {
                 >
                   &#10095;
                 </Button>
+                <Button variant="dark" className="gallery-arrow prev" onClick={() => cambiarImagen('prev')}>&#10094;</Button>
+                <Button variant="dark" className="gallery-arrow next" onClick={() => cambiarImagen('next')}>&#10095;</Button>
               </>
             )}
             <img

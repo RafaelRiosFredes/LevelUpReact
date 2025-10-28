@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
 import type { Producto, Categoria } from "../types";
 import { CategoryList } from "../components/CategoryList";
 import { ProductCard } from "../components/ProductCard";
@@ -79,7 +79,7 @@ export const ProductosPublic = () => {
           </Col>
           <Col md={9}>
             {loading ? (
-              <div className="text-center" role="status">
+              <div className="text-center" role="status" data-testid="loading-spinner">
                 <Spinner animation="border" variant="success" />
               </div>
             ) : error ? (

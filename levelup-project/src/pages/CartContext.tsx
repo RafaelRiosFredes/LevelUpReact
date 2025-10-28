@@ -3,11 +3,13 @@ import type { ReactNode } from 'react';
 import type { Producto } from '../types';
 
 // Define el tipo para un item en el carrito, extendiendo el tipo Producto
+// Define el tipo para un item en el carrito
 export interface CartItem extends Producto {
   quantity: number;
 }
 
 // Define la "forma" que tendrá nuestro contexto
+// Define el tipo para el valor del contexto
 interface CartContextType {
   cartItems: CartItem[];
   addToCart: (product: Producto, quantity: number) => void;
@@ -20,7 +22,8 @@ interface CartContextType {
 // Creamos el contexto. El valor inicial es `undefined` porque solo tendrá valor dentro del Provider.
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
-// Hook personalizado para facilitar el uso del contexto en otros componentes
+
+// Hook personalizado para usar el contexto del carrito
 export const useCart = () => {
   const context = useContext(CartContext);
   if (context === undefined) {
@@ -29,10 +32,10 @@ export const useCart = () => {
   return context;
 };
 
-// El componente "Proveedor" que contendrá toda la lógica y estado
+// Componente Proveedor del Contexto
 export const CartProvider = ({ children }: { children: ReactNode }) => {
   const [cartItems, setCartItems] = useState<CartItem[]>(() => {
-    // Al iniciar, intentamos cargar el carrito desde localStorage
+    // Cargar el carrito desde localStorage al iniciar
     try {
       const localData = localStorage.getItem('cart');
       return localData ? JSON.parse(localData) : [];
@@ -43,6 +46,7 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   });
 
   // Cada vez que `cartItems` cambie, lo guardamos en localStorage
+  // Guardar el carrito en localStorage cada vez que cambie
   useEffect(() => {
     localStorage.setItem('cart', JSON.stringify(cartItems));
   }, [cartItems]);
@@ -52,11 +56,13 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
       const existingItem = prevItems.find(item => item.id === product.id);
       if (existingItem) {
         // Si el producto ya existe, solo actualizamos su cantidad
+        // Si el item ya existe, actualiza la cantidad
         return prevItems.map(item =>
           item.id === product.id ? { ...item, quantity: item.quantity + quantity } : item
         );
       }
       // Si es un producto nuevo, lo añadimos al array
+      // Si es un item nuevo, lo añade al carrito
       return [...prevItems, { ...product, quantity }];
     });
   };
