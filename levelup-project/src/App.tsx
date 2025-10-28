@@ -3,6 +3,7 @@ import { Navbar } from "./components/NavBar";
 import { Footer } from "./components/Footer";
 import { Login } from "./pages/Login";
 import { DashboardAdmin } from "./pages/DashboardAdmin";
+import { LoginAdmin } from "./pages/LoginAdmin";
 import { NotFound } from "./pages/NotFound";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
@@ -16,6 +17,7 @@ export default function App() {
       <main className="app-container">
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/admin/login" element={<LoginAdmin />} />
           <Route path="/admin/dashboard" element={<DashboardAdmin />} />
           <Route path="*" element={<NotFound />} />
         </Routes>

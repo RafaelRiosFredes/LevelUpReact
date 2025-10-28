@@ -42,7 +42,7 @@ export const Login = () => {
 
   // Redirección a login de administrador
   const handleAdminLogin = () => {
-    navigate("/loginAdmin");
+    navigate("/admin/login");
   };
 
   return (
