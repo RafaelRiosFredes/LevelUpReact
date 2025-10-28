@@ -46,26 +46,10 @@ export const Navbar = () => {
           </form>
 
           <ul className="navbar-nav ms-auto align-items-center">
-            <li className="nav-item">
-              <a className="nav-link active" href="#">
-                Inicio
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="/productos">
-                Productos
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Noticias
-              </a>
-            </li>
-            <li className="nav-item">
-              <a className="nav-link" href="#">
-                Contacto
-              </a>
-            </li>
+            <li className="nav-item"><a className="nav-link active" href="#">Inicio</a></li>
+            <li className="nav-item"><a className="nav-link" href="/productos">Productos</a></li>
+            <li className="nav-item"><a className="nav-link" href="#">Noticias</a></li>
+            <li className="nav-item"><a className="nav-link" href="#">Contacto</a></li>
             <li className="nav-item dropdown">
               <a className="nav-link dropdown-toggle" href="#" role="button">
                 {usuario ? `Hola, ${usuario}` : "Hola, Inicia sesión"}
@@ -73,37 +57,19 @@ export const Navbar = () => {
               <ul className="dropdown-menu dropdown-menu-end bg-dark text-white">
                 {!usuario && (
                   <>
-                    <li>
-                      <a className="dropdown-item text-white" href="/login">
-                        Inicia sesión
-                      </a>
-                    </li>
-                    <li>
-                      <a className="dropdown-item text-white" href="#">
-                        Regístrate
-                      </a>
-                    </li>
+                    <li><a className="dropdown-item text-white" href="/login">Inicia sesión</a></li>
+                    <li><a className="dropdown-item text-white" href="#">Regístrate</a></li>
                   </>
                 )}
                 {usuario && (
                   <li>
-                    <a
-                      className="dropdown-item text-white"
-                      href="#"
-                      onClick={cerrarSesion}
-                    >
+                    <a className="dropdown-item text-white" href="#" onClick={cerrarSesion}>
                       Cerrar sesión
                     </a>
                   </li>
                 )}
-                <li>
-                  <hr className="dropdown-divider bg-light" />
-                </li>
-                <li>
-                  <a className="dropdown-item text-white" href="#">
-                    Puntos LevelUp
-                  </a>
-                </li>
+                <li><hr className="dropdown-divider bg-light" /></li>
+                <li><a className="dropdown-item text-white" href="#">Puntos LevelUp</a></li>
               </ul>
             </li>
           </ul>
@@ -112,3 +78,4 @@ export const Navbar = () => {
     </nav>
   );
 };
+
