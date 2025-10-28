@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import { NavBar } from "../components/NavBar";
+import img1 from "../assets/pz.jpg";
+import img2 from "../assets/ea.jpg";
+import img3 from "../assets/gm.jpg";
 import "../assets/styles.css";
 
 interface Noticia {
@@ -19,10 +22,10 @@ export const Noticia = () => {
     const mock: Noticia[] = [
       {
         id: "1",
-        titulo: "Nuevo juego AAA anunciado para 2026",
+        titulo: "Todo lo nuevo en la actualización de la build tan esperada para este año.",
         fecha: "2025-10-28",
         fuente: "GamingWorld",
-        imagenUrl: "https://via.placeholder.com/400x200",
+        imagenUrl: img1,
         enlace: "#",
       },
       {
@@ -30,7 +33,7 @@ export const Noticia = () => {
         titulo: "Torneo de eSports con premio de $1M",
         fecha: "2025-10-27",
         fuente: "eSportsNews",
-        imagenUrl: "https://via.placeholder.com/400x200",
+        imagenUrl: img2,
         enlace: "#",
       },
       {
@@ -38,7 +41,7 @@ export const Noticia = () => {
         titulo: "Hardware gamer 2025: lo que debes saber",
         fecha: "2025-10-26",
         fuente: "TechGamer",
-        imagenUrl: "https://via.placeholder.com/400x200",
+        imagenUrl: img3,
         enlace: "#",
       },
     ];
