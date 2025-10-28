@@ -2,6 +2,7 @@ import { Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/NavBar";
 import { Footer } from "./components/Footer";
 import { Login } from "./pages/Login";
+import { DetalleProducto } from "./pages/DetalleProducto";
 import { DashboardAdmin } from "./pages/DashboardAdmin";
 import { LoginAdmin } from "./pages/LoginAdmin";
 import { NotFound } from "./pages/NotFound";
@@ -17,6 +18,7 @@ export default function App() {
       <main className="app-container">
         <Routes>
           <Route path="/" element={<Login />} />
+          <Route path="/detalle" element={<DetalleProducto />} />
           <Route path="/admin/login" element={<LoginAdmin />} />
           <Route path="/admin/dashboard" element={<DashboardAdmin />} />
           <Route path="*" element={<NotFound />} />

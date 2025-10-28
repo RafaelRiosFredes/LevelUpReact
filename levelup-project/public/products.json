@@ -5,7 +5,7 @@
     "descripcion": "Un clásico juego de estrategia donde los jugadores compiten por colonizar y expandirse en la isla de Catan. Ideal para 3-4 jugadores y perfecto para noches de juego en familia o con amigos",
     "precio": 29990.0,
     "categoria": "Juegos de Mesa",
-    "imagenes": [],
+    "imagenes": ["/imagenes/1.jpeg", "/imagenes/10.png"],
     "stock": 74
   },
   {
@@ -14,7 +14,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 18990.0,
     "categoria": "Juegos de Mesa",
-    "imagenes": [],
+    "imagenes": ["/imagenes/2.jpg","/imagenes/13.jpg"],
     "stock": 51
   },
   {
@@ -23,7 +23,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 19990.0,
     "categoria": "Juegos de Mesa",
-    "imagenes": [],
+    "imagenes": ["/imagenes/3.jpg"],
     "stock": 14
   },
   {
@@ -32,7 +32,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 17990.0,
     "categoria": "Juegos de Mesa",
-    "imagenes": [],
+    "imagenes": ["/imagenes/4.png"],
     "stock": 41
   },
   {
@@ -41,7 +41,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 29990.0,
     "categoria": "Accesorios",
-    "imagenes": [],
+    "imagenes": ["/imagenes/5.jpg"],
     "stock": 22
   },
   {
@@ -50,7 +50,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 29990.0,
     "categoria": "Accesorios",
-    "imagenes": [],
+    "imagenes": ["/imagenes/6.png"],
     "stock": 54
   },
   {
@@ -59,7 +59,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 29990.0,
     "categoria": "Accesorios",
-    "imagenes": [],
+    "imagenes": ["/imagenes/7.jpg"],
     "stock": 79
   },
   {
@@ -68,7 +68,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 29990.0,
     "categoria": "Consolas",
-    "imagenes": [],
+    "imagenes": ["/imagenes/8.png"],
     "stock": 14
   },
   {
@@ -77,7 +77,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 29990.0,
     "categoria": "Consolas",
-    "imagenes": [],
+    "imagenes": ["/imagenes/9.jpg"],
     "stock": 11
   },
   {
@@ -86,7 +86,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 29990.0,
     "categoria": "Consolas",
-    "imagenes": [],
+    "imagenes": ["/imagenes/10.png"],
     "stock": 83
   },
   {
@@ -95,7 +95,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 4281990.0,
     "categoria": "Computadores Gamer",
-    "imagenes": [],
+    "imagenes": ["/imagenes/11.jpg"],
     "stock": 84
   },
   {
@@ -104,7 +104,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 1795990.0,
     "categoria": "Computadores Gamer",
-    "imagenes": [],
+    "imagenes": ["/imagenes/12.png"],
     "stock": 72
   },
   {
@@ -113,7 +113,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 129990.0,
     "categoria": "Sillas Gamer",
-    "imagenes": [],
+    "imagenes": ["/imagenes/13.jpg"],
     "stock": 61
   },
   {
@@ -122,7 +122,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 129990.0,
     "categoria": "Sillas Gamer",
-    "imagenes": [],
+    "imagenes": ["/imagenes/14.png"],
     "stock": 7
   },
   {
@@ -131,7 +131,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 129990.0,
     "categoria": "Sillas Gamer",
-    "imagenes": [],
+    "imagenes": ["/imagenes/15.png"],
     "stock": 51
   },
   {
@@ -140,7 +140,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 119990.0,
     "categoria": "Mouse",
-    "imagenes": [],
+    "imagenes": ["/imagenes/16.png"],
     "stock": 45
   },
   {
@@ -149,7 +149,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 84990.0,
     "categoria": "Mouse",
-    "imagenes": [],
+    "imagenes": ["/imagenes/17.png"],
     "stock": 94
   },
   {
@@ -158,7 +158,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 59990.0,
     "categoria": "Mouse",
-    "imagenes": [],
+    "imagenes": ["/imagenes/18.png"],
     "stock": 19
   },
   {
@@ -167,7 +167,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 29990.0,
     "categoria": "MousePad",
-    "imagenes": [],
+    "imagenes": ["/imagenes/19.jpg"],
     "stock": 0
   },
   {
@@ -176,7 +176,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 29990.0,
     "categoria": "MousePad",
-    "imagenes": [],
+    "imagenes": ["/imagenes/20.png"],
     "stock": 16
   },
   {
@@ -185,7 +185,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 29990.0,
     "categoria": "MousePad",
-    "imagenes": [],
+    "imagenes": ["/imagenes/21.png"],
     "stock": 68
   },
   {
@@ -194,7 +194,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 19990.0,
     "categoria": "Poleras Personalizadas",
-    "imagenes": [],
+    "imagenes": ["/imagenes/22.png"],
     "stock": 41
   },
   {
@@ -203,7 +203,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 19990.0,
     "categoria": "Poleras Personalizadas",
-    "imagenes": [],
+    "imagenes": ["/imagenes/23.png"],
     "stock": 46
   },
   {
@@ -212,7 +212,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 19990.0,
     "categoria": "Poleras Personalizadas",
-    "imagenes": [],
+    "imagenes": ["/imagenes/24.png"],
     "stock": 33
   },
   {
@@ -221,7 +221,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 19990.0,
     "categoria": "Poleras Personalizadas",
-    "imagenes": [],
+    "imagenes": ["/imagenes/25.png"],
     "stock": 73
   },
   {
@@ -230,7 +230,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 29990.0,
     "categoria": "Poleras Gamer Personalizadas",
-    "imagenes": [],
+    "imagenes": ["/imagenes/26.png"],
     "stock": 60
   },
   {
@@ -239,7 +239,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 29990.0,
     "categoria": "Poleras Gamer Personalizadas",
-    "imagenes": [],
+    "imagenes": ["/imagenes/27.png"],
     "stock": 0
   }
 ]
