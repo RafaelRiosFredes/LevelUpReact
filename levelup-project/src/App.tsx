@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
-import { Navbar } from "./components/NavBar";
 import { Footer } from "./components/Footer";
+import { Navbar } from "./components/Navbar";
 import { Login } from "./pages/Login";
 import { ProductosPublic } from "./pages/ProductosPublic";
 import { DetalleProducto } from "./pages/DetalleProducto";
@@ -12,6 +12,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./assets/styles.css";
+import HomePage from "./pages/HomePage";
 
 export default function App() {
   return (
@@ -20,6 +21,7 @@ export default function App() {
       <Navbar />
       <main className="app-container">
         <Routes>
+          <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/productos" element={<ProductosPublic />} />
           <Route path="/detalle" element={<DetalleProducto />} />

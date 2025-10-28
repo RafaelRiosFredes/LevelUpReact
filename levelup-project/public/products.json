@@ -5,11 +5,7 @@
     "descripcion": "Un clásico juego de estrategia donde los jugadores compiten por colonizar y expandirse en la isla de Catan. Ideal para 3-4 jugadores y perfecto para noches de juego en familia o con amigos",
     "precio": 29990.0,
     "categoria": "Juegos de Mesa",
-<<<<<<< HEAD
     "imagenes": ["/imagenes/1.jpeg", "/imagenes/10.png"],
-=======
-    "imagenes": ["/imagenes/1.jpeg","/imagenes/10.png"],
->>>>>>> feature/ListarProductos
     "stock": 74
   },
   {
@@ -18,11 +14,7 @@
     "descripcion": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.",
     "precio": 18990.0,
     "categoria": "Juegos de Mesa",
-<<<<<<< HEAD
     "imagenes": ["/imagenes/2.jpg","/imagenes/13.jpg"],
-=======
-    "imagenes": ["/imagenes/2.jpg"],
->>>>>>> feature/ListarProductos
     "stock": 51
   },
   {
