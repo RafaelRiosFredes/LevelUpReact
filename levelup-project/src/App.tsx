@@ -9,14 +9,17 @@ import { Footer } from "./components/Footer";
 
 function App() {
   return (
-    <BrowserRouter>
+    <>
       <NavBar />
+      <main className="app-container">
       <Routes>
         <Route path="/detalle" element={<DetalleProducto />} />
       </Routes>
+      </main>
       <Footer />
-    </BrowserRouter>
+    </>
   );
+  
 }
 
 export default App;
