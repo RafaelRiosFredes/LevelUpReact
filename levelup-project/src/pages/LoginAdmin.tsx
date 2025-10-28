@@ -14,20 +14,20 @@ export const LoginAdmin = () => {
 
     // Validar campos vacíos
     if (!usuario || !contrasena) {
-      setMensaje("⚠️ Completa todos los campos.");
+      setMensaje("Completa todos los campos.");
       return;
     }
 
     // Validar credenciales de administrador
     if (usuario === "admin" && contrasena === "duoc123") {
-      setMensaje("✅ Bienvenido Administrador.");
+      setMensaje("Bienvenido Administrador.");
       localStorage.setItem("adminActivo", "true");
 
-      setTimeout(() => {
-        navigate("/admin/home");
-      }, 1500);
+    setTimeout(() => {
+      navigate("/dashboardAdmin"); 
+    }, 1500);
     } else {
-      setMensaje("❌ Usuario o contraseña incorrectos.");
+      setMensaje("Usuario o contraseña incorrectos.");
     }
   };
 
@@ -39,7 +39,7 @@ export const LoginAdmin = () => {
         <div className="login-box login-admin-box">
           <form onSubmit={handleSubmit}>
             <fieldset>
-              <legend className="login-title">Acceso Administrador</legend>
+              <legend className="login-title">Ingresa a tu cuenta</legend>
 
               <div className="email-login">
                 <label htmlFor="usuario">Usuario</label>
@@ -47,9 +47,12 @@ export const LoginAdmin = () => {
                   type="text"
                   id="usuario"
                   name="usuario"
-                  placeholder="Ingrese su usuario"
+                  placeholder="Ingresa tu usuario"
                   value={usuario}
-                  onChange={(e) => setUsuario(e.target.value)}
+                  onChange={(e) => {
+                    setUsuario(e.target.value);
+                    setMensaje(""); // 🔹 Limpia el mensaje al escribir
+                  }}
                 />
               </div>
 
@@ -59,9 +62,12 @@ export const LoginAdmin = () => {
                   type="password"
                   id="contrasena"
                   name="contrasena"
-                  placeholder="Ingrese su contraseña"
+                  placeholder="Ingresa tu contraseña"
                   value={contrasena}
-                  onChange={(e) => setContrasena(e.target.value)}
+                  onChange={(e) => {
+                    setContrasena(e.target.value);
+                    setMensaje(""); // 🔹 Limpia el mensaje al escribir
+                  }}
                 />
               </div>
 
@@ -72,7 +78,7 @@ export const LoginAdmin = () => {
               {mensaje && (
                 <p
                   className={`mensaje-login ${
-                    mensaje.startsWith("✅") ? "exito" : ""
+                    mensaje.includes("Bienvenido") ? "exito" : "error"
                   }`}
                 >
                   {mensaje}

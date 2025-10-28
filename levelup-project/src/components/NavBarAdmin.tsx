@@ -24,9 +24,9 @@ export const NavBarAdmin = () => {
           <Nav className="align-items-center gap-4">
             <Nav.Link onClick={() => navigate("/admin/home")}>Home</Nav.Link>
             <Nav.Link onClick={() => navigate("/admin/boletas")}>Boletas</Nav.Link>
-            <Nav.Link onClick={() => navigate("/admin/productos")}>Producto</Nav.Link>
-            <Nav.Link onClick={() => navigate("/admin/categorias")}>Categoría</Nav.Link>
-            <Nav.Link onClick={() => navigate("/admin/usuarios")}>Usuario</Nav.Link>
+            <Nav.Link onClick={() => navigate("/admin/productos")}>Productos</Nav.Link>
+            <Nav.Link onClick={() => navigate("/admin/categorias")}>Categorías</Nav.Link>
+            <Nav.Link onClick={() => navigate("/admin/usuarios")}>Usuarios</Nav.Link>
             <Nav.Link onClick={() => navigate("/admin/reportes")}>Reportes</Nav.Link>
             <Nav.Link onClick={() => navigate("/admin/perfil")}>Perfil</Nav.Link>
           </Nav>

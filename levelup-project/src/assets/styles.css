@@ -1,4 +1,4 @@
-/* ======== ESTILO BASE ======== */
+/*  ESTILO BASE  */
 body { 
   background-color: #000;
   color: white;
@@ -9,58 +9,29 @@ body {
 }
 
 
-/* ======== NAVBAR ADMIN ======== */
+/*  NAVBAR ADMIN  */
 .navbar-admin {
   background-color: #000;
   border-bottom: 2px solid #8000ff;
   padding: 16px 24px;
   box-shadow: 0 0 15px #39ff14, 0 0 30px #8000ff;
 }
-
-.brand-admin {
-  color: #39ff14 !important;
-  font-weight: bold;
-  font-size: 26px;
+.navbar-admin .navbar-brand {
   cursor: pointer;
+  font-weight: 800;
   letter-spacing: 1px;
-  text-shadow: 0 0 10px #39ff14, 0 0 20px #8000ff;
-  transition: transform 0.3s ease;
+}
+.navbar-admin .navbar-brand span {
+  color: #39ff14;
 }
 
-.brand-admin span {
-  color: #8000ff;
-  font-weight: 700;
-}
-
-.brand-admin:hover {
-  transform: scale(1.05);
-  text-shadow: 0 0 20px #39ff14, 0 0 40px #8000ff;
-}
-
-.navbar-admin .nav-link {
-  color: #fff !important;
-  font-weight: 500;
-  font-size: 17px;
-  text-transform: uppercase;
-  transition: color 0.3s ease, text-shadow 0.3s ease;
-}
-
-.navbar-admin .nav-link:hover {
-  color: #39ff14 !important;
-  text-shadow: 0 0 10px #39ff14, 0 0 20px #8000ff;
-}
-
-.navbar-admin .nav-link.active {
-  color: #8000ff !important;
-  text-shadow: 0 0 10px #8000ff, 0 0 25px #39ff14;
-}
 
 .navbar-toggler {
   border: 1px solid #39ff14;
   background-color: #111;
 }
 
-/* ======== LOGIN ADMIN ======== */
+/*  LOGIN ADMIN  */
 .login-section {
   display: flex;
   justify-content: center;
@@ -83,15 +54,11 @@ body {
   border: 2px solid #8000ff;
 }
 
-.login-admin-box:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 45px #39ff14, 0 0 80px #8000ff;
-}
 
 .login-title {
   font-size: 38px;
   font-weight: bold;
-  color: #39ff14;
+  color: #fff;
   text-shadow: 0 0 25px #39ff14, 0 0 40px #8000ff;
   margin-bottom: 40px;
 }
@@ -111,7 +78,7 @@ input {
   border: none;
   border-radius: 10px;
   font-size: 16px;
-  color: #39ff14;
+  color: #fff;
   background-color: #111;
   outline: none;
   text-align: center;
