@@ -17,9 +17,7 @@ export const Navbar = () => {
     <nav className="navbar navbar-expand-lg navbar-dark bg-black fixed-top">
       <div className="container">
         {/* LOGO */}
-        <a className="navbar-brand" href="#">
-          LEVEL-UP GAMER
-        </a>
+        <a className="navbar-brand" href="#">LEVEL-UP GAMER</a>
 
         {/* BOTÓN HAMBURGUESA */}
         <button
