@@ -17,7 +17,7 @@ type Mark = "P" | "A" | undefined; // Presente / Ausente
 export const PerfilAdmin = () => {
   const [admin, setAdmin] = useState<Admin | null>(null);
 
-  // ===== Notas =====
+  //  Notas 
   const [nota, setNota] = useState("");
   const [notas, setNotas] = useState<string[]>(() => {
     try { return JSON.parse(localStorage.getItem("admin_notes") || "[]"); }
@@ -39,12 +39,12 @@ export const PerfilAdmin = () => {
     localStorage.setItem("admin_notes", JSON.stringify(next));
   };
 
-  // ===== Calendario de asistencia =====
+  //  Calendario de asistencia 
   const today = new Date();
   const [year, setYear] = useState(today.getFullYear());
   const [month, setMonth] = useState(today.getMonth()); // 0-11
 
-  // Mapa: "YYYY-MM-DD" -> "P" | "A"
+  // Mapa: "YYYY-MM-DD" -> "P" 
   const [marks, setMarks] = useState<Record<string, Mark>>(() => {
     try { return JSON.parse(localStorage.getItem("admin_attendance") || "{}"); }
     catch { return {}; }
@@ -84,7 +84,7 @@ export const PerfilAdmin = () => {
     // Puedes reemplazar por datos reales del admin conectado
     setAdmin({
       id: 1,
-      nombre: "Caly Jara",
+      nombre: " Caly Jara",
       correo: "Caly@levelup.cl",
       rol: "Administradora General",
       telefono: "+56 9 8765 4321",
@@ -99,22 +99,21 @@ export const PerfilAdmin = () => {
     <>
       <NavBarAdmin />
       <section className="admin-dashboard perfil-admin">
+        
+        {/* 🔹 Título fuera del box */}
+        <h1 className="perfil-titulo">¡Hola! Administrador</h1>
+
         <div className="perfil-layout">
           {/* Columna: Perfil */}
           <div className="perfil-card neon-box">
-            <div className="perfil-header">
-              <h1>¡Hola! Administrador</h1>
+            <div className="perfil-info">
+              <p><strong>Nombre:</strong> {admin.nombre}</p>
+              <p><strong>Correo:</strong> {admin.correo}</p>
+              <p><strong>Teléfono:</strong> {admin.telefono}</p>
+              <p><strong>Región:</strong> {admin.region}</p>
+              <p><strong>Rol:</strong> {admin.rol}</p>
+              <p><strong>Fecha de ingreso:</strong> {admin.fechaIngreso}</p>
             </div>
-
-              <div className="perfil-info">
-                <p><strong>Nombre:</strong> {admin.nombre}</p>
-                <p><strong>Correo:</strong> {admin.correo}</p>
-                <p><strong>Teléfono:</strong> {admin.telefono}</p>
-                <p><strong>Región:</strong> {admin.region}</p>
-                <p><strong>Rol:</strong> {admin.rol}</p>
-                <p><strong>Fecha de ingreso:</strong> {admin.fechaIngreso}</p>
-              </div>
-
           </div>
 
           {/* Columna: Widgets laterales */}
@@ -158,7 +157,7 @@ export const PerfilAdmin = () => {
                 {["L", "M", "M", "J", "V", "S", "D"].map((d) => (
                   <div key={d} className="cal-cell cal-head">{d}</div>
                 ))}
-                {/* Espacios antes del día 1 (semana inicia Lunes) */}
+                {/* Espacios antes del día 1 */}
                 {Array.from({ length: firstWeekday - 1 }).map((_, i) => (
                   <div key={`pad-${i}`} className="cal-cell cal-empty" />
                 ))}
@@ -173,7 +172,8 @@ export const PerfilAdmin = () => {
                         {mark && <span className={`chip ${mark === "P" ? "chip-p" : "chip-a"}`}>{mark}</span>}
                       </div>
                       <div className="cal-actions">
-                        <button className="btn btn-chip p" onClick={() => toggleMark(day, "P")}>P</button>                      </div>
+                        <button className="btn btn-chip p" onClick={() => toggleMark(day, "P")}>P</button>                      
+                      </div>
                     </div>
                   );
                 })}

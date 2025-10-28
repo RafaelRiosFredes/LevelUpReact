@@ -33,6 +33,14 @@
   color: #fff;
 }
 
+.perfil-titulo {
+  font-size: 2.5rem;
+  font-weight: 400;
+  color: #ffffff;
+  text-align: center;
+}
+
+
 .perfil-header {
   text-align: center;
   margin-bottom: 30px;
@@ -68,9 +76,8 @@
   .perfil-info p { font-size: 1rem; }
 }
 
-/* ===== Layout de perfil con panel lateral ===== */
 .perfil-layout {
-  display: flex; /* cambiamos de grid a flex para alinear verticalmente */
+  display: flex; 
   align-items: flex-start; 
   justify-content: center;
   gap: 28px;
@@ -90,14 +97,21 @@
 .perfil-header h1 {
   margin: 0 0 4px;
 }
-.perfil-header p { color: #cfcfcf; margin: 0 0 12px; }
+.perfil-header p { 
+  color: #cfcfcf; margin: 0 0 12px; }
 
-.perfil-info p { margin: 12px 0; font-size: 1.08rem; }
-.perfil-info strong { color: #8000ff; }
+.perfil-info p { 
+  margin: 12px 0; font-size: 1.08rem; 
+}
+.perfil-info strong { 
+  color: #8000ff; 
+}
 
-.perfil-footer { text-align: center; margin-top: 20px; }
+.perfil-footer { 
+  text-align: center; margin-top: 20px; 
+}
 
-/* ===== Widgets ===== */
+/*  Widgets  */
 .perfil-widgets {
   display: flex;
   flex-direction: column;
@@ -184,7 +198,6 @@
   background: rgba(0,0,0,.6);
 }
 .btn-chip.p { color: #39ff14; border: 1px solid #39ff14; }
-.btn-chip.a { color: #ff3b6b; border: 1px solid #ff3b6b; }
 .btn-chip:hover { filter: brightness(1.2); }
 
 /* Navbar */
