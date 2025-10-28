@@ -43,6 +43,9 @@ export const DetalleProducto = () => {
 
       if (productos.length === 0) {
         const res = await fetch("/products.json");
+        if (!res.ok) {
+          throw new Error(`Error al cargar productos: ${res.status} ${res.statusText}`);
+        }
         productos = await res.json();
         localStorage.setItem("productos", JSON.stringify(productos));
       }
