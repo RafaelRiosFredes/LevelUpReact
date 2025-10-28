@@ -1,50 +1,45 @@
-/* ======== ESTILO BASE ======== */
-body { 
-  background-color: #000;
-  color: white;
-  font-family: "Roboto", sans-serif;
-  overflow-x: hidden;
+/*  ESTILO BASE  */
+html, body {
+  background-color: #000 !important;
+  width: 100%;
+  height: 100%;
   margin: 0;
   padding: 0;
+  color: #fff;
+  font-family: "Roboto", sans-serif;
 }
 
-/* ======== NAVBAR ======== */
+/*  NAVBAR  */
 .navbar {
-  padding: 13px 16px; /* 0.8rem 1rem */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: #000;
+  box-shadow: 0 0 15px #39ff14;
+  padding: 15px 20px;
+  height: 80px;
 }
+
 .navbar-brand {
   color: #39ff14 !important;
   font-weight: bold;
-  font-size: 21px; /* 1.3rem */
+  font-size: 21px;
 }
 
-.search-bar input {
-  border-radius: 20px;
-  padding: 5px 15px;
-}
-.search-bar button {
-  border-radius: 20px;
-  color: #39ff14;
-  border-color: #39ff14;
-}
-.search-bar button:hover {
-  background-color: #39ff14;
-  color: #000;
-}
-
-/* ======== LOGIN PAGE ======== */
+/*  LOGIN SECTION  */
 .login-section {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  min-height: 100vh;
+  height: calc(100vh - 80px); 
+  margin-top: 80px; 
   background-color: #000;
-  padding: 60px 0;
-  margin: 0;
+  box-sizing: border-box;
 }
 
-/* FORMULARIO LOGIN */
+/*  LOGIN BOX  */
 .login-box {
   background: rgba(0, 0, 0, 0.95);
   border-radius: 20px;
@@ -53,55 +48,55 @@ body {
   max-width: 550px;
   text-align: center;
   box-shadow: 0 0 25px #39ff14, 0 0 45px #1e90ff;
+  animation: glow-box 4s infinite alternate;
 }
 
-/* TÍTULO */
+/*  TÍTULO  */
 .login-title {
-  font-size: 38px; 
+  font-size: 38px;
   font-weight: bold;
-  color: #39ff14;
-  margin-bottom: 29px; 
+  color: #ededed;
+  margin-bottom: 29px;
+  text-shadow: 0 0 25px #39ff14, 0 0 35px #1e90ff;
 }
 
-/* LABELS */
+/*  LABELS  */
 label {
   display: block;
   text-align: left;
   margin-bottom: 6px;
   font-weight: bold;
-  color: #fff;
+  color: #ededed;
   font-size: 18px;
 }
 
-/* INPUTS */
+/*  INPUTS  */
 input {
   width: 100%;
   padding: 12px;
   border: none;
   border-radius: 10px;
   text-align: center;
-  font-size: 16px; 
-  color: #39ff14;
+  font-size: 16px;
+  color: #ededed;
   background-color: #111;
   outline: none;
-  transition: box-shadow 0.3s ease, background-color 0.3s ease;
+  transition: box-shadow 0.4s ease, background-color 0.3s ease, transform 0.3s ease;
+}
+
+
+input:focus {
+  background-color: #0b0b0b;
+  box-shadow: 0 0 10px #39ff14, 0 0 20px #1e90ff;
+  transform: scale(1.02);
 }
 
 .email-login,
 .password-login {
-  margin-bottom: 35px; 
+  margin-bottom: 35px;
 }
 
-label {
-  margin-bottom: 10px; 
-}
-
-input:focus {
-  background-color: #0b0b0b;
-  box-shadow: 0 0 15px #1e90ff, 0 0 25px #39ff14;
-}
-
-/* BOTÓN */
+/*  BOTÓN LOGIN  */
 .boton-login {
   width: 100%;
   padding: 12px;
@@ -110,17 +105,17 @@ input:focus {
   background: linear-gradient(90deg, #00ff00, #00ffff);
   color: #000;
   font-weight: bold;
-  font-size: 16px; /* 1rem */
+  font-size: 16px;
   cursor: pointer;
   margin-top: 10px;
+  transition: all 0.3s ease;
 }
-
 .boton-login:hover {
-  transform: scale(1.05);
+  transform: scale(1.07);
   box-shadow: 0 0 25px #00ffff, 0 0 50px #00ff00;
 }
 
-/* ======== BOTÓN ADMIN ======== */
+/*  BOTÓN ADMIN  */
 .boton-admin {
   width: 70%;
   padding: 10px;
@@ -128,70 +123,58 @@ input:focus {
   border-radius: 12px;
   color: #ffffff;
   font-weight: bold;
-  font-size: 10px;
+  font-size: 12px;
   margin-top: 25px;
+  background: transparent;
+  border: 1px solid #39ff14;
   transition: all 0.3s ease;
 }
-
 .boton-admin:hover {
+  background-color: #39ff14;
+  color: #000;
   transform: scale(1.05);
   box-shadow: 0 0 30px #39ff14, 0 0 50px #1e90ff;
 }
 
-
-/* MENSAJE */
+/*  MENSAJE  */
 .mensaje-login {
   margin-top: 15px;
-  font-size: 16px; /* 1rem */
+  font-size: 16px;
   color: #ff4040;
+  text-shadow: 0 0 10px #ff0000;
 }
-
 .mensaje-login.exito {
   color: #39ff14;
+  text-shadow: 0 0 10px #39ff14;
 }
 
-/* RESPONSIVE */
+/*  RESPONSIVE  */
 @media (max-width: 768px) {
   .login-box {
     width: 90%;
-    padding: 32px 24px; /* 2rem 1.5rem */
+    padding: 32px 24px;
   }
 
   .login-title {
-    font-size: 27px; /* 1.7rem */
+    font-size: 27px;
+  }
+
+  .login-section {
+    height: calc(100vh - 70px);
+    margin-top: 70px;
   }
 }
 
-/* ======== ESTRUCTURA GLOBAL ======== */
-html, body {
-  background-color: #000 !important;
-  width: 100%;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-}
-
-body > * {
-  flex-shrink: 0;
-}
-
-main, section, .container {
-  margin: 0 auto !important;
-  padding: 0 !important;
-  width: 100% !important;
-}
-
-/* ======== FOOTER ======== */
+/*  FOOTER  */
 footer {
   background-color: #000;
   color: #888;
   text-align: center;
   padding: 20px 10px;
-  font-size: 14px; /* 0.9rem */
+  font-size: 14px;
   border-top: 1px solid #111;
   margin-top: auto;
 }
-
 footer p {
   margin: 0;
 }

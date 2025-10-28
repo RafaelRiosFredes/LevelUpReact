@@ -1,11 +1,12 @@
 import { useState } from "react";
-import { Navbar } from "../components/NavBar";
-import "../assets/styles.css"; 
+import { useNavigate } from "react-router-dom";
+import "../assets/styles.css";
 
 export const Login = () => {
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const navigate = useNavigate();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -25,34 +26,32 @@ export const Login = () => {
     );
 
     if (!usuario) {
-      setMensaje(" Correo o contraseña incorrectos.");
+      setMensaje("Correo o contraseña incorrectos.");
       return;
     }
 
-    // Guardar sesión y mostrar mensaje
+    // Guardar sesión
     localStorage.setItem("usuarioActivo", JSON.stringify(usuario));
     setMensaje(`Inicio de sesión exitoso, ¡Hola ${usuario.nombre}!`);
 
+    // Redirección (SPA)
     setTimeout(() => {
-      window.location.href = "/";
+      navigate("/");
     }, 2000);
   };
 
-    // 🔹 Redirección a login de administrador
+  // Redirección a login de administrador
   const handleAdminLogin = () => {
-    window.location.href = "/login-admin"; // Cambia la ruta si usas React Router
+    navigate("/loginAdmin");
   };
 
   return (
     <>
-      <Navbar />
-
-      {/* CONTENEDOR LOGIN */}
       <section className="login-section">
         <div className="login-box">
           <form onSubmit={handleSubmit}>
             <fieldset>
-              <legend className="login-title">Accede a tu cuenta</legend>
+              <legend className="login-title">Ingresa a tu cuenta</legend>
 
               <div className="email-login">
                 <label htmlFor="correo">Correo Electrónico</label>
@@ -62,7 +61,10 @@ export const Login = () => {
                   name="correo"
                   placeholder="Ingrese su correo electrónico"
                   value={correo}
-                  onChange={(e) => setCorreo(e.target.value)}
+                  onChange={(e) => {
+                    setCorreo(e.target.value);
+                    setMensaje("");
+                  }}
                 />
               </div>
 
@@ -74,7 +76,10 @@ export const Login = () => {
                   name="contrasena"
                   placeholder="Ingrese su contraseña"
                   value={contrasena}
-                  onChange={(e) => setContrasena(e.target.value)}
+                  onChange={(e) => {
+                    setContrasena(e.target.value);
+                    setMensaje("");
+                  }}
                 />
               </div>
 
@@ -82,7 +87,17 @@ export const Login = () => {
                 Ingresar
               </button>
 
-                {/*botón de administrador */}
+              {/* 🔹 MENSAJE ahora aparece justo debajo del botón Ingresar */}
+              {mensaje && (
+                <p
+                  className={`mensaje-login ${
+                    mensaje.includes("exitoso") ? "exito" : "error"
+                  }`}
+                >
+                  {mensaje}
+                </p>
+              )}
+
               <button
                 type="button"
                 className="boton-admin"
@@ -90,16 +105,6 @@ export const Login = () => {
               >
                 Ingreso Admin
               </button>
-
-              {mensaje && (
-                <p
-                  className={`mensaje-login ${
-                    mensaje.startsWith("✅") ? "exito" : ""
-                  }`}
-                >
-                  {mensaje}
-                </p>
-              )}
             </fieldset>
           </form>
         </div>
