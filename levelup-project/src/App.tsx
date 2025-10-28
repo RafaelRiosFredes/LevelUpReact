@@ -2,7 +2,9 @@ import { Routes, Route } from "react-router-dom";
 import { Navbar } from "./components/NavBar";
 import { Footer } from "./components/Footer";
 import { Login } from "./pages/Login";
+import { ProductosPublic } from "./pages/ProductosPublic";
 import { DetalleProducto } from "./pages/DetalleProducto";
+import { CartProvider } from "./pages/CartContext";
 import { DashboardAdmin } from "./pages/DashboardAdmin";
 import { LoginAdmin } from "./pages/LoginAdmin";
 import { NotFound } from "./pages/NotFound";
@@ -14,10 +16,12 @@ import "./assets/styles.css";
 export default function App() {
   return (
     <>
+    <CartProvider>
       <Navbar />
       <main className="app-container">
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/productos" element={<ProductosPublic />} />
           <Route path="/detalle" element={<DetalleProducto />} />
           <Route path="/admin/login" element={<LoginAdmin />} />
           <Route path="/admin/dashboard" element={<DashboardAdmin />} />
@@ -25,6 +29,7 @@ export default function App() {
         </Routes>
       </main>
       <Footer />
+    </CartProvider>
     </>
   );
-}
+};

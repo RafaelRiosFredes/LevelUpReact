@@ -47,7 +47,7 @@ export const Navbar = () => {
 
           <ul className="navbar-nav ms-auto align-items-center">
             <li className="nav-item"><a className="nav-link active" href="#">Inicio</a></li>
-            <li className="nav-item"><a className="nav-link" href="#">Productos</a></li>
+            <li className="nav-item"><a className="nav-link" href="/productos">Productos</a></li>
             <li className="nav-item"><a className="nav-link" href="#">Noticias</a></li>
             <li className="nav-item"><a className="nav-link" href="#">Contacto</a></li>
             <li className="nav-item dropdown">
@@ -57,7 +57,7 @@ export const Navbar = () => {
               <ul className="dropdown-menu dropdown-menu-end bg-dark text-white">
                 {!usuario && (
                   <>
-                    <li><a className="dropdown-item text-white" href="#">Inicia sesión</a></li>
+                    <li><a className="dropdown-item text-white" href="/login">Inicia sesión</a></li>
                     <li><a className="dropdown-item text-white" href="#">Regístrate</a></li>
                   </>
                 )}

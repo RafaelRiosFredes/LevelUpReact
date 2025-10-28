@@ -24,7 +24,7 @@ export const LoginAdmin = () => {
       localStorage.setItem("adminActivo", "true");
 
     setTimeout(() => {
-      navigate("/dashboardAdmin"); 
+      navigate("/admin/dashboard"); 
     }, 1500);
     } else {
       setMensaje("Usuario o contraseña incorrectos.");
