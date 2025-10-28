@@ -22,7 +22,7 @@ export const NavBarAdmin = () => {
         <Navbar.Toggle aria-controls="navbar-admin-nav" />
         <Navbar.Collapse id="navbar-admin-nav" className="justify-content-end">
           <Nav className="align-items-center gap-4">
-            <Nav.Link onClick={() => navigate("/admin/dashboard")}>Home</Nav.Link>
+            <Nav.Link onClick={() => navigate("/home")}>Home</Nav.Link>
             <Nav.Link onClick={() => navigate("/admin/boletas")}>
               Boletas
             </Nav.Link>

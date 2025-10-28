@@ -46,7 +46,7 @@ export const Navbar = () => {
           </form>
 
           <ul className="navbar-nav ms-auto align-items-center">
-            <li className="nav-item"><a className="nav-link active" href="#">Inicio</a></li>
+            <li className="nav-item"><a className="nav-link active" href="/home">Inicio</a></li>
             <li className="nav-item"><a className="nav-link" href="/productos">Productos</a></li>
             <li className="nav-item"><a className="nav-link" href="#">Noticias</a></li>
             <li className="nav-item"><a className="nav-link" href="#">Contacto</a></li>
