@@ -10,6 +10,7 @@
 }
 
 
+/*  ESTILO BASE  */
 body { 
   background-color: #000;
   color: white;
@@ -31,6 +32,7 @@ html, body {
 /* ======== NAVBAR ADMIN ======== */
 
 
+/*  NAVBAR ADMIN  */
 .navbar-admin {
   background-color: #000;
   border-bottom: 2px solid #8000ff;
@@ -68,6 +70,13 @@ html, body {
 }
 
 /*  LOGIN SECTION  */
+
+.navbar-toggler {
+  border: 1px solid #39ff14;
+  background-color: #111;
+}
+
+/*  LOGIN ADMIN  */
 .login-section {
   display: flex;
   justify-content: center;
@@ -90,15 +99,11 @@ html, body {
   border: 2px solid #8000ff;
 }
 
-.login-admin-box:hover {
-  transform: scale(1.02);
-  box-shadow: 0 0 45px #39ff14, 0 0 80px #8000ff;
-}
 
 .login-title {
   font-size: 38px;
   font-weight: bold;
-  color: #39ff14;
+  color: #fff;
   text-shadow: 0 0 25px #39ff14, 0 0 40px #8000ff;
   margin-bottom: 40px;
 }
@@ -118,7 +123,7 @@ input {
   border: none;
   border-radius: 10px;
   font-size: 16px;
-  color: #39ff14;
+  color: #fff;
   background-color: #111;
   outline: none;
   text-align: center;
