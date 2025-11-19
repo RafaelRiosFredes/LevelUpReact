@@ -5,13 +5,13 @@ import "../assets/styles.css";
 import { useCart } from "./CartContext";
 
 export const CarroCompras = () => {
-  // ✅ Usamos el contexto para obtener el estado y las funciones del carrito
+  //  Usamos el contexto para obtener el estado y las funciones del carrito
   const { cartItems, updateQuantity, removeFromCart, clearCart } = useCart();
   const [cupon, setCupon] = useState<string>("");
   // El total ahora se calcula directamente
   const [descuento, setDescuento] = useState(0);
 
-  // ✅ Formatear precios CLP
+  //  Formatear precios CLP
   const formatearPrecio = (valor: number) =>
     "$" + valor.toLocaleString("es-CL");
 
@@ -21,7 +21,7 @@ export const CarroCompras = () => {
   );
   const total = subtotal - descuento;
 
-  // ✅ Aplicar cupón (simulado)
+  //  Aplicar cupón (simulado)
   const aplicarCupon = () => {
     if (cupon.toLowerCase() === "levelup10") {
       setDescuento(subtotal * 0.1);
@@ -53,7 +53,7 @@ export const CarroCompras = () => {
     <Container className="py-5 text-white">
       <h2 className="highlight mb-4">Mi carrito de compras</h2>
       <Row className="g-4">
-        {/* 🛒 Lista de productos */}
+        {/*  Lista de productos */}
         <Col md={8}>
           {cartItems.map((item) => (
               <div
@@ -109,7 +109,7 @@ export const CarroCompras = () => {
             ))}
         </Col>
 
-        {/* 🧾 Resumen y botones */}
+        {/*  Resumen y botones */}
         <Col md={4}>
           <div className="bg-dark p-4 rounded">
             <h5 className="mb-3">
@@ -137,7 +137,7 @@ export const CarroCompras = () => {
               {/* 🔹 Botón que lleva a DetalleCompra */}
               <div className="d-grid gap-2 mt-3">
                 <Link
-                  to="/detalle-compra"
+                  to="/detallecompra"
                   className={`btn btn-success btn-lg w-100 ${
                     cartItems.length === 0 ? "disabled" : ""
                   }`}
