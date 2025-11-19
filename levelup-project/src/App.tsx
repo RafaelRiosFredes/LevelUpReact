@@ -14,6 +14,8 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./assets/styles.css";
 import HomePage from "./pages/HomePage";
+import { RegistroUsuario } from "./pages/RegistroUsuario";
+import { PerfilAdmin } from "./pages/PerfilAdmin";
 
 export default function App() {
   return (
@@ -27,12 +29,24 @@ export default function App() {
           <Route path="/productos" element={<ProductosPublic />} />
           <Route path="/detalle" element={<DetalleProducto />} />
           <Route path="/carrito" element={<CarroCompras />} />
+          <Route path="/RegistroUsuario" element={<RegistroUsuario />} />
+          
+
+         {/* RUTAS ADMIN */}
           <Route path="/admin/login" element={<LoginAdmin />} />
           <Route path="/admin/dashboard" element={<DashboardAdmin />} />
-          <Route path="*" element={<NotFound />} />
+          <Route path="/admin/perfil" element={<PerfilAdmin />} />
+
+
+
+
+
+
         </Routes>
       </main>
-      <Footer />
+
+      {/* Footer también NO debe aparecer en admin */}
+      {/*{!isAdminRoute && <Footer />}*/}
     </CartProvider>
     </>
   );

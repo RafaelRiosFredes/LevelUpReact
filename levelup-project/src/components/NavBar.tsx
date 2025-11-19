@@ -125,7 +125,7 @@ export const NavBar = () => {
                   <NavDropdown.Item as={Link} to="/login" className="text-white">
                     Inicia sesión
                   </NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/registro" className="text-white">
+                  <NavDropdown.Item as={Link} to="/RegistroUsuario">
                     Regístrate
                   </NavDropdown.Item>
                 </>
