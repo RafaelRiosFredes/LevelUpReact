@@ -14,6 +14,8 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./assets/styles.css";
 import HomePage from "./pages/HomePage";
+import { Noticia } from "./pages/Noticias";
+import { DetalleCompra } from "./pages/DetalleCompra";
 
 export default function App() {
   return (
@@ -25,10 +27,13 @@ export default function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/productos" element={<ProductosPublic />} />
+          <Route path="/noticias" element={<Noticia />} />
           <Route path="/detalle" element={<DetalleProducto />} />
           <Route path="/carrito" element={<CarroCompras />} />
           <Route path="/admin/login" element={<LoginAdmin />} />
           <Route path="/admin/dashboard" element={<DashboardAdmin />} />
+          <Route path="/detallecompra" element={<DetalleCompra />} />
+
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
