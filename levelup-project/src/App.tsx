@@ -1,5 +1,4 @@
 import { Routes, Route } from "react-router-dom";
-import { Footer } from "./components/Footer";
 import { NavBar } from "./components/NavBar";
 import { Login } from "./pages/Login";
 import { ProductosPublic } from "./pages/ProductosPublic";
@@ -14,13 +13,10 @@ import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
 import "./assets/styles.css";
 import HomePage from "./pages/HomePage";
-<<<<<<< HEAD
 import { RegistroUsuario } from "./pages/RegistroUsuario";
 import { PerfilAdmin } from "./pages/PerfilAdmin";
-=======
 import { Noticia } from "./pages/Noticias";
 import { DetalleCompra } from "./pages/DetalleCompra";
->>>>>>> 603e1225fe1d0ddfbd1a724fd35a19a9ae9df35e
 
 export default function App() {
   return (
@@ -36,12 +32,12 @@ export default function App() {
           <Route path="/detalle" element={<DetalleProducto />} />
           <Route path="/carrito" element={<CarroCompras />} />
           <Route path="/RegistroUsuario" element={<RegistroUsuario />} />
+          <Route path="/detallecompra" element={<DetalleCompra />} />
           
 
          {/* RUTAS ADMIN */}
           <Route path="/admin/login" element={<LoginAdmin />} />
           <Route path="/admin/dashboard" element={<DashboardAdmin />} />
-<<<<<<< HEAD
           <Route path="/admin/perfil" element={<PerfilAdmin />} />
 
 
@@ -49,11 +45,6 @@ export default function App() {
 
 
 
-=======
-          <Route path="/detallecompra" element={<DetalleCompra />} />
-
-          <Route path="*" element={<NotFound />} />
->>>>>>> 603e1225fe1d0ddfbd1a724fd35a19a9ae9df35e
         </Routes>
       </main>
 
