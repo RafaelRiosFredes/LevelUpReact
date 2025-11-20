@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../assets/styles.css";
 
 export const NavBarAdmin = () => {
+  const admin = JSON.parse(localStorage.getItem("admin") || "null");
   const navigate = useNavigate();
 
   return (
@@ -34,6 +35,9 @@ export const NavBarAdmin = () => {
             </Nav.Link>
             <Nav.Link onClick={() => navigate("/admin/usuarios")}>
               Usuarios
+            </Nav.Link>
+            <Nav.Link onClick={() => navigate("/admin/editarUsuarioAdmin/1")}>
+              Editar Usuario
             </Nav.Link>
             <Nav.Link onClick={() => navigate("/admin/reportes")}>
               Reportes

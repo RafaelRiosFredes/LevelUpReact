@@ -2214,3 +2214,206 @@ p {
 }
 
 /* PERFIL ADMIN */
+
+
+
+
+/*EDITAR PERFIL ADMIN */
+
+/* BOX PRINCIPAL */
+.admin-dashboard {
+  background-color: #000;
+  min-height: 100vh;
+  padding-top: 90px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/*  CONTENIDO INTERIOR */
+.admin-content {
+  width: 100%;
+  max-width: 800px;
+  background-color: #111;
+  border: 1px solid #39ff14;
+  border-radius: 25px;
+  padding: 30px;
+  margin-top: 40px;
+}
+
+/* ENCABEZADO */
+.admin-header {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.admin-header h1 {
+  color: #fff;
+  font-size: 28.8px; 
+}
+
+.admin-header p {
+  color: #ccc;
+  font-size: 16px;
+}
+
+/* FORMULARIO  */
+.edit-form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+/*lABELS */
+.form-group label {
+  color: #fff;
+  font-weight: bold;
+  margin-bottom: 6px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+  justify-content: center;  
+  align-items: center; 
+}
+
+/*  INPUTS */
+.edit-form input {
+  background-color: #1a1a1a;
+  border: 1px solid #1a1a1a;
+  border-radius: 6px;
+  color: white;
+  padding: 10px;
+  font-size: 16px; 
+}
+
+.edit-form input:focus {
+  outline: none;
+  border-color: #6f00ff;
+}
+
+/*  CAMPOS DE REGIÓN Y COMUNA */
+.selector-region {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.titulo-RC {
+  color: #ccc;
+  font-weight: 500;
+  margin-bottom: 10px;
+  text-align: center;
+  font-size: 16px; 
+}
+
+.select-row {
+  display: flex;
+  gap: 20px; 
+  justify-content: space-between;
+}
+
+.select-row select {
+  flex: 1;
+  padding: 8px;
+  border-radius: 8px;
+  border: none;
+  background-color: #1e1e1e;
+  color: #fff;
+  font-size: 15.2px; 
+  transition: background-color 0.3s;
+}
+
+.select-row select:focus {
+  outline: none;
+  background-color: #2b2b2b;
+}
+
+.edit-form select:focus {
+  outline: none;
+  border-color: #6f00ff;
+  box-shadow: 0 0 8px #39ff14;  
+} 
+
+/*BOTONES*/
+.btn {
+  background-color: transparent !important;
+  border: 1px solid #6f00ff !important;
+  color: #fff !important;
+  padding: 10px 22px;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.btn-success:hover {
+  background-color: #6f00ff !important;
+  color: #fff !important;
+  box-shadow: 0 0 12px #6f00ff, 0 0 24px #39ff14;
+  transform: scale(1.05);
+}
+
+/*  MENSAJES */
+.mensaje-exito {
+  margin-top: 20px;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+}
+
+.no-users {
+  text-align: center;
+  color: #bbb;
+  margin-top: 50px;
+  font-size: 17.6px; 
+}
+
+/*  RESPONSIVO  */
+@media (max-width: 768px) {
+  .admin-content {
+    width: 90%;
+    padding: 20px;
+  }
+
+  .btn {
+    width: 48%;
+  }
+}
+
+/*  NAVBAR */
+.navbar-admin {
+  background-color: #000;
+  border-bottom: 2px solid #8000ff;
+  padding: 16px 24px;
+  box-shadow: 0 0 15px #39ff14, 0 0 30px #8000ff;
+}
+.navbar-admin .navbar-brand {
+  cursor: pointer;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+.navbar-admin .navbar-brand span {
+  color: #39ff14;
+}
+
+/* FOOTER*/
+footer {
+  background-color: #000;
+  color: #888;
+  text-align: center;
+  padding: 20px 10px;
+  font-size: 14.4px; 
+  margin-top: 40px;
+  border-top: 1px solid #111;
+}
+footer p { margin: 0; }
+
+
+/*EDITAR PERFIL ADMIN */
