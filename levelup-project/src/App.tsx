@@ -19,11 +19,18 @@ import { DetalleCompra } from "./pages/DetalleCompra";
 import { EditarUsuarioAdmin } from "./pages/EditarUsuarioAdmin";
 import { AdminProductos } from "./pages/AdminProductos";
 import { AdminOrdenes } from "./pages/AdminOrdenes";
+import { CrearProductoAdmin } from "./pages/CrearProductoAdmin";
+import { useLocation } from "react-router-dom";
+
 
 export default function App() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
   return (
     <>
     <CartProvider>
+        {!isAdminRoute && <NavBar />}
       <NavBar />
       <main className="app-container">
         <Routes>
@@ -43,6 +50,7 @@ export default function App() {
           <Route path="/admin/perfil" element={<PerfilAdmin />} />
           <Route path="/admin/editarUsuarioAdmin/:id" element={<EditarUsuarioAdmin />} />
           <Route path="/admin/productos" element={<AdminProductos />} />
+          <Route path="/admin/crearProducto" element={<CrearProductoAdmin />} />
           <Route path="/admin/ordenes" element={<AdminOrdenes />} />
 
 

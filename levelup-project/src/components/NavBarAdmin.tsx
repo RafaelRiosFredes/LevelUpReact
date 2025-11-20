@@ -30,6 +30,9 @@ export const NavBarAdmin = () => {
             <Nav.Link onClick={() => navigate("/admin/productos")}>
               Productos
             </Nav.Link>
+            <Nav.Link onClick={() => navigate("/admin/crearProducto")}>
+              Crear Producto
+            </Nav.Link>
             <Nav.Link onClick={() => navigate("/admin/categorias")}>
               Categorías
             </Nav.Link>
