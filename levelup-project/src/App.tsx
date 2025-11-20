@@ -41,7 +41,7 @@ export default function App() {
           <Route path="/admin/dashboard" element={<DashboardAdmin />} />
           <Route path="/admin/perfil" element={<PerfilAdmin />} />
           <Route path="/admin/editarUsuarioAdmin/:id" element={<EditarUsuarioAdmin />} />
-          <Route path="/admin/listarProductosAdmin" element={<AdminProductos />} />
+          <Route path="/admin/productos" element={<AdminProductos />} />
 
 
 
