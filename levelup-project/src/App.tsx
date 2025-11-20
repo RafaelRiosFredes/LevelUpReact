@@ -7,7 +7,6 @@ import { CartProvider } from "./pages/CartContext";
 import { CarroCompras } from "./pages/CarroCompras";
 import { DashboardAdmin } from "./pages/DashboardAdmin";
 import { LoginAdmin } from "./pages/LoginAdmin";
-import { NotFound } from "./pages/NotFound";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";

@@ -16,6 +16,11 @@ export const DetalleProducto = () => {
   );
 
   const [cantidad, setCantidad] = useState(1);
+
+  // 👉 **NUEVOS ESTADOS PARA COMENTARIOS**
+  const [comentario, setComentario] = useState("");
+  const [comentarios, setComentarios] = useState<string[]>([]);
+
   const [searchParams] = useSearchParams();
   const navigate = useNavigate();
   const idProducto = searchParams.get("id");
@@ -143,7 +148,6 @@ export const DetalleProducto = () => {
   const handleAddToCart = () => {
     if (producto) {
       addToCart(producto, cantidad);
-      // Opcional: Mostrar una notificación de que el producto fue añadido
       alert(`${cantidad} ${producto.nombre}(s) añadido(s) al carrito.`);
     }
   };
@@ -163,6 +167,7 @@ export const DetalleProducto = () => {
     setImagenSeleccionada(producto.imagenes[nuevoIndice]);
   };
 
+ 
   if (loading) {
     return (
       <Container className="text-center py-5 text-white">
@@ -183,8 +188,6 @@ export const DetalleProducto = () => {
     );
   }
 
-  // Si la carga terminó, no hay error, pero el producto es null, mostramos un mensaje.
-  // Esto satisface a TypeScript y maneja un caso borde.
   if (!producto) {
     return (
       <Container className="py-5">
@@ -301,6 +304,41 @@ export const DetalleProducto = () => {
             ></i>
           ))}
         </div>
+      </div>
+
+      {/* NUEVA SECCIÓN DE COMENTARIOS */}
+      <div className="comentarios mt-4">
+        <h4 className="highlight">Añadir un comentario</h4>
+
+        <textarea
+          className="form-control bg-dark text-white mt-2"
+          placeholder="Escribe tu comentario..."
+          value={comentario}
+          onChange={(e) => setComentario(e.target.value)}
+          rows={3}
+        ></textarea>
+
+        <Button
+          className="btn-custom mt-2"
+          onClick={() => {
+            if (comentario.trim().length === 0) return;
+            setComentarios([...comentarios, comentario]);
+            setComentario("");
+          }}
+        >
+          Publicar comentario
+        </Button>
+
+        {comentarios.length > 0 && (
+          <div className="lista-comentarios mt-4">
+            <h5 className="text-info">Comentarios</h5>
+            {comentarios.map((c, i) => (
+              <div key={i} className="bg-dark p-2 rounded mt-2">
+                <p className="m-0">{c}</p>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Productos relacionados */}
