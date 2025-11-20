@@ -39,6 +39,9 @@ export const NavBarAdmin = () => {
             <Nav.Link onClick={() => navigate("/admin/editarUsuarioAdmin/1")}>
               Editar Usuario
             </Nav.Link>
+            <Nav.Link onClick={() => navigate("/admin/ordenes")}>
+              Ordenes
+            </Nav.Link>
             <Nav.Link onClick={() => navigate("/admin/reportes")}>
               Reportes
             </Nav.Link>

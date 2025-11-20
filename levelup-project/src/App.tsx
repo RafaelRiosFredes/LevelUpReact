@@ -18,6 +18,7 @@ import { Noticia } from "./pages/Noticias";
 import { DetalleCompra } from "./pages/DetalleCompra";
 import { EditarUsuarioAdmin } from "./pages/EditarUsuarioAdmin";
 import { AdminProductos } from "./pages/AdminProductos";
+import { AdminOrdenes } from "./pages/AdminOrdenes";
 
 export default function App() {
   return (
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/admin/perfil" element={<PerfilAdmin />} />
           <Route path="/admin/editarUsuarioAdmin/:id" element={<EditarUsuarioAdmin />} />
           <Route path="/admin/productos" element={<AdminProductos />} />
+          <Route path="/admin/ordenes" element={<AdminOrdenes />} />
 
 
 
