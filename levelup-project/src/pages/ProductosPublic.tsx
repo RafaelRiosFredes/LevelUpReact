@@ -36,7 +36,7 @@ export const ProductosPublic = () => {
       setProductos(productosData);
     } catch (err) {
       const errorMessage = err instanceof Error ? err.message : "Ocurrió un error desconocido";
-      console.error("❌ Error cargando datos:", errorMessage);
+      console.error(" Error cargando datos:", errorMessage);
       setError(errorMessage);
     } finally {
       setLoading(false);

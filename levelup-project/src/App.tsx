@@ -6,7 +6,6 @@ import { DetalleProducto } from "./pages/DetalleProducto";
 import { CartProvider } from "./pages/CartContext";
 import { CarroCompras } from "./pages/CarroCompras";
 import { DashboardAdmin } from "./pages/DashboardAdmin";
-import { LoginAdmin } from "./pages/LoginAdmin";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap-icons/font/bootstrap-icons.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
@@ -46,7 +45,6 @@ export default function App() {
           
 
          {/* RUTAS ADMIN */}
-          <Route path="/admin/login" element={<LoginAdmin />} />
           <Route path="/admin/dashboard" element={<DashboardAdmin />} />
           <Route path="/admin/perfil" element={<PerfilAdmin />} />
           <Route path="/admin/editarUsuarioAdmin/:id" element={<EditarUsuarioAdmin />} />

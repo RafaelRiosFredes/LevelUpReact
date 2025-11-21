@@ -1,11 +1,11 @@
 import { useState } from "react";
-import "../assets/styles.css"
+import "../assets/styles.css";
 import { NavBar } from "../components/NavBar";
-
+import { apiFetch } from "../services/api";
 
 export const RegistroUsuario = () => {
   const [formData, setFormData] = useState({
-    nombre: "",
+    nombre: "",              // nombre completo
     email: "",
     contrasena: "",
     confirmarContrasena: "",
@@ -16,6 +16,7 @@ export const RegistroUsuario = () => {
   });
 
   const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
   const [descuento, setDescuento] = useState(false);
   const [comunas, setComunas] = useState<string[]>([]);
 
@@ -38,9 +39,21 @@ export const RegistroUsuario = () => {
     "Magallanes y de la Antártica Chilena": ["Punta Arenas", "Laguna Blanca", "Río Verde", "San Gregorio", "Cabo de Hornos", "Antártica", "Porvenir", "Primavera", "Timaukel", "Natales", "Torres del Paine"]
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+  const calcularEdad = (fechaNacimiento: string) => {
+    const hoy = new Date();
+    const fechaNac = new Date(fechaNacimiento);
+    let edad = hoy.getFullYear() - fechaNac.getFullYear();
+    const mes = hoy.getMonth() - fechaNac.getMonth();
+    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNac.getDate())) {
+      edad--;
+    }
+    return edad;
+  };
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
 
     if (name === "region") {
       setFormData((prev) => ({ ...prev, region: value, comuna: "" }));
@@ -52,81 +65,100 @@ export const RegistroUsuario = () => {
     if (name === "email") {
       setDescuento(value.toLowerCase().endsWith("@duocuc.cl"));
     }
+
+    setError("");
+    setMensaje("");
   };
 
-  const calcularEdad = (fechaNacimiento: string) => {
-    const hoy = new Date();
-    const fechaNac = new Date(fechaNacimiento);
-    let edad = hoy.getFullYear() - fechaNac.getFullYear();
-    const mes = hoy.getMonth() - fechaNac.getMonth();
-    if (mes < 0 || (mes === 0 && hoy.getDate() < fechaNac.getDate())) edad--;
-    return edad;
-  };
-
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const { nombre, email, contrasena, confirmarContrasena, fechaNacimiento } = formData;
+    setError("");
+    setMensaje("");
 
-    if (!nombre || !email || !contrasena || !confirmarContrasena || !fechaNacimiento) {
-      setMensaje("Completa todos los campos obligatorios.");
+    if (
+      !formData.nombre ||
+      !formData.email ||
+      !formData.contrasena ||
+      !formData.confirmarContrasena ||
+      !formData.telefono ||
+      !formData.fechaNacimiento
+    ) {
+      setError("Completa todos los campos obligatorios.");
       return;
     }
 
-    if (contrasena !== confirmarContrasena) {
-      setMensaje("Las contraseñas no coinciden.");
+    if (formData.contrasena !== formData.confirmarContrasena) {
+      setError("Las contraseñas no coinciden.");
       return;
     }
 
-    const edad = calcularEdad(fechaNacimiento);
+    const edad = calcularEdad(formData.fechaNacimiento);
     if (edad < 18) {
-      setMensaje("Solo +18 pueden registrarse.");
+      setError("Debes ser mayor de 18 años para registrarte.");
       return;
     }
 
-
-
-     // Limpia mensaje de error 
-  setMensaje("");
-
-    // Obtener usuarios guardados
-
-    const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios") || "[]");
-
-    const nuevoUsuario = {
-      id:
-        usuariosGuardados.length > 0
-          ? usuariosGuardados[usuariosGuardados.length - 1].id + 1
-          : 1,
-      nombre: formData.nombre,
-      email: formData.email,
-      contrasena: formData.contrasena,
-      telefono: formData.telefono,
-      fechaNacimiento: formData.fechaNacimiento,
-      region: formData.region,
-      comuna: formData.comuna,
-      descuento: descuento ? 20 : 0,
-      fechaRegistro: new Date().toISOString().split("T")[0],
-    };
-
-    usuariosGuardados.push(nuevoUsuario);
-    localStorage.setItem("usuarios", JSON.stringify(usuariosGuardados));
-    localStorage.setItem("usuario", nombre);
-
-    if (descuento) {
-      setMensaje("¡Bienvenido a LEVEL-UP! Tienes un 20% de descuento por ser estudiante DUOC UC.");
-    } else {
-      setMensaje(`¡Bienvenido a LEVEL-UP, ${nombre}!`);
+    // Separar nombre completo en nombres y apellidos
+    const partesNombre = formData.nombre.trim().split(" ");
+    if (partesNombre.length < 2) {
+      setError("Ingresa tu nombre y apellido.");
+      return;
     }
+    const nombres = partesNombre.slice(0, -1).join(" ");
+    const apellidos = partesNombre.slice(-1).join(" ");
 
-    setTimeout(() => {
-      window.location.href = "/";
-    }, 2000);
+    try {
+      // Adaptamos el body a lo que espera el backend (RegistroUsuarioDTO)
+      const body = {
+        nombres: formData.nombre,
+        apellidos: "", // si luego agregas campo "apellido" en el form, lo pones aquí
+        correo: formData.email,
+        contrasena: formData.contrasena,
+        confirmarContrasena: formData.confirmarContrasena,
+        telefono: formData.telefono ? Number(formData.telefono) : null,
+        fechaNacimiento: formData.fechaNacimiento || null, // "YYYY-MM-DD"
+        duoc: descuento, // true si es @duocuc.cl
+        descApl: false,
+      };
+
+      await apiFetch("/auth/registro", {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
+
+      // Mensaje bonito
+      if (descuento) {
+        setMensaje(
+          "Usuario registrado correctamente. ¡Tienes un 20% de descuento por ser estudiante DUOC UC!"
+        );
+      } else {
+        setMensaje("Usuario registrado correctamente. Ahora puedes iniciar sesión.");
+      }
+
+      // opcional: limpiar formulario
+      // setFormData({
+      //   nombre: "",
+      //   email: "",
+      //   contrasena: "",
+      //   confirmarContrasena: "",
+      //   telefono: "",
+      //   fechaNacimiento: "",
+      //   region: "",
+      //   comuna: "",
+      // });
+
+      // opcional: redirigir a /login después de unos segundos
+      // setTimeout(() => navigate("/login"), 2000);
+    } catch (err: any) {
+      console.error(err);
+      setError("Error al registrar usuario. Intenta nuevamente.");
+    }
   };
 
   return (
     <>
-        <NavBar />
-      
+      <NavBar />
+
       <section className="RegistroUsuario-box">
         <form onSubmit={handleSubmit}>
           <fieldset>
@@ -195,7 +227,12 @@ export const RegistroUsuario = () => {
               <label htmlFor="region" className="titulo-RC">
                 Selecciona tu región y comuna
               </label>
-              <select id="region" name="region" value={formData.region} onChange={handleChange}>
+              <select
+                id="region"
+                name="region"
+                value={formData.region}
+                onChange={handleChange}
+              >
                 <option value="">Selecciona tu Región</option>
                 {Object.keys(regionesConComunas).map((r, i) => (
                   <option key={i} value={r}>
@@ -204,7 +241,12 @@ export const RegistroUsuario = () => {
                 ))}
               </select>
 
-              <select id="comuna" name="comuna" value={formData.comuna} onChange={handleChange}>
+              <select
+                id="comuna"
+                name="comuna"
+                value={formData.comuna}
+                onChange={handleChange}
+              >
                 <option value="">Selecciona tu Comuna</option>
                 {comunas.map((c, i) => (
                   <option key={i} value={c}>
@@ -218,10 +260,14 @@ export const RegistroUsuario = () => {
               Registrarse
             </button>
 
-            {mensaje && (
+            {error && (
+              <p style={{ color: "#ff4040", marginTop: "15px" }}>{error}</p>
+            )}
+
+            {mensaje && !error && (
               <p
                 style={{
-                  color: mensaje.includes("¡Bienvenido") ? "#39ff14" : "#ff4040",
+                  color: "#39ff14",
                   marginTop: "15px",
                 }}
               >

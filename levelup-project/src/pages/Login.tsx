@@ -1,114 +1,121 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { apiFetch } from "../services/api";
 import "../assets/styles.css";
 
 export const Login = () => {
   const [correo, setCorreo] = useState("");
   const [contrasena, setContrasena] = useState("");
   const [mensaje, setMensaje] = useState("");
+  const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError("");
+    setMensaje("");
 
-    // Validar campos vacíos
     if (!correo || !contrasena) {
-      setMensaje("Completa todos los campos.");
+      setError("Completa todos los campos.");
       return;
     }
 
-    // Obtener usuarios guardados
-    const usuariosGuardados = JSON.parse(localStorage.getItem("usuarios") || "[]");
+    try {
+      // El backend espera { correo, contrasena }
+      const body = {
+        correo,
+        contrasena,
+      };
 
-    // Buscar coincidencia
-    const usuario = usuariosGuardados.find(
-      (u: any) => u.email === correo && u.contrasena === contrasena
-    );
+      const resp = await apiFetch<{
+        token: string;
+        username: string;
+        message?: string;
+      }>("/auth/login", {
+        method: "POST",
+        body: JSON.stringify(body),
+      });
 
-    if (!usuario) {
-      setMensaje("Correo o contraseña incorrectos.");
-      return;
+      // Claves donde se guarda el token / usuario
+      const TOKEN_KEY =
+        import.meta.env.VITE_JWT_STORAGE_KEY || "levelup_token";
+      const USER_KEY =
+        import.meta.env.VITE_USER_STORAGE_KEY || "levelup_user";
+
+      // Guardar JWT
+      localStorage.setItem(TOKEN_KEY, resp.token);
+
+      // Guardar info básica del usuario
+      localStorage.setItem(
+        USER_KEY,
+        JSON.stringify({
+          correo: resp.username,
+        })
+      );
+
+      setMensaje(resp.message || "Inicio de sesión exitoso.");
+
+      // Redirigir a home (ajusta la ruta si quieres otra)
+      navigate("/home");
+    } catch (err) {
+      console.error(err);
+      setError(
+        "Error al iniciar sesión. Revisa tu correo y contraseña o inténtalo más tarde."
+      );
     }
-
-    // Guardar sesión
-    localStorage.setItem("usuarioActivo", JSON.stringify(usuario));
-    setMensaje(`Inicio de sesión exitoso, ¡Hola ${usuario.nombre}!`);
-
-    // Redirección (SPA)
-    setTimeout(() => {
-      navigate("/");
-    }, 2000);
-  };
-
-  // Redirección a login de administrador
-  const handleAdminLogin = () => {
-    navigate("/admin/login");
   };
 
   return (
-    <>
-      <section className="login-section">
-        <div className="login-box">
-          <form onSubmit={handleSubmit}>
-            <fieldset>
-              <legend className="login-title">Ingresa a tu cuenta</legend>
+    <section className="login-section">
+      <div className="login-box">
+        <form onSubmit={handleLogin}>
+          <fieldset>
+            <legend className="login-title">Ingresa a tu cuenta</legend>
 
-              <div className="email-login">
-                <label htmlFor="correo">Correo Electrónico</label>
-                <input
-                  type="email"
-                  id="correo"
-                  name="correo"
-                  placeholder="Ingrese su correo electrónico"
-                  value={correo}
-                  onChange={(e) => {
-                    setCorreo(e.target.value);
-                    setMensaje("");
-                  }}
-                />
-              </div>
+            <div className="email-login">
+              <label htmlFor="correo">Correo Electrónico</label>
+              <input
+                type="email"
+                id="correo"
+                name="correo"
+                placeholder="Ingrese su correo electrónico"
+                value={correo}
+                onChange={(e) => {
+                  setCorreo(e.target.value);
+                  setError("");
+                  setMensaje("");
+                }}
+              />
+            </div>
 
-              <div className="password-login">
-                <label htmlFor="contrasena">Contraseña</label>
-                <input
-                  type="password"
-                  id="contrasena"
-                  name="contrasena"
-                  placeholder="Ingrese su contraseña"
-                  value={contrasena}
-                  onChange={(e) => {
-                    setContrasena(e.target.value);
-                    setMensaje("");
-                  }}
-                />
-              </div>
+            <div className="password-login">
+              <label htmlFor="contrasena">Contraseña</label>
+              <input
+                type="password"
+                id="contrasena"
+                name="contrasena"
+                placeholder="Ingrese su contraseña"
+                value={contrasena}
+                onChange={(e) => {
+                  setContrasena(e.target.value);
+                  setError("");
+                  setMensaje("");
+                }}
+              />
+            </div>
 
-              <button className="boton-login" type="submit">
-                Ingresar
-              </button>
+            <button className="boton-login" type="submit">
+              Ingresar
+            </button>
 
-              {/* 🔹 MENSAJE ahora aparece justo debajo del botón Ingresar */}
-              {mensaje && (
-                <p
-                  className={`mensaje-login ${
-                    mensaje.includes("exitoso") ? "exito" : "error"
-                  }`}
-                >
-                  {mensaje}
-                </p>
-              )}
+            {error && <p className="mensaje-login error">{error}</p>}
 
-              <button
-                type="button"
-                className="boton-admin"
-                onClick={handleAdminLogin}
-              >
-                Ingreso Admin
-              </button>
-            </fieldset>
-          </form>
-        </div>
-      </section>
-    </>
+            {mensaje && !error && (
+              <p className="mensaje-login exito">{mensaje}</p>
+            )}
+          </fieldset>
+        </form>
+      </div>
+    </section>
   );
 };

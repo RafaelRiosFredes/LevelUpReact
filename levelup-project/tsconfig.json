@@ -15,7 +15,7 @@
     "noEmit": true,
     "jsx": "react-jsx",
 
-    /* ✅ Tipos para Vitest y Testing Library */
+    /*  Tipos para Vitest y Testing Library */
     "types": ["vitest/globals", "@testing-library/jest-dom"],
 
     /* Linting */
