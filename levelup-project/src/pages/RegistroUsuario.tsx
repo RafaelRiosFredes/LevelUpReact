@@ -69,91 +69,124 @@ export const RegistroUsuario = () => {
     setError("");
     setMensaje("");
   };
+const handleSubmit = async (e: React.FormEvent) => {
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setError("");
-    setMensaje("");
+ e.preventDefault();
 
-    if (
-      !formData.nombre ||
-      !formData.email ||
-      !formData.contrasena ||
-      !formData.confirmarContrasena ||
-      !formData.telefono ||
-      !formData.fechaNacimiento
-    ) {
-      setError("Completa todos los campos obligatorios.");
-      return;
-    }
+ setError("");
 
-    if (formData.contrasena !== formData.confirmarContrasena) {
-      setError("Las contraseñas no coinciden.");
-      return;
-    }
+ setMensaje("");
 
-    const edad = calcularEdad(formData.fechaNacimiento);
-    if (edad < 18) {
-      setError("Debes ser mayor de 18 años para registrarte.");
-      return;
-    }
 
-    // Separar nombre completo en nombres y apellidos
-    const partesNombre = formData.nombre.trim().split(" ");
-    if (partesNombre.length < 2) {
-      setError("Ingresa tu nombre y apellido.");
-      return;
-    }
-    const nombres = partesNombre.slice(0, -1).join(" ");
-    const apellidos = partesNombre.slice(-1).join(" ");
 
-    try {
-      // Adaptamos el body a lo que espera el backend (RegistroUsuarioDTO)
-      const body = {
-        nombres: formData.nombre,
-        apellidos: "", // si luego agregas campo "apellido" en el form, lo pones aquí
-        correo: formData.email,
-        contrasena: formData.contrasena,
-        confirmarContrasena: formData.confirmarContrasena,
-        telefono: formData.telefono ? Number(formData.telefono) : null,
-        fechaNacimiento: formData.fechaNacimiento || null, // "YYYY-MM-DD"
-        duoc: descuento, // true si es @duocuc.cl
-        descApl: false,
-      };
+ if (
 
-      await apiFetch("/auth/registro", {
-        method: "POST",
-        body: JSON.stringify(body),
-      });
+  !formData.nombre ||
 
-      // Mensaje bonito
-      if (descuento) {
-        setMensaje(
-          "Usuario registrado correctamente. ¡Tienes un 20% de descuento por ser estudiante DUOC UC!"
-        );
-      } else {
-        setMensaje("Usuario registrado correctamente. Ahora puedes iniciar sesión.");
-      }
+  !formData.email ||
 
-      // opcional: limpiar formulario
-      // setFormData({
-      //   nombre: "",
-      //   email: "",
-      //   contrasena: "",
-      //   confirmarContrasena: "",
-      //   telefono: "",
-      //   fechaNacimiento: "",
-      //   region: "",
-      //   comuna: "",
-      // });
+  !formData.contrasena ||
 
-      // opcional: redirigir a /login después de unos segundos
-      // setTimeout(() => navigate("/login"), 2000);
-    } catch (err: any) {
-      console.error(err);
-      setError("Error al registrar usuario. Intenta nuevamente.");
-    }
+  !formData.confirmarContrasena ||
+
+  !formData.telefono ||
+
+  !formData.fechaNacimiento
+
+ ) {
+
+  setError("Completa todos los campos obligatorios.");
+
+  return;
+
+ }
+
+
+
+ if (formData.contrasena !== formData.confirmarContrasena) {
+
+  setError("Las contraseñas no coinciden.");
+
+  return;
+
+ }
+
+
+
+ const edad = calcularEdad(formData.fechaNacimiento);
+
+ if (edad < 18) {
+
+  setError("Debes ser mayor de 18 años para registrarte.");
+
+  return;
+
+ }
+
+
+
+ const partesNombre = formData.nombre.trim().split(" ");
+
+ if (partesNombre.length < 2) {
+
+  setError("Ingresa tu nombre y apellido.");
+
+  return;
+
+ }
+
+
+
+ const nombres = partesNombre.slice(0, -1).join(" ");
+
+ const apellidos = partesNombre.slice(-1).join(" ");
+
+
+
+ try {
+
+  const body = {
+
+   nombres: nombres,
+
+   apellidos: apellidos,
+
+   correo: formData.email,
+
+   contrasena: formData.contrasena,
+
+   telefono: formData.telefono ? Number(formData.telefono) : null,
+
+   fechaNacimiento: formData.fechaNacimiento || null,
+
   };
+
+
+
+  await apiFetch("/auth/registro", {
+
+   method: "POST",
+
+   body: JSON.stringify(body),
+
+  });
+
+
+
+  setMensaje("Usuario registrado correctamente. Ahora puedes iniciar sesión.");
+
+
+
+ } catch (err: any) {
+
+  console.error("Error en registro:", err);
+
+  setError(err.message || "Error al registrar usuario. Intenta nuevamente.");
+
+ }
+
+};
+
 
   return (
     <>

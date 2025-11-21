@@ -1,6 +1,6 @@
 // src/services/api.ts
 const API_BASE_URL =
-  import.meta.env.VITE_API_BASE_URL || "http://localhost:8080/api/v1";
+  import.meta.env.VITE_API_BASE_URL || "http://localhost:9090/api/v1";
 
 const TOKEN_KEY = import.meta.env.VITE_JWT_STORAGE_KEY || "levelup_token";
 
