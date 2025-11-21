@@ -21,7 +21,7 @@ import { AdminProductos } from "./pages/AdminProductos";
 import { AdminOrdenes } from "./pages/AdminOrdenes";
 import { CrearProductoAdmin } from "./pages/CrearProductoAdmin";
 import { useLocation } from "react-router-dom";
-
+import {Contacto} from "./pages/Contacto";
 
 export default function App() {
   const location = useLocation();
@@ -42,6 +42,7 @@ export default function App() {
           <Route path="/carrito" element={<CarroCompras />} />
           <Route path="/RegistroUsuario" element={<RegistroUsuario />} />
           <Route path="/detallecompra" element={<DetalleCompra />} />
+          <Route path="/contacto" element={<Contacto />} />
           
 
          {/* RUTAS ADMIN */}

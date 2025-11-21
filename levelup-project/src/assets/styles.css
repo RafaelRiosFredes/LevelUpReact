@@ -2793,3 +2793,43 @@ input:focus {
 
 /*CREAR PRODUCTO ADMIN*/
 
+/* CONACTO */
+/* Inputs Gamer */
+.input-gamer {
+  width: 100%;
+  padding: 10px;
+  background: #000;
+  border: 1px solid #39ff14;
+  color: white;
+  border-radius: 4px;
+}
+
+.input-gamer:focus {
+  outline: none;
+  border-color: #1E90FF;
+}
+
+/* Botón gamer */
+.btn-gamer {
+  width: 100%;
+  padding: 12px;
+  background: #39ff14;
+  border: none;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: 0.2s;
+}
+
+.btn-gamer:hover {
+  background: #1E90FF;
+  color: #fff;
+}
+
+/* Espaciado */
+.mb-3 {
+  margin-bottom: 15px;
+}
+
+/*   FIN CONTACTO */
