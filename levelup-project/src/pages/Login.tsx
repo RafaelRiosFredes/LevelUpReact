@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { apiFetch } from "../services/api";
+import { login } from "../services/api"; // <- importamos la función login
 import "../assets/styles.css";
 
 export const Login = () => {
@@ -10,7 +10,7 @@ export const Login = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleLogin = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
     setMensaje("");
@@ -21,41 +21,29 @@ export const Login = () => {
     }
 
     try {
-      // El backend espera { correo, contrasena }
-      const body = {
-        correo,
-        contrasena,
-      };
+      // llamar a la función login que envía cookies
+      const resp = await login({ correo, contrasena });
 
-      const resp = await apiFetch<{
-        token: string;
-        username: string;
-        message?: string;
-      }>("/auth/login", {
-        method: "POST",
-        body: JSON.stringify(body),
-      });
-
-      // Claves donde se guarda el token / usuario
+      // guardar JWT si tu backend lo devuelve
       const TOKEN_KEY =
         import.meta.env.VITE_JWT_STORAGE_KEY || "levelup_token";
       const USER_KEY =
         import.meta.env.VITE_USER_STORAGE_KEY || "levelup_user";
 
-      // Guardar JWT
-      localStorage.setItem(TOKEN_KEY, resp.token);
+      if (resp.token) localStorage.setItem(TOKEN_KEY, resp.token);
 
-      // Guardar info básica del usuario
+      // guardar info básica del usuario
       localStorage.setItem(
         USER_KEY,
         JSON.stringify({
           correo: resp.username,
+          roles: resp.roles,
         })
       );
 
       setMensaje(resp.message || "Inicio de sesión exitoso.");
 
-      // Redirigir a home (ajusta la ruta si quieres otra)
+      // redirigir a home
       navigate("/home");
     } catch (err) {
       console.error(err);
@@ -73,7 +61,7 @@ export const Login = () => {
             <legend className="login-title">Ingresa a tu cuenta</legend>
 
             <div className="email-login">
-              <label htmlFor="correo">Correo Electrónico</label>
+              <label htmlFor="correo">Correo electrónico</label>
               <input
                 type="email"
                 id="correo"
@@ -109,10 +97,7 @@ export const Login = () => {
             </button>
 
             {error && <p className="mensaje-login error">{error}</p>}
-
-            {mensaje && !error && (
-              <p className="mensaje-login exito">{mensaje}</p>
-            )}
+            {mensaje && !error && <p className="mensaje-login exito">{mensaje}</p>}
           </fieldset>
         </form>
       </div>
