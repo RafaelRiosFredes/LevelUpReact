@@ -21,6 +21,7 @@ import { AdminOrdenes } from "./pages/AdminOrdenes";
 import { CrearProductoAdmin } from "./pages/CrearProductoAdmin";
 import { useLocation } from "react-router-dom";
 import {Contacto} from "./pages/Contacto";
+import { BoletaDetalle } from "./pages/BoletaDetalle";  
 
 export default function App() {
   const location = useLocation();
@@ -42,6 +43,7 @@ export default function App() {
           <Route path="/RegistroUsuario" element={<RegistroUsuario />} />
           <Route path="/detallecompra" element={<DetalleCompra />} />
           <Route path="/contacto" element={<Contacto />} />
+          <Route path="/boleta/:id" element={<BoletaDetalle/>} />
           
 
          {/* RUTAS ADMIN */}

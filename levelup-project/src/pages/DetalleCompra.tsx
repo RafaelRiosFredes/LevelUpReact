@@ -1,8 +1,9 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Container, Table, Form, Row, Col, Button, Card, Alert, Spinner } from "react-bootstrap";
 import { Link, useNavigate } from "react-router-dom";
 import "../assets/styles.css";
 import { useCart } from "./CartContext";
+import { crearBoleta } from "../services/BoletaService";  
 
 export const DetalleCompra = () => {
   //  Usamos el contexto para obtener el estado y las funciones del carrito
@@ -33,16 +34,19 @@ export const DetalleCompra = () => {
   const formatPrice = (value: number) =>
     "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async(event: React.FormEvent<HTMLFormElement>) => {
+    console.log("HANDLE SUBMIT INICIADO");
+    
     event.preventDefault();
     const form = event.currentTarget;
+
 
     // Usamos la validación nativa del navegador
     if (form.checkValidity() === false || tarjeta.trim().length !== 16) {
       event.stopPropagation();
       setMensaje({
         tipo: "danger",
-        texto: "❌ El pago no pudo ser realizado. Intentalo Denuevo",
+        texto: "El pago no pudo ser realizado. Intentalo Denuevo",
       });
       return;
     }
@@ -50,34 +54,46 @@ export const DetalleCompra = () => {
     setProcesando(true);
     setMensaje(null);
 
-    // Simulación de una llamada a una API de pago
-    setTimeout(() => {
-      // 1. Leer las órdenes anteriores de localStorage
-      const ordenesGuardadas = JSON.parse(localStorage.getItem("ordenes_compra") || "[]");
+       try {
+    // lo que el backend espera
+    const data = {
+      items: cartItems.map(item => ({
+        idProducto: item.id,
+        cantidad: item.quantity,
+      })),
+      total: total,
+      descuento: 0,
+    };
 
-      // 2. Crear el nuevo objeto de la orden
-      const nuevaOrden = {
-        id: Date.now(), // Un ID único basado en la fecha
-        fecha: new Date().toISOString(),
-        cliente: { nombre, apellido, correo, calle, departamento, region, comuna, indicaciones },
-        items: cartItems, // Los items que vienen del contexto del carrito
-        total: total,     // El total calculado
-      };
+    console.log("ENVIANDO DATA A BACKEND:", data);
 
-      // 3. Añadir la nueva orden a la lista
-      const ordenesActualizadas = [...ordenesGuardadas, nuevaOrden];
+    // llama al backend
+    const response = await crearBoleta(data);
 
-      // 4. Guardar la lista actualizada en localStorage
-      localStorage.setItem("ordenes_compra", JSON.stringify(ordenesActualizadas));
+    console.log("RESPUESTA DEL BACKEND:", response);
 
-      setMensaje({
-        tipo: "success",
-        texto: `✅ ¡Gracias por tu compra, ${nombre || "cliente"}! Tu pago por ${formatPrice(total)} fue exitoso.`,
-      });
-      clearCart();
-      setProcesando(false);
-    }, 2000); // Simula una espera de 2 segundos
-  };
+    setMensaje({
+      tipo: "success",
+      texto: `¡Compra realizada! Total: ${formatPrice(total)}`,
+    });
+
+    clearCart();
+    setProcesando(false);
+
+    // redirige a la boleta 
+    navigate(`/boleta/${response.idBoleta}`);
+
+  } catch (error) {
+    console.error(error);
+
+    setMensaje({
+      tipo: "danger",
+      texto: "Hubo un problema al procesar la compra.",
+    });
+
+    setProcesando(false);
+  }
+};
 
   // Si el carrito está vacío y no hay un mensaje de éxito, redirigir o mostrar un aviso.
   if (cartItems.length === 0 && !mensaje) {
