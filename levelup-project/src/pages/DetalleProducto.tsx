@@ -1,9 +1,52 @@
 import { useEffect, useState, useCallback } from "react";
 import { Container, Row, Col, Button, Spinner, Alert } from "react-bootstrap";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams,Link } from "react-router-dom";
+import { apiFetch } from "../services/api"; // ajusta a tu ruta real
 import "../assets/styles.css";
 import type { Producto } from "../types";
 import { useCart } from "./CartContext";
+
+// === Tipos que reflejan el backend ===
+
+interface ImagenProductoBackend {
+  idImagen: number;
+  url: string;
+  contentType: string;
+  sizeBytes: number;
+  nombreArchivo: string;
+}
+
+interface ProductoBackend {
+  idProducto: number;
+  nombreProducto: string;
+  descripcion: string;
+  precio: number;
+  stock: number;
+  categoriaId: number;
+  categoriaNombre: string;
+  imagenes: ImagenProductoBackend[];
+}
+
+interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  size: number;
+  number: number;
+}
+
+
+
+// Mapeo de DTO backend -> tipo de UI
+const mapProductoBackendToUi = (p: ProductoBackend): Producto => ({
+  id: p.idProducto,
+  nombre: p.nombreProducto,
+  categoria: p.categoriaNombre || "Sin categoría",
+  stock: p.stock,
+  precio: p.precio,
+  descripcion: p.descripcion,
+  imagenes: p.imagenes?.map((img) => img.url) ?? [],
+});
 
 export const DetalleProducto = () => {
   const [producto, setProducto] = useState<Producto | null>(null);
@@ -14,10 +57,9 @@ export const DetalleProducto = () => {
   const [imagenSeleccionada, setImagenSeleccionada] = useState<string | null>(
     null
   );
-
   const [cantidad, setCantidad] = useState(1);
 
-  // 👉 **NUEVOS ESTADOS PARA COMENTARIOS**
+  // Comentarios locales solo en frontend por ahora
   const [comentario, setComentario] = useState("");
   const [comentarios, setComentarios] = useState<string[]>([]);
 
@@ -25,118 +67,71 @@ export const DetalleProducto = () => {
   const navigate = useNavigate();
   const idProducto = searchParams.get("id");
   const { addToCart } = useCart();
-  
-  const cargarDatos = useCallback(async () => {
-    if (!idProducto) {
-      setError("No se ha especificado un ID de producto.");
-      setLoading(false);
-      return;
+
+ const cargarDatos = useCallback(async () => {
+   if (!idProducto) {
+     setError("No se ha especificado un ID de producto.");
+     setLoading(false);
+     return;
+   }
+
+   setLoading(true);
+   setError(null);
+
+   try {
+     // 1) Obtener producto principal desde backend
+     const backendProducto = await apiFetch<ProductoBackend>(
+       `/productos/${idProducto}`
+     );
+
+     const uiProducto = mapProductoBackendToUi(backendProducto);
+     setProducto(uiProducto);
+
+     if (uiProducto.imagenes.length > 0) {
+       setImagenSeleccionada(uiProducto.imagenes[0]);
+     } else {
+       setImagenSeleccionada(null);
+     }
+
+     // reset de cosas asociadas al producto anterior
+     setCalificacion(0);
+     setComentarios([]);
+     setCantidad(1);
+
+     // 2) Obtener productos relacionados por categoría
+     if (backendProducto.categoriaId) {
+       const params = new URLSearchParams({
+         page: "0",
+         size: "10",
+         idCategoria: String(backendProducto.categoriaId),
+       });
+
+       const relacionadosPage = await apiFetch<PageResponse<ProductoBackend>>(
+         `/productos?${params.toString()}`
+       );
+
+       const relacionadosUi = relacionadosPage.content
+         .filter((p) => p.idProducto !== backendProducto.idProducto)
+         .map(mapProductoBackendToUi);
+
+       setRelacionados(relacionadosUi);
+     }else {
+        setRelacionados([]);
     }
-    setLoading(true);
-    setError(null);
-    try {
-      let productos: Producto[] = [];
-      const productosGuardados = localStorage.getItem("productos");
+   } catch (err) {
+     const errorMessage =
+       err instanceof Error ? err.message : "Ocurrió un error desconocido";
+     console.error("❌ Error al cargar producto:", errorMessage);
+     setError(errorMessage);
+   } finally {
+     setLoading(false);
+   }
+ }, [idProducto]);
 
-      if (productosGuardados) {
-        try {
-          productos = JSON.parse(productosGuardados);
-        } catch (e) {
-          console.error("Error al parsear productos de localStorage", e);
-          productos = [];
-        }
-      }
-
-      if (productos.length === 0) {
-        const res = await fetch("/products.json");
-        if (!res.ok) {
-          throw new Error(`Error al cargar productos: ${res.status} ${res.statusText}`);
-        }
-        productos = await res.json();
-        localStorage.setItem("productos", JSON.stringify(productos));
-      }
-
-      const encontrado = productos.find(
-        (p) => String(p.id) === String(idProducto)
-      );
-
-      if (!encontrado) {
-        throw new Error("Producto no encontrado.");
-      }
-
-      setProducto(encontrado);
-
-      if (encontrado?.imagenes?.length) {
-        setImagenSeleccionada(encontrado.imagenes[0]);
-      }
-
-      if (encontrado) {
-        const rel = productos.filter(
-          (p) =>
-            p.categoria === encontrado.categoria && p.id !== encontrado.id
-        );
-        setRelacionados(rel.slice(0, 10));
-      }
-    } catch (err) {
-      const errorMessage =
-        err instanceof Error ? err.message : "Ocurrió un error desconocido";
-      console.error("❌ Error al cargar producto:", errorMessage);
-      setError(errorMessage);
-    } finally {
-      setLoading(false);
-    }
-      try {
-        let productos: Producto[] = [];
-        const productosGuardados = localStorage.getItem("productos");
-
-        if (productosGuardados) {
-          try {
-            productos = JSON.parse(productosGuardados);
-          } catch (e) {
-            console.error("Error al parsear productos de localStorage", e);
-            productos = [];
-          }
-        }
-
-        if (productos.length === 0) {
-          const res = await fetch("/products.json");
-          productos = await res.json();
-          localStorage.setItem("productos", JSON.stringify(productos));
-        }
-
-        const encontrado = productos.find(
-          (p) => String(p.id) === String(idProducto)
-        );
-
-        if (!encontrado) {
-          throw new Error("Producto no encontrado.");
-        }
-
-        setProducto(encontrado);
-
-        if (encontrado?.imagenes?.length) {
-          setImagenSeleccionada(encontrado.imagenes[0]);
-        }
-
-        if (encontrado) {
-          const rel = productos.filter(
-            (p) =>
-              p.categoria === encontrado.categoria && p.id !== encontrado.id
-          );
-          setRelacionados(rel.slice(0, 10));
-        }
-      } catch (err) {
-        const errorMessage = err instanceof Error ? err.message : "Ocurrió un error desconocido";
-        console.error("❌ Error al cargar producto:", errorMessage);
-        setError(errorMessage);
-      } finally {
-        setLoading(false);
-      }
-  }, [idProducto]);
 
   useEffect(() => {
     cargarDatos();
-  }, [cargarDatos]); // se ejecuta cada vez que el id del producto cambia
+  }, [cargarDatos]);
 
   const formatPrice = (value: number) =>
     "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
@@ -159,15 +154,18 @@ export const DetalleProducto = () => {
     const indiceActual = producto.imagenes.findIndex(
       (img) => img === imagenSeleccionada
     );
-    
-    let nuevoIndice = direccion === "next" 
-      ? (indiceActual + 1) % totalImagenes
-      : (indiceActual - 1 + totalImagenes) % totalImagenes;
+
+    const nuevoIndice =
+      direccion === "next"
+        ? (indiceActual + 1) % totalImagenes
+        : (indiceActual - 1 + totalImagenes) % totalImagenes;
 
     setImagenSeleccionada(producto.imagenes[nuevoIndice]);
+    
   };
 
- 
+  // === Render ===
+
   if (loading) {
     return (
       <Container className="text-center py-5 text-white">
@@ -181,7 +179,7 @@ export const DetalleProducto = () => {
     return (
       <Container className="py-5">
         <Alert variant="danger">
-          <Alert.Heading>¡Oh, no! Ha ocurrido un error.</Alert.Heading>
+          <Alert.Heading>Ha ocurrido un error.</Alert.Heading>
           <p>{error}</p>
         </Alert>
       </Container>
@@ -202,9 +200,9 @@ export const DetalleProducto = () => {
     <Container className="py-5 text-white">
       {/* Migas de pan */}
       <p className="text-secondary">
-        <a href="/" className="text-info text-decoration-none">
+        <Link to="/" className="text-info text-decoration-none">
           Inicio
-        </a>{" "}
+        </Link>{" "}
         &gt; <span className="text-info">{producto.categoria}</span> &gt;{" "}
         <span>{producto.nombre}</span>
       </p>
@@ -229,8 +227,6 @@ export const DetalleProducto = () => {
                 >
                   &#10095;
                 </Button>
-                <Button variant="dark" className="gallery-arrow prev" onClick={() => cambiarImagen('prev')}>&#10094;</Button>
-                <Button variant="dark" className="gallery-arrow next" onClick={() => cambiarImagen('next')}>&#10095;</Button>
               </>
             )}
             <img
@@ -277,7 +273,9 @@ export const DetalleProducto = () => {
               id="cantidad"
               className="form-control w-25"
               value={cantidad}
-              onChange={(e) => setCantidad(Math.max(1, parseInt(e.target.value) || 1))}
+              onChange={(e) =>
+                setCantidad(Math.max(1, parseInt(e.target.value) || 1))
+              }
               min={1}
             />
             <Button className="btn-custom mt-3" onClick={handleAddToCart}>
@@ -306,7 +304,7 @@ export const DetalleProducto = () => {
         </div>
       </div>
 
-      {/* NUEVA SECCIÓN DE COMENTARIOS */}
+      {/* Comentarios */}
       <div className="comentarios mt-4">
         <h4 className="highlight">Añadir un comentario</h4>
 
