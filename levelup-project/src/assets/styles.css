@@ -2848,72 +2848,61 @@ input:focus {
 }
 
 
-/* PDF DE BOLETA */
 
-/* --- ESTILO SOLO PARA EL PDF --- */
-#boleta-completa.pdf-mode {
-  background: white !important;
-  color: black !important;
-  padding: 20px;
+/* ------------------ VISTA NORMAL (oscuro gamer) ------------------ */
+.boleta-normal {
+  background: #0b0e12;
+  padding: 25px;
+  border-radius: 12px;
 }
 
-/* Forzar tarjetas blancas dentro del PDF */
-#boleta-completa.pdf-mode .card {
+.card-dark {
+  background: #12181f !important;
+  color: white !important;
+  border: 1px solid #1f2933 !important;
+}
+
+/* ------------------ PDF BLANCO GAMER (NO PARPADEA) ------------------ */
+.pdf-white {
+  background: white !important;
+  color: black !important;
+  padding: 25px !important;
+  width: 1000px; /* tamaño perfecto */
+  border-radius: 12px;
+}
+
+.pdf-white .card-dark {
+  background: #f8f8f8 !important;
+  color: black !important;
+  border: 1px solid #ccc !important;
+}
+
+.pdf-white table,
+.pdf-white th,
+.pdf-white td {
   background: white !important;
   color: black !important;
   border: 1px solid #ccc !important;
 }
 
-/* Tablas compatibles con PDF */
-#boleta-completa.pdf-mode table {
-  color: black !important;
-  border-color: #999 !important;
-}
 
-#boleta-completa.pdf-mode th,
-#boleta-completa.pdf-mode td {
-  background: white !important;
-  color: black !important;
-  border: 1px solid #999 !important;
-}
 
-/* --- MODO PDF (forzado blanco y ordenado) --- */
-#boleta-completa.pdf-mode {
-  background: white !important;
-  color: black !important;
-  padding: 30px;
-  border: 2px solid #222 !important;
-  border-radius: 10px;
-}
 
-/* Títulos */
-#boleta-completa.pdf-mode h2,
-#boleta-completa.pdf-mode h4 {
-  color: #00a6ff !important; /* celeste gamer */
-}
 
-/* Cards blancas */
-#boleta-completa.pdf-mode .card {
-  background: white !important;
-  color: black !important;
-  border: 1px solid #ccc !important;
-}
 
-/* Tablas */
-#boleta-completa.pdf-mode table {
-  background: white !important;
-  color: black !important;
-}
 
-#boleta-completa.pdf-mode th {
-  background: #e8e8e8 !important;
-  color: black !important;
-}
 
-#boleta-completa.pdf-mode td {
-  background: white !important;
-  color: black !important;
-}
+
+
+
+
+
+
+
+
+
+
+
 
 
 /* ------------------------- */

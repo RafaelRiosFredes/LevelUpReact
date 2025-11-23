@@ -4,8 +4,7 @@ import { apiFetch } from "../services/api";
 import { Spinner, Card, Table, Container, Button, Alert } from "react-bootstrap";
 import jsPDF from "jspdf";
 import html2canvas from "html2canvas";
-
-import logo from "../assets/Level.png"; // <-- Logo del proyecto
+import logo from "../assets/LEVEL-UP.png";
 
 export const BoletaDetalle = () => {
   const { id } = useParams();
@@ -13,15 +12,11 @@ export const BoletaDetalle = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // ----------- FORMATOS ----------
-  const formatPrice = (value: number) =>
-    value.toLocaleString("es-CL", {
-      style: "currency",
-      currency: "CLP",
-    });
+  const formatPrice = (v: number) =>
+    v.toLocaleString("es-CL", { style: "currency", currency: "CLP" });
 
-  const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr);
+  const formatDate = (d: string) => {
+    const date = new Date(d);
     return date.toLocaleString("es-CL", {
       day: "2-digit",
       month: "2-digit",
@@ -32,7 +27,6 @@ export const BoletaDetalle = () => {
     });
   };
 
-  // --------- CARGAR BOLETA ----------
   useEffect(() => {
     apiFetch(`/boletas/${id}`)
       .then((data) => {
@@ -56,65 +50,67 @@ export const BoletaDetalle = () => {
     return (
       <Container className="text-center text-white py-5">
         <Alert variant="danger">{error || "Boleta no encontrada"}</Alert>
-        <Link to="/"><Button variant="outline-light">Volver a la tienda</Button></Link>
+        <Link to="/"><Button variant="outline-light">Volver</Button></Link>
       </Container>
     );
 
-  // ----------- PDF --------------
+  // ---------------- PDF BLANCO GAMER -----------------
   const descargarPDF = async () => {
-    const boletaDiv = document.getElementById("boleta-completa");
-    if (!boletaDiv) return;
+    const original = document.getElementById("pdf-area");
+    if (!original) return;
 
-    // Activar modo PDF (fondo blanco)
-    boletaDiv.classList.add("pdf-mode");
+    // Clonar el contenido SIN afectar la pantalla
+    const clone = original.cloneNode(true) as HTMLElement;
+    clone.id = "pdf-temp";
 
-    await new Promise((resolve) => setTimeout(resolve, 250));
+    // Aplicar modo PDF
+    clone.classList.add("pdf-white");
 
-    const canvas = await html2canvas(boletaDiv, {
+    // Contenedor temporal oculto
+    const wrap = document.createElement("div");
+    wrap.style.position = "fixed";
+    wrap.style.top = "-999999px";
+    wrap.appendChild(clone);
+    document.body.appendChild(wrap);
+
+    await new Promise((res) => setTimeout(res, 200));
+
+    const canvas = await html2canvas(clone, {
       scale: 2,
-      backgroundColor: "#ffffff",
+      backgroundColor: "#ffffff"
     });
 
-    // Quitar modo PDF
-    boletaDiv.classList.remove("pdf-mode");
+    document.body.removeChild(wrap);
 
-    const imgData = canvas.toDataURL("image/png");
+    const img = canvas.toDataURL("image/png");
     const pdf = new jsPDF("p", "mm", "a4");
 
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+    const w = pdf.internal.pageSize.getWidth();
+    const h = (canvas.height * w) / canvas.width;
 
-    pdf.addImage(imgData, "PNG", 0, 0, pdfWidth, pdfHeight);
-
-    // Logo arriba a la izquierda
-    pdf.addImage(logo, "PNG", 10, 10, 40, 20);
-
+    pdf.addImage(img, "PNG", 0, 0, w, h);
     pdf.save(`Boleta-${boleta.idBoleta}.pdf`);
   };
 
   return (
-    <Container className="p-4 mb-5 shadow text-white" style={{ marginTop: "140px" }}>
-      
-      {/* 🎯 Contenedor que será capturado en el PDF */}
-      <div id="boleta-completa">
+    <Container className="p-4 mb-5 text-white" style={{ marginTop: "140px" }}>
 
-        {/* LOGO */}
+      {/* ZONA QUE VA AL PDF */}
+      <div id="pdf-area" className="boleta-normal">
+
         <div className="text-center mb-3">
-          <img src={logo} alt="LevelUp Gamer" width="160" />
+          <img src={logo} width="150" alt="logo" />
         </div>
 
-        {/* ENCABEZADO */}
-        <Card className="bg-dark text-white p-4 mb-4 shadow">
+        <Card className="p-4 mb-4 shadow card-dark">
           <h2 className="text-info">Boleta #{boleta.idBoleta}</h2>
           <p>{formatDate(boleta.fechaEmision)}</p>
           <p className="fw-bold">{boleta.nombreUsuario}</p>
         </Card>
 
-        {/* DETALLE */}
-        <Card className="bg-dark text-white p-4 mb-4 shadow">
+        <Card className="p-4 mb-4 shadow card-dark">
           <h4 className="text-info mb-3">Detalle de la compra</h4>
-
-          <Table bordered striped hover responsive variant="dark">
+          <Table bordered hover responsive variant="dark">
             <thead>
               <tr>
                 <th>Producto</th>
@@ -136,29 +132,23 @@ export const BoletaDetalle = () => {
           </Table>
         </Card>
 
-        {/* RESUMEN */}
-        <Card className="bg-dark text-white p-4 shadow mb-4">
+        <Card className="p-4 shadow card-dark">
           <h4 className="text-info mb-3">Resumen de pago</h4>
           <p><strong>Subtotal:</strong> {formatPrice(boleta.totalSinDescuento)}</p>
-          <p><strong>Descuento aplicado:</strong> {boleta.descuento}%</p>
-          <h4 className="mt-3">
-            <span className="text-success">Total pagado:</span> {formatPrice(boleta.total)}
+          <p><strong>Descuento:</strong> {boleta.descuento}%</p>
+          <h4 className="mt-3 text-success">
+            Total pagado: {formatPrice(boleta.total)}
           </h4>
         </Card>
 
       </div>
 
-      {/* BOTONES */}
       <div className="text-center mt-4 d-flex gap-3 justify-content-center">
-        <Button variant="primary" size="lg" onClick={descargarPDF}>
+        <Button size="lg" variant="primary" onClick={descargarPDF}>
           Descargar PDF
         </Button>
 
-        <Link to="/">
-          <Button variant="success" size="lg">
-            Volver a la tienda
-          </Button>
-        </Link>
+        <Link to="/"><Button size="lg" variant="success">Volver</Button></Link>
       </div>
 
     </Container>
