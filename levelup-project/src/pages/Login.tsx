@@ -1,6 +1,6 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { login, apiFetch } from "../services/api"; 
+import { login, apiFetch } from "../services/api";
 
 import "../assets/styles.css";
 
@@ -22,60 +22,95 @@ export const Login = () => {
     }
 
     try {
-      // llamar a la función login que envía cookies
+      // 1) Login al backend
       const resp = await login({ correo, contrasena });
 
-      // guardar JWT si tu backend lo devuelve
+      // 2) Claves de storage
       const TOKEN_KEY = import.meta.env.VITE_JWT_STORAGE_KEY || "levelup_token";
       const USER_KEY = import.meta.env.VITE_USER_STORAGE_KEY || "levelup_user";
 
-      if (resp.token) localStorage.setItem(TOKEN_KEY, resp.token);
+      // 3) Guardar token (si existe)
+      if (resp.token) {
+        localStorage.setItem(TOKEN_KEY, resp.token);
+      }
 
-      const roles = Array.isArray(resp.roles) 
-      ? resp.roles.map((r:any) => r.nombreRol) 
-      : [];
+      // 4) Normalizar roles
+      const rawRoles = resp.roles;
+      let roles: string[] = [];
 
-      const isAdmin = roles.includes("ROLE_ADMIN") || roles.includes("ADMIN");
+      if (Array.isArray(rawRoles)) {
+        roles = rawRoles
+          .map((r: any) => {
+            if (typeof r === "string") return r;
+            if (r.nombreRol) return r.nombreRol;
+            if (r.authority) return r.authority;
+            return "";
+          })
+          .filter(Boolean);
+      }
+
+      const rolesNormalizados = roles.map((r) =>
+        r.startsWith("ROLE_") ? r : `ROLE_${r}`
+      );
+
+      const isAdmin = rolesNormalizados.includes("ROLE_ADMIN");
 
       const correoUsuario = resp.username || correo;
 
-      // guardar info básica del usuario
+      // 5) Guardar info básica de sesión
       localStorage.setItem(
         USER_KEY,
         JSON.stringify({
           id: resp.idUsuario,
           correo: correoUsuario,
-          roles,
+          roles: rolesNormalizados,
         })
       );
 
-      // guardar "usuario" simple para el NavBar actual
-      localStorage.setItem("usuario", correoUsuario);
-
-      // guardar si es admin o no
+      // bandera admin para el navbar
       if (isAdmin) {
         localStorage.setItem("isAdmin", "true");
-        // redirigir a panel admin
       } else {
         localStorage.removeItem("isAdmin");
       }
 
-      // Avisar al NavBar que el usuario cambió
-      window.dispatchEvent(new Event("usuarioActualizado"));
+      // 6) Obtener datos completos del usuario para mostrar nombre bonito
+      let displayName = correoUsuario;
 
-      
-    // obtener datos completos del usuario
-      const datos = await apiFetch(`/usuarios/${resp.idUsuario}`);
-      localStorage.setItem("usuario", JSON.stringify(datos));
+      try {
+        const datos: any = await apiFetch(`/usuarios/${resp.idUsuario}`);
+        // guardas el detalle en otra clave, NO en "usuario"
+        localStorage.setItem("usuario", JSON.stringify(datos));
+
+        const nombres = (datos?.nombres ?? datos?.nombre ?? "")
+          .toString()
+          .trim();
+        const apellidos = (datos?.apellidos ?? datos?.apellido ?? "")
+          .toString()
+          .trim();
+        const candidato = `${nombres} ${apellidos}`.trim();
+
+        if (candidato) {
+          displayName = candidato;
+        }
+      } catch (detalleError) {
+        console.error(
+          "Error obteniendo datos completos del usuario",
+          detalleError
+        );
+        // si falla, se queda con el correo como displayName
+      }
+
+      // 7) Esto es lo que usa el NavBar para el "Hola, ..."
+      localStorage.setItem("usuario", displayName);
+
+      // Avisar al NavBar que hay nuevo usuario
+      window.dispatchEvent(new Event("usuarioActualizado"));
 
       setMensaje(resp.message || "Inicio de sesión exitoso.");
 
-      if(isAdmin) {
-        navigate("/admin/dashboard");
-      } else {
-        navigate("/home");
-      }
-
+      // 8) Redirigir SIEMPRE al home (aunque sea admin)
+      navigate("/home");
     } catch (err) {
       console.error(err);
       setError(
