@@ -18,7 +18,7 @@ import { apiFetch } from "../services/api";
 // === Tipos que reflejan el backend ===
 interface CategoriaBackend {
   idCategoria: number;
-  nombre: string;
+  nombreCategoria: string;
 }
 
 interface ImagenProductoBackend {
@@ -287,8 +287,8 @@ export const AdminProductos = () => {
                 >
                   <option value="todos">Todas las categorías</option>
                   {categorias.map((c) => (
-                    <option key={c.idCategoria} value={c.idCategoria}>
-                      {c.nombre}
+                    <option key={c.idCategoria} value={String(c.idCategoria)}>
+                      {c.nombreCategoria}
                     </option>
                   ))}
                 </Form.Select>
@@ -458,7 +458,11 @@ export const AdminProductos = () => {
               <Form.Group>
                 <Form.Label>Categoría</Form.Label>
                 <Form.Select
-                  value={editando.categoriaId ?? ""}
+                  value={
+                    editando.categoriaId != null
+                      ? String(editando.categoriaId)
+                      : ""
+                  }
                   onChange={(e) =>
                     handleChangeEditar(
                       "categoriaId",
@@ -468,8 +472,8 @@ export const AdminProductos = () => {
                 >
                   <option value="">Sin categoría</option>
                   {categorias.map((c) => (
-                    <option key={c.idCategoria} value={c.idCategoria}>
-                      {c.nombre}
+                    <option key={c.idCategoria} value={String(c.idCategoria)}>
+                      {c.nombreCategoria}
                     </option>
                   ))}
                 </Form.Select>

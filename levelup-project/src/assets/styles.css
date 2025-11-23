@@ -2977,7 +2977,13 @@ input:focus {
   background-color: #9b5cff !important;
 }
 
+/* MODAL DETALLE BOLETA */
 
+.admin-modal .form-select,
+.admin-modal .form-select option {
+  background-color: #111;
+  color: #fff;
+}
 
 
 
