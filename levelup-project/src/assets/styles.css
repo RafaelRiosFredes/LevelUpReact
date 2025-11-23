@@ -1883,7 +1883,7 @@ footer p {
 }
 
 /*  CAMPOS DEL FORMULARIO  */
-label {
+.RegistroUsuario-box label {
   font-weight: bold;
   color: #ededed;
   text-align: left;
@@ -1893,8 +1893,8 @@ label {
   margin-top: 23px;
 }
 
-input,
-select {
+.RegistroUsuario-box input,
+.RegistroUsuario-box select {
   width: 100%;
   padding: 12px;
   margin-bottom: 1.2rem;
@@ -1908,8 +1908,8 @@ select {
   transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
-input:focus,
-select:focus {
+.RegistroUsuario-box input:focus,
+.RegistroUsuario-box select:focus {
   background-color: #0b0b0b;
   box-shadow: 0 0 15px #1e90ff, 0 0 9px #39ff14;
 }
@@ -2343,7 +2343,7 @@ p {
 } 
 
 /*BOTONES*/
-.btn {
+.edit-form .btn {
   background-color: transparent !important;
   border: 1px solid #6f00ff !important;
   color: #fff !important;
@@ -2353,7 +2353,8 @@ p {
   margin-top: 20px;
 }
 
-.btn-success:hover {
+
+.edit-form .btn-success:hover {
   background-color: #6f00ff !important;
   color: #fff !important;
   box-shadow: 0 0 12px #6f00ff, 0 0 24px #39ff14;
@@ -2833,3 +2834,15 @@ input:focus {
 }
 
 /*   FIN CONTACTO */
+
+/* Modal dark para que combine con el admin */
+.modal-content {
+  background-color: #050816;
+  color: #f9fafb;
+  border: 1px solid #22c55e;
+}
+
+.modal-header,
+.modal-footer {
+  border-color: #1f2937;
+}

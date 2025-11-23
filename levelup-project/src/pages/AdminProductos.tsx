@@ -1,291 +1,499 @@
-import { Container, Row, Col, Form, Table, Pagination } from "react-bootstrap";
-import { NavBarAdmin } from "../components/NavBarAdmin";
-import "../assets/styles.css";
-import { useEffect, useState } from "react";
+import {  useCallback,  useEffect,  useState,  type ChangeEvent,  type FormEvent,} from "react";
+import {
+  Container,
+  Row,
+  Col,
+  Table,
+  Badge,
+  Button,
+  Form,
+  FormControl,
+  InputGroup,
+  Spinner,
+  Alert,
+  Modal,
+} from "react-bootstrap";
+import { apiFetch } from "../services/api";
 
-interface Producto {
-  id: number;
+// === Tipos que reflejan el backend ===
+interface CategoriaBackend {
+  idCategoria: number;
   nombre: string;
-  categoria: string;
-  stock: number;
-  precio: number;
-  imagenes: string[];
+}
+
+interface ImagenProductoBackend {
+  idImagen: number;
+  url: string;
+  contentType: string;
+  sizeBytes: number;
+  nombreArchivo: string;
+}
+
+interface ProductoBackend {
+  idProducto: number;
+  nombreProducto: string;
   descripcion: string;
+  precio: number;
+  stock: number;
+  categoriaId: number | null;
+  categoriaNombre: string;
+  imagenes: ImagenProductoBackend[];
 }
 
-// Función para asignar clases de CSS según el estado
-const getStatusClass = (estado: string) => {
-  switch (estado) {
-    case "Disponible":
-      return "status-disponible";
-    case "Stock Bajo":
-      return "status-stock-bajo";
-    case "Agotado":
-      return "status-agotado";
-    default:
-      return "";
-  }
-};
+interface PageResponse<T> {
+  content: T[];
+  totalElements: number;
+  totalPages: number;
+  number: number; // page index
+  size: number;
+}
 
-interface Categoria {
+// === Tipo usado en el UI de admin ===
+interface ProductoAdmin {
   id: number;
   nombre: string;
+  descripcion: string;
+  precio: number;
+  stock: number;
+  categoriaId: number | null;
+  categoriaNombre: string;
+  imagenPrincipal: string | null;
 }
+
+// Mapea del backend al tipo del UI
+const mapProductoBackendToAdmin = (p: ProductoBackend): ProductoAdmin => ({
+  id: p.idProducto,
+  nombre: p.nombreProducto,
+  descripcion: p.descripcion,
+  precio: p.precio,
+  stock: p.stock,
+  categoriaId: p.categoriaId,
+  categoriaNombre: p.categoriaNombre,
+  imagenPrincipal: p.imagenes?.[0]?.url ?? null,
+});
 
 export const AdminProductos = () => {
-  const [productos, setProductos] = useState<Producto[]>([]);
-  const [categorias, setCategorias] = useState<Categoria[]>([]);
-  const [categoriaFiltro, setCategoriaFiltro] = useState<string>("todos");
-  const [busqueda, setBusqueda] = useState<string>("");
+  const [productos, setProductos] = useState<ProductoAdmin[]>([]);
+  const [categorias, setCategorias] = useState<CategoriaBackend[]>([]);
+
+  const [busqueda, setBusqueda] = useState("");
+  const [filtroCategoria, setFiltroCategoria] = useState<string>("todos");
+
   const [paginaActual, setPaginaActual] = useState(1);
-  const productosPorPagina = 20;
-  const [loading, setLoading] = useState(true);
+  const [totalPaginas, setTotalPaginas] = useState(1);
+  const productosPorPagina = 10;
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const [idEliminando, setIdEliminando] = useState<number | null>(null);
+
+  // Modal de edición
+  const [showModal, setShowModal] = useState(false);
+  const [editando, setEditando] = useState<ProductoAdmin | null>(null);
+  const [guardando, setGuardando] = useState(false);
+
+  // ============= CARGA DE CATEGORÍAS =============
   useEffect(() => {
-    const cargarDatos = async () => {
-      setLoading(true);
+    const cargarCategorias = async () => {
       try {
-        // Cargar categorías
-        const categoriasResponse = await fetch("/categories.json");
-        const categoriasData = await categoriasResponse.json();
-        setCategorias(categoriasData);
-
-        // Cargar productos desde localStorage o JSON
-        let productosData: Producto[] = [];
-        const productosGuardados = localStorage.getItem("productos");
-        if (productosGuardados) {
-          productosData = JSON.parse(productosGuardados);
-        } else {
-          const productosResponse = await fetch("/products.json");
-          productosData = await productosResponse.json();
-          localStorage.setItem("productos", JSON.stringify(productosData));
-        }
-        setProductos(productosData);
-      } catch (error) {
-        console.error("Error al cargar los datos:", error);
-      } finally {
-        setLoading(false);
+        const data = await apiFetch<CategoriaBackend[]>("/categorias");
+        setCategorias(data);
+      } catch (err) {
+        console.error("Error cargando categorías:", err);
       }
     };
-
-    cargarDatos();
-
-    // Escuchar cambios en localStorage para actualizar en tiempo real
-    const handleStorageChange = (event: StorageEvent) => {
-      if (event.key === 'productos_lastUpdate' || event.key === 'productos') {
-        cargarDatos();
-      }
-    };
-    window.addEventListener('storage', handleStorageChange);
-    return () => window.removeEventListener('storage', handleStorageChange);
+    cargarCategorias();
   }, []);
 
-  const getEstadoProducto = (stock: number): string => {
-    if (stock === 0) return "Agotado";
-    if (stock <= 10) return "Stock Bajo";
-    return "Disponible";
+  // ============= CARGA DE PRODUCTOS (con filtros/paginación) =============
+  const cargarProductos = useCallback(async () => {
+    try {
+      setLoading(true);
+      setError(null);
+
+      const params = new URLSearchParams();
+      params.set("page", String(paginaActual - 1));
+      params.set("size", String(productosPorPagina));
+
+      if (busqueda.trim()) {
+        params.set("nombre", busqueda.trim());
+      }
+
+      if (filtroCategoria !== "todos") {
+        params.set("idCategoria", filtroCategoria);
+      }
+
+      const page = await apiFetch<PageResponse<ProductoBackend>>(
+        `/productos?${params.toString()}`
+      );
+
+      setProductos(page.content.map(mapProductoBackendToAdmin));
+      setTotalPaginas(page.totalPages || 1);
+    } catch (err) {
+      const msg =
+        err instanceof Error
+          ? err.message
+          : "Error al cargar productos desde el servidor.";
+      setError(msg);
+    } finally {
+      setLoading(false);
+    }
+  }, [paginaActual, productosPorPagina, busqueda, filtroCategoria]);
+
+  useEffect(() => {
+    cargarProductos();
+  }, [cargarProductos]);
+
+  // ============= HANDLERS DE FILTROS =============
+  const handleBusquedaChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setBusqueda(e.target.value);
+    setPaginaActual(1);
   };
 
-  const truncarNombre = (nombre: string, maxLength: number = 20): string => {
-    if (nombre.length <= maxLength) return nombre;
-    return nombre.slice(0, maxLength - 3) + "...";
+  const handleCategoriaChange = (e: ChangeEvent<HTMLSelectElement>) => {
+    setFiltroCategoria(e.target.value);
+    setPaginaActual(1);
   };
 
-  const productosFiltrados = productos
-    .filter(producto => 
-      categoriaFiltro === "todos" || producto.categoria === categoriaFiltro
-    )
-    .filter(producto =>
-      producto.nombre.toLowerCase().includes(busqueda.toLowerCase())
+  const handleBuscarSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    setPaginaActual(1);
+    // el useEffect ya dispara cargarProductos
+  };
+
+  // ============= ELIMINAR PRODUCTO =============
+  const handleEliminar = async (id: number) => {
+    const confirmar = window.confirm(
+      "¿Seguro que quieres eliminar este producto? Esta acción no se puede deshacer."
     );
+    if (!confirmar) return;
 
-  // Calcular el total de páginas
-  const totalPaginas = Math.ceil(productosFiltrados.length / productosPorPagina);
+    try {
+      setIdEliminando(id);
+      setError(null);
 
-  // Obtener los productos de la página actual
-  const productosEnPagina = productosFiltrados.slice(
-    (paginaActual - 1) * productosPorPagina,
-    paginaActual * productosPorPagina
-  );
+      await apiFetch(`/productos/${id}`, {
+        method: "DELETE",
+      });
 
-  // Manejar cambio de página
-  const handleCambioPagina = (numeroPagina: number) => {
-    setPaginaActual(numeroPagina);
+      // recargar página actual
+      await cargarProductos();
+    } catch (err) {
+      const msg =
+        err instanceof Error ? err.message : "Error al eliminar el producto.";
+      setError(msg);
+    } finally {
+      setIdEliminando(null);
+    }
   };
 
-  return (
-    <>
-      <NavBarAdmin />
-      <section className="product-list-section">
-        <Container fluid="lg">
-          <div className="product-list-box">
-            <h2 className="list-title">Gestión de Productos</h2>
+  // ============= EDICIÓN =============
+  const abrirModalEdicion = (producto: ProductoAdmin) => {
+    setEditando({ ...producto });
+    setShowModal(true);
+  };
 
-            {/* Filtros y Búsqueda */}
-            <Row className="filters-header mb-4" align-items="center">
+  const cerrarModal = () => {
+    setShowModal(false);
+    setEditando(null);
+  };
+
+  const handleChangeEditar = (
+    campo: keyof ProductoAdmin,
+    valor: string | number | null
+  ) => {
+    if (!editando) return;
+    setEditando({ ...editando, [campo]: valor } as ProductoAdmin);
+  };
+
+  const guardarCambios = async () => {
+    if (!editando) return;
+
+    try {
+      setGuardando(true);
+      setError(null);
+
+      const payload = {
+        nombreProducto: editando.nombre,
+        descripcion: editando.descripcion,
+        precio: editando.precio,
+        stock: editando.stock,
+        categoriaId: editando.categoriaId,
+      };
+
+      await apiFetch(`/productos/${editando.id}`, {
+        method: "PUT",
+        body: JSON.stringify(payload),
+      });
+
+      cerrarModal();
+      await cargarProductos();
+    } catch (err) {
+      const msg =
+        err instanceof Error
+          ? err.message
+          : "Error al guardar los cambios del producto.";
+      setError(msg);
+    } finally {
+      setGuardando(false);
+    }
+  };
+
+  const formatPrice = (value: number) =>
+    "$" + value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+  // ============= RENDER =============
+  return (
+    <Container fluid className="admin-layout text-light py-4">
+      <Row>
+        {/* Si tienes un sidebar real, reemplaza este Col por tu componente */}
+        <Col md={2} className="admin-sidebar">
+          <h5>Panel Admin</h5>
+          <ul className="admin-menu">
+            <li className="active">Productos</li>
+            <li>Usuarios</li>
+            <li>Órdenes</li>
+          </ul>
+        </Col>
+
+        <Col md={10} className="admin-content">
+          <div className="d-flex justify-content-between align-items-center mb-3">
+            <h3>Gestión de Productos</h3>
+            <small className="text-muted">
+              Página {paginaActual} de {totalPaginas}
+            </small>
+          </div>
+
+          {/* Filtros */}
+          <Form onSubmit={handleBuscarSubmit} className="mb-3">
+            <Row className="g-2">
+              <Col md={5}>
+                <InputGroup>
+                  <FormControl
+                    placeholder="Buscar por nombre..."
+                    value={busqueda}
+                    onChange={handleBusquedaChange}
+                  />
+                  <Button type="submit" variant="success">
+                    Buscar
+                  </Button>
+                </InputGroup>
+              </Col>
               <Col md={4}>
                 <Form.Select
-                  aria-label="Filtrar por categoría"
-                  value={categoriaFiltro}
-                  onChange={(e) => setCategoriaFiltro(e.target.value)}
+                  value={filtroCategoria}
+                  onChange={handleCategoriaChange}
                 >
-                  <option value="todos">Todos los productos</option>
-                  {categorias.map(categoria => (
-                    <option key={categoria.id} value={categoria.nombre}>
-                      {categoria.nombre}
+                  <option value="todos">Todas las categorías</option>
+                  {categorias.map((c) => (
+                    <option key={c.idCategoria} value={c.idCategoria}>
+                      {c.nombre}
                     </option>
                   ))}
                 </Form.Select>
               </Col>
-              <Col md={4} className="ms-auto">
-                <Form.Control
-                  type="search"
-                  placeholder="Buscar producto..."
-                  value={busqueda}
-                  onChange={(e) => setBusqueda(e.target.value)}
-                  className="admin-search-input"
-                  style={{ textAlign: 'left' }}
-                />
-              </Col>
             </Row>
+          </Form>
 
-            {/* Tabla de Productos */}
-            <Table responsive className="table-admin" variant="dark">
+          {error && <Alert variant="danger">{error}</Alert>}
+
+          {loading ? (
+            <div className="text-center py-5">
+              <Spinner animation="border" variant="success" />
+              <p className="mt-2">Cargando productos.</p>
+            </div>
+          ) : productos.length === 0 ? (
+            <p>No se encontraron productos con los filtros actuales.</p>
+          ) : (
+            <Table striped bordered hover responsive className="table-admin">
               <thead>
                 <tr>
-                  <th>Id</th>
-                  <th>Producto</th>
+                  <th>ID</th>
+                  <th>Imagen</th>
+                  <th>Nombre</th>
                   <th>Categoría</th>
                   <th>Stock</th>
                   <th>Precio</th>
-                  <th>Estado</th>
+                  <th>Acciones</th>
                 </tr>
               </thead>
               <tbody>
-                {productosEnPagina.map((p) => (
-                  <tr key={p.id}>
-                    <td>{p.id}</td>
-                    <td title={p.nombre}>{truncarNombre(p.nombre)}</td>
-                    <td>{p.categoria}</td>
-                    <td>{p.stock}</td>
-                    <td>${p.precio.toLocaleString()}</td>
+                {productos.map((producto) => (
+                  <tr key={producto.id}>
+                    <td>{producto.id}</td>
                     <td>
-                      <span
-                        className={`status-badge ${getStatusClass(
-                          getEstadoProducto(p.stock)
-                        )}`}
+                      {producto.imagenPrincipal ? (
+                        <img
+                          src={producto.imagenPrincipal}
+                          alt={producto.nombre}
+                          style={{
+                            width: "60px",
+                            height: "60px",
+                            objectFit: "cover",
+                          }}
+                        />
+                      ) : (
+                        <span className="text-muted">Sin imagen</span>
+                      )}
+                    </td>
+                    <td>{producto.nombre}</td>
+                    <td>{producto.categoriaNombre}</td>
+                    <td>
+                      <Badge
+                        bg={producto.stock > 0 ? "success" : "danger"}
+                        className="status-badge-admin"
                       >
-                        {getEstadoProducto(p.stock)}
-                      </span>
+                        {producto.stock > 0
+                          ? `Disponible (${producto.stock})`
+                          : "Sin stock"}
+                      </Badge>
+                    </td>
+                    <td>{formatPrice(producto.precio)}</td>
+                    <td>
+                      <div className="d-flex gap-2">
+                        <Button
+                          variant="outline-info"
+                          size="sm"
+                          onClick={() => abrirModalEdicion(producto)}
+                        >
+                          Editar
+                        </Button>
+                        <Button
+                          variant="outline-danger"
+                          size="sm"
+                          disabled={idEliminando === producto.id}
+                          onClick={() => handleEliminar(producto.id)}
+                        >
+                          {idEliminando === producto.id
+                            ? "Eliminando..."
+                            : "Eliminar"}
+                        </Button>
+                      </div>
                     </td>
                   </tr>
                 ))}
               </tbody>
             </Table>
+          )}
 
-            {/* Paginación */}
-            <Pagination className="pagination-admin justify-content-center">
-              <Pagination.First
-                onClick={() => handleCambioPagina(1)}
-                disabled={paginaActual === 1}
-              />
-              <Pagination.Prev
-                onClick={() => handleCambioPagina(paginaActual - 1)}
-                disabled={paginaActual === 1}
-              />
-              
-              {totalPaginas <= 7 ? (
-                // Si hay 7 páginas o menos, mostrar todas
-                Array.from({ length: totalPaginas }, (_, i) => i + 1).map((pagina) => (
-                  <Pagination.Item
-                    key={pagina}
-                    active={pagina === paginaActual}
-                    onClick={() => handleCambioPagina(pagina)}
-                  >
-                    {pagina}
-                  </Pagination.Item>
-                ))
-              ) : (
-                // Si hay más de 7 páginas, mostrar un rango inteligente
-                <>
-                  {/* Primeras páginas */}
-                  {paginaActual <= 4 ? (
-                    <>
-                      {[1, 2, 3, 4, 5].map(pagina => (
-                        <Pagination.Item
-                          key={pagina}
-                          active={pagina === paginaActual}
-                          onClick={() => handleCambioPagina(pagina)}
-                        >
-                          {pagina}
-                        </Pagination.Item>
-                      ))}
-                      <Pagination.Ellipsis />
-                      <Pagination.Item
-                        onClick={() => handleCambioPagina(totalPaginas)}
-                      >
-                        {totalPaginas}
-                      </Pagination.Item>
-                    </>
-                  ) : paginaActual >= totalPaginas - 3 ? (
-                    <>
-                      <Pagination.Item onClick={() => handleCambioPagina(1)}>
-                        1
-                      </Pagination.Item>
-                      <Pagination.Ellipsis />
-                      {Array.from(
-                        { length: 5 },
-                        (_, i) => totalPaginas - 4 + i
-                      ).map(pagina => (
-                        <Pagination.Item
-                          key={pagina}
-                          active={pagina === paginaActual}
-                          onClick={() => handleCambioPagina(pagina)}
-                        >
-                          {pagina}
-                        </Pagination.Item>
-                      ))}
-                    </>
-                  ) : (
-                    <>
-                      <Pagination.Item onClick={() => handleCambioPagina(1)}>
-                        1
-                      </Pagination.Item>
-                      <Pagination.Ellipsis />
-                      {[paginaActual - 1, paginaActual, paginaActual + 1].map(
-                        pagina => (
-                          <Pagination.Item
-                            key={pagina}
-                            active={pagina === paginaActual}
-                            onClick={() => handleCambioPagina(pagina)}
-                          >
-                            {pagina}
-                          </Pagination.Item>
-                        )
-                      )}
-                      <Pagination.Ellipsis />
-                      <Pagination.Item
-                        onClick={() => handleCambioPagina(totalPaginas)}
-                      >
-                        {totalPaginas}
-                      </Pagination.Item>
-                    </>
-                  )}
-                </>
-              )}
-
-              <Pagination.Next
-                onClick={() => handleCambioPagina(paginaActual + 1)}
-                disabled={paginaActual === totalPaginas}
-              />
-              <Pagination.Last
-                onClick={() => handleCambioPagina(totalPaginas)}
-                disabled={paginaActual === totalPaginas}
-              />
-            </Pagination>
+          {/* Paginación simple */}
+          <div className="d-flex justify-content-between align-items-center mt-3">
+            <Button
+              variant="secondary"
+              disabled={paginaActual <= 1}
+              onClick={() => setPaginaActual((p) => Math.max(1, p - 1))}
+            >
+              Anterior
+            </Button>
+            <span>
+              Página {paginaActual} de {totalPaginas}
+            </span>
+            <Button
+              variant="secondary"
+              disabled={paginaActual >= totalPaginas}
+              onClick={() =>
+                setPaginaActual((p) => Math.min(totalPaginas, p + 1))
+              }
+            >
+              Siguiente
+            </Button>
           </div>
-        </Container>
-      </section>
-    </>
+        </Col>
+      </Row>
+
+      {/* Modal de edición */}
+      <Modal show={showModal} onHide={cerrarModal} centered>
+        <Modal.Header closeButton>
+          <Modal.Title>Editar producto</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          {editando && (
+            <Form>
+              <Form.Group className="mb-3">
+                <Form.Label>Nombre</Form.Label>
+                <Form.Control
+                  value={editando.nombre}
+                  onChange={(e) => handleChangeEditar("nombre", e.target.value)}
+                />
+              </Form.Group>
+
+              <Form.Group className="mb-3">
+                <Form.Label>Descripción</Form.Label>
+                <Form.Control
+                  as="textarea"
+                  rows={3}
+                  value={editando.descripcion}
+                  onChange={(e) =>
+                    handleChangeEditar("descripcion", e.target.value)
+                  }
+                />
+              </Form.Group>
+
+              <Row className="mb-3">
+                <Col>
+                  <Form.Label>Precio</Form.Label>
+                  <Form.Control
+                    type="number"
+                    min={0}
+                    value={editando.precio}
+                    onChange={(e) =>
+                      handleChangeEditar("precio", Number(e.target.value))
+                    }
+                  />
+                </Col>
+                <Col>
+                  <Form.Label>Stock</Form.Label>
+                  <Form.Control
+                    type="number"
+                    min={0}
+                    value={editando.stock}
+                    onChange={(e) =>
+                      handleChangeEditar("stock", Number(e.target.value))
+                    }
+                  />
+                </Col>
+              </Row>
+
+              <Form.Group>
+                <Form.Label>Categoría</Form.Label>
+                <Form.Select
+                  value={editando.categoriaId ?? ""}
+                  onChange={(e) =>
+                    handleChangeEditar(
+                      "categoriaId",
+                      e.target.value ? Number(e.target.value) : null
+                    )
+                  }
+                >
+                  <option value="">Sin categoría</option>
+                  {categorias.map((c) => (
+                    <option key={c.idCategoria} value={c.idCategoria}>
+                      {c.nombre}
+                    </option>
+                  ))}
+                </Form.Select>
+              </Form.Group>
+            </Form>
+          )}
+        </Modal.Body>
+        <Modal.Footer>
+          <Button
+            variant="secondary"
+            onClick={cerrarModal}
+            disabled={guardando}
+          >
+            Cancelar
+          </Button>
+          <Button
+            variant="success"
+            onClick={guardarCambios}
+            disabled={guardando}
+          >
+            {guardando ? "Guardando..." : "Guardar cambios"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
+    </Container>
   );
 };
