@@ -21,6 +21,8 @@ import { AdminOrdenes } from "./pages/AdminOrdenes";
 import { CrearProductoAdmin } from "./pages/CrearProductoAdmin";
 import { Contacto } from "./pages/Contacto";
 import { BoletaDetalle } from "./pages/BoletaDetalle";
+import { BoletasAdmin } from "./pages/BoletasAdmin";
+
 
 const isAdminFromStorage = (): boolean => {
   // Flag simple
@@ -130,6 +132,14 @@ export default function App() {
               element={
                 <RequireAdmin>
                   <AdminOrdenes />
+                </RequireAdmin>
+              }
+            />
+            <Route
+              path="/admin/boletas"
+              element={
+                <RequireAdmin>
+                  <BoletasAdmin />
                 </RequireAdmin>
               }
             />
