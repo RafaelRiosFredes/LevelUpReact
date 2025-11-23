@@ -31,9 +31,9 @@ export default function App() {
     <>
     <CartProvider>
         {!isAdminRoute && <NavBar />}
-      <NavBar />
       <main className="app-container">
         <Routes>
+          <Route path="/" element={<HomePage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/productos" element={<ProductosPublic />} />

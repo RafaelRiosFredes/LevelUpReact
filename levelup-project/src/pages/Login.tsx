@@ -25,26 +25,50 @@ export const Login = () => {
       const resp = await login({ correo, contrasena });
 
       // guardar JWT si tu backend lo devuelve
-      const TOKEN_KEY =
-        import.meta.env.VITE_JWT_STORAGE_KEY || "levelup_token";
-      const USER_KEY =
-        import.meta.env.VITE_USER_STORAGE_KEY || "levelup_user";
+      const TOKEN_KEY = import.meta.env.VITE_JWT_STORAGE_KEY || "levelup_token";
+      const USER_KEY = import.meta.env.VITE_USER_STORAGE_KEY || "levelup_user";
 
       if (resp.token) localStorage.setItem(TOKEN_KEY, resp.token);
+
+      const roles = Array.isArray(resp.roles) 
+      ? resp.roles.map((r:any) => r.nombreRol) 
+      : [];
+
+      const isAdmin = roles.includes("ROLE_ADMIN") || roles.includes("ADMIN");
+
+      const correoUsuario = resp.username || correo;
 
       // guardar info básica del usuario
       localStorage.setItem(
         USER_KEY,
         JSON.stringify({
-          correo: resp.username,
-          roles: resp.roles,
+          correo: correoUsuario,
+          roles,
         })
       );
 
+      // guardar "usuario" simple para el NavBar actual
+      localStorage.setItem("usuario", correoUsuario);
+
+      // guardar si es admin o no
+      if (isAdmin) {
+        localStorage.setItem("isAdmin", "true");
+        // redirigir a panel admin
+      } else {
+        localStorage.removeItem("isAdmin");
+      }
+
+      // Avisar al NavBar que el usuario cambió
+      window.dispatchEvent(new Event("usuarioActualizado"));
+
       setMensaje(resp.message || "Inicio de sesión exitoso.");
 
-      // redirigir a home
-      navigate("/home");
+      if(isAdmin) {
+        navigate("/admin/dashboard");
+      } else {
+        navigate("/home");
+      }
+
     } catch (err) {
       console.error(err);
       setError(
@@ -97,7 +121,9 @@ export const Login = () => {
             </button>
 
             {error && <p className="mensaje-login error">{error}</p>}
-            {mensaje && !error && <p className="mensaje-login exito">{mensaje}</p>}
+            {mensaje && !error && (
+              <p className="mensaje-login exito">{mensaje}</p>
+            )}
           </fieldset>
         </form>
       </div>

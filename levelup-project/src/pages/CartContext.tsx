@@ -3,12 +3,10 @@ import type { ReactNode } from 'react';
 import type { Producto } from '../types';
 
 // Define el tipo para un item en el carrito, extendiendo el tipo Producto
-// Define el tipo para un item en el carrito
 export interface CartItem extends Producto {
   quantity: number;
 }
 
-// Define la "forma" que tendrá nuestro contexto
 // Define el tipo para el valor del contexto
 interface CartContextType {
   cartItems: CartItem[];
