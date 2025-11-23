@@ -2846,3 +2846,170 @@ input:focus {
 .modal-footer {
   border-color: #1f2937;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* PDF DE BOLETA */
+
+/* --- ESTILO SOLO PARA EL PDF --- */
+#boleta-completa.pdf-mode {
+  background: white !important;
+  color: black !important;
+  padding: 20px;
+}
+
+/* Forzar tarjetas blancas dentro del PDF */
+#boleta-completa.pdf-mode .card {
+  background: white !important;
+  color: black !important;
+  border: 1px solid #ccc !important;
+}
+
+/* Tablas compatibles con PDF */
+#boleta-completa.pdf-mode table {
+  color: black !important;
+  border-color: #999 !important;
+}
+
+#boleta-completa.pdf-mode th,
+#boleta-completa.pdf-mode td {
+  background: white !important;
+  color: black !important;
+  border: 1px solid #999 !important;
+}
+
+/* --- MODO PDF (forzado blanco y ordenado) --- */
+#boleta-completa.pdf-mode {
+  background: white !important;
+  color: black !important;
+  padding: 30px;
+  border: 2px solid #222 !important;
+  border-radius: 10px;
+}
+
+/* Títulos */
+#boleta-completa.pdf-mode h2,
+#boleta-completa.pdf-mode h4 {
+  color: #00a6ff !important; /* celeste gamer */
+}
+
+/* Cards blancas */
+#boleta-completa.pdf-mode .card {
+  background: white !important;
+  color: black !important;
+  border: 1px solid #ccc !important;
+}
+
+/* Tablas */
+#boleta-completa.pdf-mode table {
+  background: white !important;
+  color: black !important;
+}
+
+#boleta-completa.pdf-mode th {
+  background: #e8e8e8 !important;
+  color: black !important;
+}
+
+#boleta-completa.pdf-mode td {
+  background: white !important;
+  color: black !important;
+}
+
+
+/* ------------------------- */
+/*        Boletas Admin      */
+/* ------------------------- */
+
+.boletas-header h2 {
+  color: #28c3ff;
+  font-weight: 700;
+  margin-bottom: 5px;
+}
+
+.boletas-header .desc {
+  color: #cfcfcf;
+  font-size: 14px;
+  margin-bottom: 25px;
+}
+
+/* Fondo general */
+.boletas-admin-page {
+  background-color: #0b0e12 !important;
+  min-height: 100vh;
+  padding: 30px;
+}
+
+/* Caja contenedora */
+.boletas-table-container {
+  background: #0d1218 !important;
+  border-radius: 12px;
+  padding: 25px;
+  margin-bottom: 40px;
+  border: 1px solid #1f2933;
+}
+
+/* Tabla */
+.boletas-table {
+  width: 100%;
+  color: white !important;
+  border-collapse: collapse;
+}
+
+/* ENCABEZADO */
+.boletas-table thead th {
+  background-color: #0a0f14 !important;
+  color: #5bc0ff !important;
+  border-color: #1f2933 !important;
+  padding: 12px;
+}
+
+/* FILAS */
+.boletas-table tbody td {
+  background-color: #11161d !important;
+  color: white !important;
+  border-color: #1f2933 !important;
+  padding: 12px;
+}
+
+/* HOVER */
+.boletas-table tbody tr:hover td {
+  background-color: #1b2430 !important;
+}
+
+/* BOTÓN */
+.btn-detalle {
+  background-color: #7b2cff !important;
+  border: none !important;
+  padding: 5px 14px;
+  color: white !important;
+}
+
+.btn-detalle:hover {
+  background-color: #9b5cff !important;
+}
+
+
+
+
+
