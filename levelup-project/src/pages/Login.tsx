@@ -1,6 +1,7 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { login } from "../services/api"; // <- importamos la función login
+import { login, apiFetch } from "../services/api"; 
+
 import "../assets/styles.css";
 
 export const Login = () => {
@@ -42,6 +43,7 @@ export const Login = () => {
       localStorage.setItem(
         USER_KEY,
         JSON.stringify({
+          id: resp.idUsuario,
           correo: correoUsuario,
           roles,
         })
@@ -60,6 +62,11 @@ export const Login = () => {
 
       // Avisar al NavBar que el usuario cambió
       window.dispatchEvent(new Event("usuarioActualizado"));
+
+      
+    // obtener datos completos del usuario
+      const datos = await apiFetch(`/usuarios/${resp.idUsuario}`);
+      localStorage.setItem("usuario", JSON.stringify(datos));
 
       setMensaje(resp.message || "Inicio de sesión exitoso.");
 

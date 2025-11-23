@@ -4,6 +4,8 @@ import { Link, useNavigate, useLocation } from "react-router-dom"; // <-- IMPORT
 import "../assets/styles.css";
 import { useCart } from "./CartContext";
 import { crearBoleta } from "../services/BoletaService";  
+import { obtenerUsuarioPorId } from "../services/UsuarioService";
+
 
 export const DetalleCompra = () => {
     const { cartItems, clearCart } = useCart();
@@ -36,6 +38,32 @@ export const DetalleCompra = () => {
     const [comuna, setComuna] = useState("");
     const [indicaciones, setIndicaciones] = useState("");
 
+
+    // -------------------------------------------------------------
+    // CARGAR DATOS DEL USUARIO LOGEADO AUTOMÁTICAMENTE
+    // -------------------------------------------------------------
+    React.useEffect(() => {
+        const USER_KEY = import.meta.env.VITE_USER_STORAGE_KEY || "levelup_user";
+
+        const userData = localStorage.getItem(USER_KEY);
+        if (!userData) return;
+
+        const parsed = JSON.parse(userData);
+
+        if (!parsed.id) return;
+
+        // Llamar al backend
+        obtenerUsuarioPorId(parsed.id)
+            .then((data) => {
+                setNombre(data.nombres || "");
+                setApellido(data.apellidos || "");
+                setCorreo(data.correo || "");
+            })
+            .catch((err) => {
+                console.error("Error obteniendo usuario:", err);
+            });
+    }, []);
+
     // Pago
     const [tarjeta, setTarjeta] = useState("");
     const [mensaje, setMensaje] = useState<{ tipo: "success" | "danger"; texto: string } | null>(null);
@@ -58,7 +86,7 @@ export const DetalleCompra = () => {
             event.stopPropagation();
             setMensaje({
                 tipo: "danger",
-                texto: "El pago no pudo ser realizado. Intentalo Denuevo",
+                texto: "El pago no pudo ser realizado. Intentalo Denuevo...",
             });
             return;
         }
@@ -75,8 +103,8 @@ export const DetalleCompra = () => {
                     idProducto: item.id,
                     cantidad: item.quantity,
                 })),
-                total: totalFinal, // <-- ENVIAMOS EL TOTAL CON DESCUENTO
-                descuento: descuentoPorcentaje, // <-- ENVIAMOS EL PORCENTAJE (0-100)
+                total: totalFinal, 
+                descuento: descuentoPorcentaje, 
             };
 
             console.log("ENVIANDO DATA A BACKEND:", data);
