@@ -3530,11 +3530,6 @@ export const CrearProducto = () => {
       return;
     }
 
-    if (imagenes.length === 0) {
-      setError("Es necesario agregar al menos una imagen.");
-      return;
-    }
-
     try {
       setSaving(true);
 
