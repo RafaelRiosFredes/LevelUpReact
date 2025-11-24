@@ -155,7 +155,7 @@ export const ProductosPublic = () => {
     <>
       <NavBar />
 
-      <section className="mt-4">
+      <section style={{ marginTop: "120px" }}>
         <Container>
           <h5 className="mb-4 titulo-categoria text-success">
             INICIO &gt; CATEGORÍAS

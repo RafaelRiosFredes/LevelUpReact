@@ -45,7 +45,7 @@ export const DetalleCompra = () => {
     React.useEffect(() => {
         const USER_KEY = import.meta.env.VITE_USER_STORAGE_KEY || "levelup_user";
 
-        const userData = localStorage.getItem(USER_KEY);
+        const userData = sessionStorage.getItem(USER_KEY);
         if (!userData) return;
 
         const parsed = JSON.parse(userData);

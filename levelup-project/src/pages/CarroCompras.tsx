@@ -39,7 +39,7 @@ export const CarroCompras = () => {
 
     if (cartItems.length === 0) {
         return (
-            <Container className="py-5 text-center text-white">
+            <Container className="py-5 text-center text-white" style={{ marginTop: "50px" }}>
                 <Alert variant="info">
                     <Alert.Heading>Tu carrito está vacío</Alert.Heading>
                     <p>
@@ -55,112 +55,124 @@ export const CarroCompras = () => {
     }
 
     return (
-        <Container className="py-5 text-white">
-            <h2 className="highlight mb-4">Mi carrito de compras</h2>
-            <Row className="g-4">
-                {/*  Lista de productos */}
-                <Col md={8}>
-                    {cartItems.map((item) => (
-                            <div
-                                key={item.id}
-                                className="d-flex align-items-center bg-dark p-3 rounded mb-3"
-                            >
-                                <img
-                                    src={item.imagenes && item.imagenes.length > 0 ? item.imagenes[0] : 'https://via.placeholder.com/100'}
-                                    alt={item.nombre}
-                                    className="rounded me-3"
-                                    style={{ width: "100px", height: "100px", objectFit: "cover" }}
-                                />
-                                <div className="flex-grow-1">
-                                    <h5 className="mb-1">{item.nombre}</h5>
-                                    <p className="text-muted small">
-                                        Precio unitario: {formatearPrecio(item.precio)}
-                                    </p>
-                                    <div className="d-flex align-items-center">
-                                        <Button
-                                            variant="outline-light"
-                                            size="sm"
-                                            onClick={() => updateQuantity(item.id, item.quantity - 1)}
-                                        >
-                                            <i className="bi bi-dash"></i>
-                                        </Button>
-                                        <Form.Control
-                                            type="number"
-                                            value={item.quantity}
-                                            className="mx-1 text-center bg-dark text-white border-secondary"
-                                            style={{ width: "60px" }}
-                                            disabled
-                                        />
-                                        <Button
-                                            variant="outline-light"
-                                            size="sm"
-                                            onClick={() => updateQuantity(item.id, item.quantity + 1)}
-                                        >
-                                            <i className="bi bi-plus"></i>
-                                        </Button>
-                                    </div>
-                                </div>
-                                <p className="price me-3">
-                                    {formatearPrecio(item.precio * item.quantity)}
-                                </p>
-                                <Button
-                                    variant="danger"
-                                    size="sm"
-                                    onClick={() => removeFromCart(item.id)}
-                                >
-                                    <i className="bi bi-trash"></i>
-                                </Button>
-                            </div>
-                        ))}
-                </Col>
+      <Container className="py-5 text-white" style={{ marginTop: "50px" }}>
+        <h2 className="highlight mb-4">Mi carrito de compras</h2>
+        <Row className="g-4">
+          {/*  Lista de productos */}
+          <Col md={8}>
+            {cartItems.map((item) => (
+              <div
+                key={item.id}
+                className="d-flex align-items-center bg-dark p-3 rounded mb-3"
+              >
+                <img
+                  src={
+                    item.imagenes && item.imagenes.length > 0
+                      ? item.imagenes[0]
+                      : "https://via.placeholder.com/100"
+                  }
+                  alt={item.nombre}
+                  className="rounded me-3"
+                  style={{
+                    width: "100px",
+                    height: "100px",
+                    objectFit: "cover",
+                  }}
+                />
+                <div className="flex-grow-1">
+                  <h5 className="mb-1">{item.nombre}</h5>
+                  <p className="text-muted small">
+                    Precio unitario: {formatearPrecio(item.precio)}
+                  </p>
+                  <div className="d-flex align-items-center">
+                    <Button
+                      variant="outline-light"
+                      size="sm"
+                      onClick={() => updateQuantity(item.id, item.quantity - 1)}
+                    >
+                      <i className="bi bi-dash"></i>
+                    </Button>
+                    <Form.Control
+                      type="number"
+                      value={item.quantity}
+                      className="mx-1 text-center bg-dark text-white border-secondary"
+                      style={{ width: "60px" }}
+                      disabled
+                    />
+                    <Button
+                      variant="outline-light"
+                      size="sm"
+                      onClick={() => updateQuantity(item.id, item.quantity + 1)}
+                    >
+                      <i className="bi bi-plus"></i>
+                    </Button>
+                  </div>
+                </div>
+                <p className="price me-3">
+                  {formatearPrecio(item.precio * item.quantity)}
+                </p>
+                <Button
+                  variant="danger"
+                  size="sm"
+                  onClick={() => removeFromCart(item.id)}
+                >
+                  <i className="bi bi-trash"></i>
+                </Button>
+              </div>
+            ))}
+          </Col>
 
-                {/*  Resumen y botones */}
-                <Col md={4}>
-                    <div className="bg-dark p-4 rounded">
-                        <h5 className="mb-3">
-                            TOTAL: <span className="price">{formatearPrecio(total)}</span>
-                        </h5>
-                        {descuentoMonto > 0 && (
-                            <>
-                                <p className="text-muted small">
-                                    Subtotal: {formatearPrecio(subtotal)}
-                                </p>
-                                <p className="text-success fw-bold">
-                                    Descuento aplicado: -{formatearPrecio(descuentoMonto)} ({porcentajeDescuento}%)
-                                </p>
-                            </>
-                        )}
-                        <Form>
-                            <Form.Label>Ingrese el cupón de descuento</Form.Label>
-                            <div className="input-group mb-3">
-                                <Form.Control
-                                    type="text"
-                                    placeholder="Código"
-                                    value={cupon}
-                                    onChange={(e) => setCupon(e.target.value)}
-                                />
-                                <Button variant="outline-light" onClick={aplicarCupon}>
-                                    Aplicar
-                                </Button>
-                            </div>
+          {/*  Resumen y botones */}
+          <Col md={4}>
+            <div className="bg-dark p-4 rounded">
+              <h5 className="mb-3">
+                TOTAL: <span className="price">{formatearPrecio(total)}</span>
+              </h5>
+              {descuentoMonto > 0 && (
+                <>
+                  <p className="text-muted small">
+                    Subtotal: {formatearPrecio(subtotal)}
+                  </p>
+                  <p className="text-success fw-bold">
+                    Descuento aplicado: -{formatearPrecio(descuentoMonto)} (
+                    {porcentajeDescuento}%)
+                  </p>
+                </>
+              )}
+              <Form>
+                <Form.Label>Ingrese el cupón de descuento</Form.Label>
+                <div className="input-group mb-3">
+                  <Form.Control
+                    type="text"
+                    placeholder="Código"
+                    value={cupon}
+                    onChange={(e) => setCupon(e.target.value)}
+                  />
+                  <Button variant="outline-light" onClick={aplicarCupon}>
+                    Aplicar
+                  </Button>
+                </div>
 
-                            {/* 🔹 Botón que lleva a DetalleCompra */}
-                            <div className="d-grid gap-2 mt-3">
-                                <Link
-                                    to="/detallecompra"
-                                    // PASAR EL PORCENTAJE Y EL TOTAL FINAL
-                                    state={{ appliedDiscountPercentage: porcentajeDescuento, finalTotal: total }} 
-                                    className={`btn btn-success btn-lg w-100 ${
-                                        cartItems.length === 0 ? "disabled" : ""
-                                    }`}
-                                >
-                                    Ir a Detalle de Compra 🧾
-                                </Link>
-                            </div>
-                        </Form>
-                    </div>
-                </Col>
-            </Row>
-        </Container>
+                {/* 🔹 Botón que lleva a DetalleCompra */}
+                <div className="d-grid gap-2 mt-3">
+                  <Link
+                    to="/detallecompra"
+                    // PASAR EL PORCENTAJE Y EL TOTAL FINAL
+                    state={{
+                      appliedDiscountPercentage: porcentajeDescuento,
+                      finalTotal: total,
+                    }}
+                    className={`btn btn-success btn-lg w-100 ${
+                      cartItems.length === 0 ? "disabled" : ""
+                    }`}
+                  >
+                    Ir a Detalle de Compra 🧾
+                  </Link>
+                </div>
+              </Form>
+            </div>
+          </Col>
+        </Row>
+      </Container>
     );
 };

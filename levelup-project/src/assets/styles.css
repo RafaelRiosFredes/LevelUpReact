@@ -889,7 +889,6 @@ path{
 }
 
 #email{
-  background-color: #fffefe;
   border: 2px solid #1E90FF;
   border-radius: 10px;
   padding: 12px;
@@ -1479,7 +1478,6 @@ path{
 }
 
 #nombre, #correo, #contenido {
-  background-color: #fffefe;
   border: 2px solid #1E90FF;
   border-radius: 10px;
   padding: 12px;

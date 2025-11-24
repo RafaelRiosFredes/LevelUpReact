@@ -55,6 +55,15 @@ export const RegistroUsuario = () => {
   ) => {
     const { name, value } = e.target;
 
+    // Lógica para validar solo números en el teléfono
+    if (name === "telefono") {
+      // Reemplaza cualquier cosa que NO sea un número (0-9) por vacío
+      const soloNumeros = value.replace(/[^0-9]/g, "");
+
+      setFormData((prev) => ({ ...prev, [name]: soloNumeros }));
+      return;
+    }
+
     if (name === "region") {
       setFormData((prev) => ({ ...prev, region: value, comuna: "" }));
       setComunas(regionesConComunas[value] || []);
