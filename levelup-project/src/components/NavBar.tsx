@@ -16,7 +16,7 @@ export const NavBar = () => {
   const [query, setQuery] = useState("");
   const [isAdmin, setIsAdmin] = useState(false);
 
-  // Carga de usuario desde localStorage
+  // Carga de usuario desde SessionStorage
   useEffect(() => {
     const cargarUsuario = () => {
       const u = sessionStorage.getItem("usuario");
