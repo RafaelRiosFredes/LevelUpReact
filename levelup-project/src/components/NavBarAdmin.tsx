@@ -14,7 +14,7 @@ export const NavBarAdmin = () => {
     >
       <Container>
         <Navbar.Brand
-          onClick={() => navigate("/admin")}
+          onClick={() => navigate("/admin/dashboard")}
           className="brand-admin"
         >
           LEVEL-UP <span>ADMIN</span>
@@ -23,30 +23,17 @@ export const NavBarAdmin = () => {
         <Navbar.Toggle aria-controls="navbar-admin-nav" />
         <Navbar.Collapse id="navbar-admin-nav" className="justify-content-end">
           <Nav className="align-items-center gap-4">
-            <Nav.Link onClick={() => navigate("/home")}>Home</Nav.Link>
-            <Nav.Link onClick={() => navigate("/admin/boletas")}>
-              Boletas
-            </Nav.Link>
-            <Nav.Link onClick={() => navigate("/admin/productos")}>
-              Productos
+            <Nav.Link onClick={() => navigate("/home")}>
+              Home (público)
             </Nav.Link>
             <Nav.Link onClick={() => navigate("/admin/crearProducto")}>
               Crear Producto
             </Nav.Link>
-            <Nav.Link onClick={() => navigate("/admin/categorias")}>
-              Categorías
+            <Nav.Link onClick={() => navigate("/admin/productos")}>
+              Productos
             </Nav.Link>
-            <Nav.Link onClick={() => navigate("/admin/usuarios")}>
-              Usuarios
-            </Nav.Link>
-            <Nav.Link onClick={() => navigate("/admin/editarUsuarioAdmin/1")}>
-              Editar Usuario
-            </Nav.Link>
-            <Nav.Link onClick={() => navigate("/admin/ordenes")}>
-              Ordenes
-            </Nav.Link>
-            <Nav.Link onClick={() => navigate("/admin/reportes")}>
-              Reportes
+            <Nav.Link onClick={() => navigate("/admin/boletas")}>
+              Boletas
             </Nav.Link>
             <Nav.Link onClick={() => navigate("/admin/perfil")}>
               Perfil
