@@ -19,10 +19,10 @@ export const NavBar = () => {
   // Carga de usuario desde localStorage
   useEffect(() => {
     const cargarUsuario = () => {
-      const u = localStorage.getItem("usuario");
+      const u = sessionStorage.getItem("usuario");
       setUsuario(u);
 
-      const adminFlag = localStorage.getItem("isAdmin") === "true";
+      const adminFlag = sessionStorage.getItem("isAdmin") === "true";
       setIsAdmin(adminFlag)
     };
 
@@ -41,7 +41,7 @@ export const NavBar = () => {
   // Badge del carrito (storage + evento custom)
   useEffect(() => {
     const actualizarBadge = () => {
-      const carrito = JSON.parse(localStorage.getItem("carrito") || "[]");
+      const carrito = JSON.parse(sessionStorage.getItem("carrito") || "[]");
       const total = carrito.reduce(
         (acc: number, item: any) => acc + (item?.cantidad ?? 0),
         0
@@ -64,11 +64,11 @@ export const NavBar = () => {
     const TOKEN_KEY = import.meta.env.VITE_JWT_STORAGE_KEY || "levelup_token";
     const USER_KEY = import.meta.env.VITE_USER_STORAGE_KEY || "levelup_user";
 
-    localStorage.removeItem("usuario");
-    localStorage.removeItem(TOKEN_KEY);
-    localStorage.removeItem(USER_KEY);
-    localStorage.removeItem("isAdmin");
-    localStorage.removeItem("carrito");
+    sessionStorage.removeItem("usuario");
+    sessionStorage.removeItem(TOKEN_KEY);
+    sessionStorage.removeItem(USER_KEY);
+    sessionStorage.removeItem("isAdmin");
+    sessionStorage.removeItem("carrito");
 
     setUsuario(null);
 

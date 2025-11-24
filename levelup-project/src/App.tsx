@@ -26,11 +26,11 @@ import { BoletasAdmin } from "./pages/BoletasAdmin";
 
 const isAdminFromStorage = (): boolean => {
   // Flag simple
-  if (localStorage.getItem("isAdmin") === "true") return true;
+  if (sessionStorage.getItem("isAdmin") === "true") return true;
 
   // Por si en algún momento no existe isAdmin pero sí el usuario con roles
   const USER_KEY = import.meta.env.VITE_USER_STORAGE_KEY || "levelup_user";
-  const raw = localStorage.getItem(USER_KEY);
+  const raw = sessionStorage.getItem(USER_KEY);
   if (!raw) return false;
 
   try {

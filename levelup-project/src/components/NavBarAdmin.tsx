@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import "../assets/styles.css";
 
 export const NavBarAdmin = () => {
-  const admin = JSON.parse(localStorage.getItem("admin") || "null");
+  const admin = JSON.parse(sessionStorage.getItem("admin") || "null");
   const navigate = useNavigate();
 
   return (

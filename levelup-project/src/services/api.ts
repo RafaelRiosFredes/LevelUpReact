@@ -10,7 +10,7 @@ export async function apiFetch<T = any>(
   path: string,
   options: RequestInit = {}
 ): Promise<T> {
-  const token = localStorage.getItem(TOKEN_KEY);
+  const token = sessionStorage.getItem(TOKEN_KEY);
 
   const headers = new Headers(options.headers || {});
   headers.set("Content-Type", "application/json");

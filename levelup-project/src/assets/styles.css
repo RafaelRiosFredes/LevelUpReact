@@ -212,6 +212,13 @@ input:focus {
   transition: box-shadow 0.3s ease, background-color 0.3s ease;
 }
 
+/* Asegura que las opciones del select se vean en el tema oscuro */
+.product-list-box .form-select option {
+  background-color: #111;
+  color: #fff;
+}
+
+
 .product-list-box .form-control:focus,
 .product-list-box .form-select:focus {
   background-color: #0b0b0b;

@@ -31,7 +31,7 @@ export const Login = () => {
 
       // 3) Guardar token (si existe)
       if (resp.token) {
-        localStorage.setItem(TOKEN_KEY, resp.token);
+        sessionStorage.setItem(TOKEN_KEY, resp.token);
       }
 
       // 4) Normalizar roles
@@ -58,7 +58,7 @@ export const Login = () => {
       const correoUsuario = resp.username || correo;
 
       // 5) Guardar info básica de sesión
-      localStorage.setItem(
+      sessionStorage.setItem(
         USER_KEY,
         JSON.stringify({
           id: resp.idUsuario,
@@ -69,9 +69,9 @@ export const Login = () => {
 
       // bandera admin para el navbar
       if (isAdmin) {
-        localStorage.setItem("isAdmin", "true");
+        sessionStorage.setItem("isAdmin", "true");
       } else {
-        localStorage.removeItem("isAdmin");
+        sessionStorage.removeItem("isAdmin");
       }
 
       // 6) Obtener datos completos del usuario para mostrar nombre bonito
@@ -80,7 +80,7 @@ export const Login = () => {
       try {
         const datos: any = await apiFetch(`/usuarios/${resp.idUsuario}`);
         // guardas el detalle en otra clave, NO en "usuario"
-        localStorage.setItem("usuario", JSON.stringify(datos));
+        sessionStorage.setItem("usuario", JSON.stringify(datos));
 
         const nombres = (datos?.nombres ?? datos?.nombre ?? "")
           .toString()
@@ -102,7 +102,7 @@ export const Login = () => {
       }
 
       // 7) Esto es lo que usa el NavBar para el "Hola, ..."
-      localStorage.setItem("usuario", displayName);
+      sessionStorage.setItem("usuario", displayName);
 
       // Avisar al NavBar que hay nuevo usuario
       window.dispatchEvent(new Event("usuarioActualizado"));

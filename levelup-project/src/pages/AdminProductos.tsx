@@ -1,4 +1,10 @@
-import {  useCallback,  useEffect,  useState,  type ChangeEvent,  type FormEvent,} from "react";
+import {
+  useCallback,
+  useEffect,
+  useState,
+  type ChangeEvent,
+  type FormEvent,
+} from "react";
 import {
   Container,
   Row,
@@ -14,6 +20,8 @@ import {
   Modal,
 } from "react-bootstrap";
 import { apiFetch } from "../services/api";
+import { NavBarAdmin } from "../components/NavBarAdmin";
+import "../assets/styles.css";
 
 // === Tipos que reflejan el backend ===
 interface CategoriaBackend {
@@ -245,162 +253,157 @@ export const AdminProductos = () => {
 
   // ============= RENDER =============
   return (
-    <Container fluid className="admin-layout text-light py-4">
-      <Row>
-        {/* Si tienes un sidebar real, reemplaza este Col por tu componente */}
-        <Col md={2} className="admin-sidebar">
-          <h5>Panel Admin</h5>
-          <ul className="admin-menu">
-            <li className="active">Productos</li>
-            <li>Usuarios</li>
-            <li>Órdenes</li>
-          </ul>
-        </Col>
+    <>
+      <NavBarAdmin />
 
-        <Col md={10} className="admin-content">
-          <div className="d-flex justify-content-between align-items-center mb-3">
-            <h3>Gestión de Productos</h3>
-            <small className="text-muted">
-              Página {paginaActual} de {totalPaginas}
-            </small>
-          </div>
-
-          {/* Filtros */}
-          <Form onSubmit={handleBuscarSubmit} className="mb-3">
-            <Row className="g-2">
-              <Col md={5}>
-                <InputGroup>
-                  <FormControl
-                    placeholder="Buscar por nombre..."
-                    value={busqueda}
-                    onChange={handleBusquedaChange}
-                  />
-                  <Button type="submit" variant="success">
-                    Buscar
-                  </Button>
-                </InputGroup>
-              </Col>
-              <Col md={4}>
-                <Form.Select
-                  value={filtroCategoria}
-                  onChange={handleCategoriaChange}
-                >
-                  <option value="todos">Todas las categorías</option>
-                  {categorias.map((c) => (
-                    <option key={c.idCategoria} value={String(c.idCategoria)}>
-                      {c.nombreCategoria}
-                    </option>
-                  ))}
-                </Form.Select>
-              </Col>
-            </Row>
-          </Form>
-
-          {error && <Alert variant="danger">{error}</Alert>}
-
-          {loading ? (
-            <div className="text-center py-5">
-              <Spinner animation="border" variant="success" />
-              <p className="mt-2">Cargando productos.</p>
+      <section className="product-list-section">
+        <Container fluid="lg">
+          <div className="product-list-box">
+            {/* Header */}
+            <div className="d-flex justify-content-between align-items-center mb-3">
+              <h2 className="list-title">Gestión de Productos</h2>
+              <small className="text-muted">
+                Página {paginaActual} de {totalPaginas}
+              </small>
             </div>
-          ) : productos.length === 0 ? (
-            <p>No se encontraron productos con los filtros actuales.</p>
-          ) : (
-            <Table striped bordered hover responsive className="table-admin">
-              <thead>
-                <tr>
-                  <th>ID</th>
-                  <th>Imagen</th>
-                  <th>Nombre</th>
-                  <th>Categoría</th>
-                  <th>Stock</th>
-                  <th>Precio</th>
-                  <th>Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {productos.map((producto) => (
-                  <tr key={producto.id}>
-                    <td>{producto.id}</td>
-                    <td>
-                      {producto.imagenPrincipal ? (
-                        <img
-                          src={producto.imagenPrincipal}
-                          alt={producto.nombre}
-                          style={{
-                            width: "60px",
-                            height: "60px",
-                            objectFit: "cover",
-                          }}
-                        />
-                      ) : (
-                        <span className="text-muted">Sin imagen</span>
-                      )}
-                    </td>
-                    <td>{producto.nombre}</td>
-                    <td>{producto.categoriaNombre}</td>
-                    <td>
-                      <Badge
-                        bg={producto.stock > 0 ? "success" : "danger"}
-                        className="status-badge-admin"
-                      >
-                        {producto.stock > 0
-                          ? `Disponible (${producto.stock})`
-                          : "Sin stock"}
-                      </Badge>
-                    </td>
-                    <td>{formatPrice(producto.precio)}</td>
-                    <td>
-                      <div className="d-flex gap-2">
-                        <Button
-                          variant="outline-info"
-                          size="sm"
-                          onClick={() => abrirModalEdicion(producto)}
-                        >
-                          Editar
-                        </Button>
-                        <Button
-                          variant="outline-danger"
-                          size="sm"
-                          disabled={idEliminando === producto.id}
-                          onClick={() => handleEliminar(producto.id)}
-                        >
-                          {idEliminando === producto.id
-                            ? "Eliminando..."
-                            : "Eliminar"}
-                        </Button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </Table>
-          )}
 
-          {/* Paginación simple */}
-          <div className="d-flex justify-content-between align-items-center mt-3">
-            <Button
-              variant="secondary"
-              disabled={paginaActual <= 1}
-              onClick={() => setPaginaActual((p) => Math.max(1, p - 1))}
-            >
-              Anterior
-            </Button>
-            <span>
-              Página {paginaActual} de {totalPaginas}
-            </span>
-            <Button
-              variant="secondary"
-              disabled={paginaActual >= totalPaginas}
-              onClick={() =>
-                setPaginaActual((p) => Math.min(totalPaginas, p + 1))
-              }
-            >
-              Siguiente
-            </Button>
+            {/* Filtros */}
+            <Form onSubmit={handleBuscarSubmit} className="mb-3">
+              <Row className="g-2">
+                <Col md={5}>
+                  <InputGroup>
+                    <FormControl
+                      placeholder="Buscar por nombre..."
+                      value={busqueda}
+                      onChange={handleBusquedaChange}
+                    />
+                    <Button type="submit" variant="success">
+                      Buscar
+                    </Button>
+                  </InputGroup>
+                </Col>
+                <Col md={4}>
+                  <Form.Select
+                    value={filtroCategoria}
+                    onChange={handleCategoriaChange}
+                  >
+                    <option value="todos">Todas las categorías</option>
+                    {categorias.map((c) => (
+                      <option key={c.idCategoria} value={String(c.idCategoria)}>
+                        {c.nombreCategoria}
+                      </option>
+                    ))}
+                  </Form.Select>
+                </Col>
+              </Row>
+            </Form>
+
+            {error && <Alert variant="danger">{error}</Alert>}
+
+            {loading ? (
+              <div className="text-center py-5">
+                <Spinner animation="border" variant="success" />
+                <p className="mt-2">Cargando productos.</p>
+              </div>
+            ) : productos.length === 0 ? (
+              <p>No se encontraron productos con los filtros actuales.</p>
+            ) : (
+              <Table striped bordered hover responsive className="table-admin">
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>Imagen</th>
+                    <th>Nombre</th>
+                    <th>Categoría</th>
+                    <th>Stock</th>
+                    <th>Precio</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {productos.map((producto) => (
+                    <tr key={producto.id}>
+                      <td>{producto.id}</td>
+                      <td>
+                        {producto.imagenPrincipal ? (
+                          <img
+                            src={producto.imagenPrincipal}
+                            alt={producto.nombre}
+                            style={{
+                              width: "60px",
+                              height: "60px",
+                              objectFit: "cover",
+                            }}
+                          />
+                        ) : (
+                          <span className="text-muted">Sin imagen</span>
+                        )}
+                      </td>
+                      <td>{producto.nombre}</td>
+                      <td>{producto.categoriaNombre}</td>
+                      <td>
+                        <Badge
+                          bg={producto.stock > 0 ? "success" : "danger"}
+                          className="status-badge-admin"
+                        >
+                          {producto.stock > 0
+                            ? `Disponible (${producto.stock})`
+                            : "Sin stock"}
+                        </Badge>
+                      </td>
+                      <td>{formatPrice(producto.precio)}</td>
+                      <td>
+                        <div className="d-flex gap-2">
+                          <Button
+                            variant="outline-info"
+                            size="sm"
+                            onClick={() => abrirModalEdicion(producto)}
+                          >
+                            Editar
+                          </Button>
+                          <Button
+                            variant="outline-danger"
+                            size="sm"
+                            disabled={idEliminando === producto.id}
+                            onClick={() => handleEliminar(producto.id)}
+                          >
+                            {idEliminando === producto.id
+                              ? "Eliminando..."
+                              : "Eliminar"}
+                          </Button>
+                        </div>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            )}
+
+            {/* Paginación */}
+            <div className="d-flex justify-content-between align-items-center mt-3">
+              <Button
+                variant="secondary"
+                disabled={paginaActual <= 1}
+                onClick={() => setPaginaActual((p) => Math.max(1, p - 1))}
+              >
+                Anterior
+              </Button>
+              <span>
+                Página {paginaActual} de {totalPaginas}
+              </span>
+              <Button
+                variant="secondary"
+                disabled={paginaActual >= totalPaginas}
+                onClick={() =>
+                  setPaginaActual((p) => Math.min(totalPaginas, p + 1))
+                }
+              >
+                Siguiente
+              </Button>
+            </div>
           </div>
-        </Col>
-      </Row>
+        </Container>
+      </section>
 
       {/* Modal de edición */}
       <Modal show={showModal} onHide={cerrarModal} centered>
@@ -498,6 +501,6 @@ export const AdminProductos = () => {
           </Button>
         </Modal.Footer>
       </Modal>
-    </Container>
+    </>
   );
 };
