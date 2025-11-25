@@ -246,7 +246,7 @@ const handleSubmit = async (e: React.FormEvent) => {
               onChange={handleChange}
             />
 
-            <label htmlFor="telefono">Teléfono (Opcional)</label>
+            <label htmlFor="telefono">Teléfono</label>
             <input
               type="tel"
               id="telefono"
