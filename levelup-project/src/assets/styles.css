@@ -213,7 +213,7 @@ input:focus {
 }
 
 /* Asegura que las opciones del select se vean en el tema oscuro */
-.product-list-box .form-select option {
+.product-list-box {
   background-color: #111;
   color: #fff;
 }
@@ -2700,6 +2700,28 @@ input:focus {
   text-align: left;
 }
 
+.table-admin tbody td, 
+.table-admin tbody th {
+  background-color: #111 !important; /* Negro suave */
+  color: #ededed !important;         /* Blanco hueso */
+  border-color: rgba(128, 0, 255, 0.3) !important; /* Borde sutil morado */
+}
+
+/* 2. Arreglar el efecto "Striped" (filas alternas) para que sea gris oscuro, no blanco */
+.table-admin.table-striped > tbody > tr:nth-of-type(odd) > * {
+  background-color: #161616 !important; /* Un poco más claro que el base */
+  color: #ededed !important;
+  box-shadow: none !important; /* Quita sombras blancas raras de bootstrap */
+}
+
+/* 3. Arreglar el efecto "Hover" (al pasar el mouse) */
+.table-admin.table-hover > tbody > tr:hover > * {
+  background-color: #222 !important; /* Gris más visible al pasar mouse */
+  color: #39ff14 !important;         /* El texto se pone verde gamer */
+  box-shadow: inset 0 0 8px rgba(57, 255, 20, 0.2); /* Un brillo sutil interno */
+  transition: all 0.2s ease;
+}
+
 .table-admin tbody tr {
   border-bottom: 1px solid rgba(128, 0, 255, 0.3); /* Línea divisora púrpura sutil */
 }
@@ -2992,3 +3014,112 @@ input:focus {
 
 
 
+.table-admin .text-muted {
+  color: #aaaaaa !important; /* Gris claro, mucho mÃ¡s visible */
+  font-style: italic;        /* Opcional: para darle un toque diferente */
+}
+
+/* ================= MODAL ADMIN GAMER ================= */
+
+/* 1. Contenedor principal del Modal */
+.modal-content {
+  background-color: #0b0b0b !important; /* Fondo casi negro */
+  color: #ededed !important;            /* Texto base claro */
+  border: 2px solid #8000ff !important; /* Borde morado neón */
+  box-shadow: 0 0 25px rgba(128, 0, 255, 0.4) !important; /* Resplandor */
+}
+
+/* 2. Encabezado y Pie del Modal */
+.modal-header, 
+.modal-footer {
+  border-color: #333 !important; /* Línea divisoria sutil */
+}
+
+.modal-title {
+  color: #39ff14 !important;     /* Título en Verde Neón */
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(57, 255, 20, 0.5);
+}
+
+/* 3. Botón de cerrar (X) */
+.btn-close {
+  filter: invert(1) grayscale(100%) brightness(200%); /* Lo vuelve blanco */
+  opacity: 0.8;
+}
+.btn-close:hover {
+  opacity: 1;
+  box-shadow: 0 0 10px #ff0000; /* Brillo rojo al pasar el mouse */
+}
+
+/* 4. Inputs, Textareas y Selects DENTRO del modal */
+.modal-body input,
+.modal-body textarea,
+.modal-body select {
+  background-color: #111 !important;  /* Fondo oscuro */
+  color: #39ff14 !important;          /* Texto Verde Neón al escribir */
+  border: 1px solid #8000ff !important; /* Borde morado */
+  box-shadow: inset 0 0 10px rgba(0,0,0,0.5) !important;
+}
+
+/* Placeholder (texto de ayuda) */
+.modal-body input::placeholder,
+.modal-body textarea::placeholder {
+  color: #666 !important;
+}
+
+/* Al hacer clic en el input */
+.modal-body input:focus,
+.modal-body textarea:focus,
+.modal-body select:focus {
+  background-color: #000 !important;
+  border-color: #39ff14 !important;   /* Cambia a borde verde */
+  box-shadow: 0 0 15px rgba(57, 255, 20, 0.3) !important;
+  color: #fff !important;
+}
+
+/* 5. Arreglar el desplegable (Select) */
+.modal-body select option {
+  background-color: #000;
+  color: #fff;
+}
+
+/* 6. Botones del Footer (Cancelar / Guardar) */
+.modal-footer .btn-secondary {
+  background-color: #333;
+  border: 1px solid #666;
+  color: #ccc;
+}
+.modal-footer .btn-secondary:hover {
+  background-color: #444;
+  color: #fff;
+}
+
+/* Asumiendo que el botón de guardar es variant="success" o similar */
+.modal-footer .btn-success, 
+.modal-footer .btn-primary {
+  background-color: #39ff14 !important;
+  color: #000 !important;
+  font-weight: bold;
+  border: none;
+  box-shadow: 0 0 15px #39ff14;
+}
+.modal-footer .btn-success:hover {
+  background-color: #1E90FF !important; /* Azul eléctrico al hover */
+  color: #fff !important;
+  box-shadow: 0 0 20px #1E90FF;
+}
+.product-list-box .form-select,
+.product-list-box select {
+  background-color: #111 !important;   /* Fondo oscuro */
+  color: #ededed !important;           /* Texto blanco */
+  border: 1px solid #8000ff !important; /* Borde morado */
+  box-shadow: inset 0 0 10px rgba(128, 0, 255, 0.2);
+}
+
+/* ESTO es lo que arregla las opciones desplegadas (Fondo negro, letra blanca) */
+.product-list-box .form-select option,
+.product-list-box select option {
+  background-color: #000 !important; 
+  color: #fff !important;
+  -webkit-text-fill-color: white !important; /* Refuerzo para Chrome */
+}

@@ -155,8 +155,8 @@ export const DetalleCompra = () => {
     }
 
     return (
-        <Container className="py-5 text-white">
-            <h2 className="highlight mb-4">Carrito de compra</h2>
+        <Container className="py-5 text-white" style={{marginTop: "100px"}}>
+            <h2 className="highlight mb-4">Detalle de compra</h2>
 
             {/*  Tabla de productos */}
             <Card className="bg-dark text-white mb-4 p-3">

@@ -13,7 +13,7 @@ import { apiFetch } from "../services/api";
 // === Tipos que reflejan el backend ===
 interface CategoriaBackend {
   idCategoria: number;
-  nombre: string;
+  nombreCategoria: string;
 }
 
 interface ProductoCreadoResponse {
@@ -308,7 +308,7 @@ export const CrearProducto = () => {
                           key={categoria.idCategoria}
                           value={categoria.idCategoria}
                         >
-                          {categoria.nombre}
+                          {categoria.nombreCategoria}
                         </option>
                       ))}
                     </Form.Select>

@@ -9,9 +9,7 @@ export const CrearProductoAdmin = () => {
       <NavBarAdmin />
 
       <section className="product-list-section">
-        <div className="product-list-box">
           <CrearProducto />
-        </div>
       </section>
     </>
   );
