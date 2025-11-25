@@ -7,6 +7,7 @@ import {CategoryList} from "../components/CategoryList";
 import {ProductCard} from "../components/ProductCard";
 import type { Producto, Categoria } from "../types";
 import { apiFetch } from "../services/api";
+import { useSearchParams } from "react-router-dom";
 
 // Tipos que reflejan lo que entrega el backend
 interface ProductoImagenBackend {
@@ -55,9 +56,13 @@ const mapProductoBackendToUi = (p: ProductoBackend): Producto => ({
 const PAGE_SIZE = 20;
 
 export const ProductosPublic = () => {
+  const [searchParams] = useSearchParams();
+
   const [productos, setProductos] = useState<Producto[]>([]);
   const [categorias, setCategorias] = useState<Categoria[]>([]);
-  const [filtro, setFiltro] = useState<string>("todos");
+
+  const categoriaUrl = searchParams.get("categoria");
+  const [filtro, setFiltro] = useState<string>(categoriaUrl || "todos");
   const [paginaActual, setPaginaActual] = useState<number>(1); // 1-based para el usuario
   const [totalPaginas, setTotalPaginas] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
@@ -82,7 +87,16 @@ export const ProductosPublic = () => {
     cargarCategorias();
   }, []);
 
-  // 2) Cargar productos cada vez que cambie página o filtro
+  // 2) Efecto para escuchar cambios en la URL
+useEffect(() => {
+  const catParam = searchParams.get("categoria");
+  if (catParam) {
+    setFiltro(catParam);
+    setPaginaActual(1); // Reiniciar a página 1 al cambiar filtro
+  }
+}, [searchParams]);
+
+  // 3) Cargar productos cada vez que cambie página o filtro
   useEffect(() => {
     const cargarProductos = async () => {
       setLoading(true);
